@@ -13,6 +13,10 @@
 
 </div>
 
+Welcome to my Neovim configuration! This project aims to show everyone what a Lua configuration for Neovim looks like.
+Feel free to open issues if you have suggestions or improvements. This is an ongoing project and I am constantly making
+changes and experimenting new things. Also if you enjoy live coding sessions, please check out my [twitch channel](https://twitch.tv/npxbr)
+
 # Install
 
 **Prerequisites**
