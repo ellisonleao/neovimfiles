@@ -10,6 +10,11 @@ end
 require("formatter").setup({
   logging = false,
   filetype = {
+    sh = {
+      function()
+        return {exe = "shfmt", args = {"-"}, stdin = true}
+      end,
+    },
     lua = {
       function()
         -- check if current folder has a lua formatter file
@@ -62,6 +67,6 @@ require("formatter").setup({
 vim.cmd([[
 augroup FormatAu
     autocmd!
-    autocmd BufWritePost *.go,*.py,*.json,*.js,*.jsx,*.md,*.yaml,*.lua FormatWrite
+    autocmd BufWritePost * FormatWrite
 augroup END
 ]])
