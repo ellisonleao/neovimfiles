@@ -86,6 +86,7 @@ local function make_config()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport =
     {properties = {"documentation", "detail", "additionalTextEdits"}}
+  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
   return {on_attach = on_attach, capabilities = capabilities}
 end
 

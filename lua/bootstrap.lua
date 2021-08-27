@@ -85,14 +85,15 @@ return require("packer").startup(function(use)
 
   -- local
   use {"~/code/glow.nvim", run = "GlowInstall"}
-  use {
-    "~/code/go.nvim",
-    config = function()
-      require("go").config({lsp = require("plugins.lsp").config()})
-      -- require("go").config()
-    end,
-    ft = {"go"},
-  }
+  -- use {
+  --   "~/code/go.nvim",
+  --   config = function()
+  --     require("go").config({lsp = require("plugins.lsp").config()})
+  --     -- require("go").config()
+  --   end,
+  --   ft = {"go"},
+  -- }
+  use {"fatih/vim-go", run = {"GoUpdateBinaries"}, ft = {"go"}}
 
   -- plugin development and utils
   use {"nvim-lua/plenary.nvim"}
@@ -132,22 +133,25 @@ return require("packer").startup(function(use)
     end,
   }
   use {
-    "hrsh7th/nvim-compe",
+    "hrsh7th/nvim-cmp",
     config = function()
-      require("plugins.compe")
+      require("plugins.cmp")
     end,
-    event = "InsertEnter",
+    requires = {
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-vsnip",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lua",
+    },
   }
   use {
     "neovim/nvim-lspconfig",
     config = function()
       require("plugins.lsp")
     end,
-    requires = {
-      "hrsh7th/vim-vsnip",
-      "hrsh7th/vim-vsnip-integ",
-      "kabouzeid/nvim-lspinstall",
-    },
+    requires = {"kabouzeid/nvim-lspinstall"},
   }
   use {"Pocco81/TrueZen.nvim"}
 
