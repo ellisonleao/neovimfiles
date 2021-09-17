@@ -67,6 +67,6 @@ require("formatter").setup({
 vim.cmd([[
 augroup FormatAu
     autocmd!
-    autocmd BufWritePost * FormatWrite
+    autocmd BufWritePost *.go,*.jsx,*.js,*.json,*.md,*.py,*.yaml,*.sh FormatWrite
 augroup END
 ]])

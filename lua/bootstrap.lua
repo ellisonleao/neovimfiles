@@ -84,7 +84,8 @@ return require("packer").startup(function(use)
   }
 
   -- local
-  use {"~/code/glow.nvim", run = "GlowInstall"}
+  use {"~/code/glow.nvim"}
+
   -- use {
   --   "~/code/go.nvim",
   --   config = function()
@@ -164,30 +165,22 @@ return require("packer").startup(function(use)
       vim.g.startify_bookmarks = {"~/.config/nvim/lua"}
     end,
   }
+
+  use {"lukas-reineke/indent-blankline.nvim", config=function() 
+    vim.opt.listchars = {
+      eol = "↴",
+    }
+    require("indent_blankline").setup({
+      buftype_exclude = {"terminal", "packer", "startify"},
+      show_end_of_line = true,
+    })
+  end} 
+
   use {
-    "hoob3rt/lualine.nvim",
+    "shadmansaleh/lualine.nvim",
     config = function()
-      require("lualine").setup {
-        options = {theme = "tokyonight"},
-        sections = {
-          lualine_a = {"mode"},
-          lualine_b = {"branch"},
-          lualine_c = {{"filename", path = 2}, {"diagnostics", sources = {"nvim_lsp"}}},
-          lualine_x = {"encoding", "fileformat", "filetype"},
-          lualine_y = {"progress"},
-          lualine_z = {"location"},
-        },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = {"filename"},
-          lualine_x = {"location"},
-          lualine_y = {},
-          lualine_z = {},
-        },
-        extensions = {"fugitive", "quickfix"},
-      }
-    end,
+      require("plugins.lualine")
+    end
   }
 
   -- buffer tabs at top

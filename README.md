@@ -46,9 +46,9 @@ Below the list of the current plugins used in this configuration and how we are 
 - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) - web devicons for general usage. Used in buffer
   tabs, statusline and telescope
 - [vim-startify](https://github.com/mhinz/vim-startify) - Our main starting screen
-- [lualine.nvim](https://github.com/hoob3rt/lualine.nvim) - Our statusline
+- [lualine.nvim](https://github.com/shadmansaleh/lualine.nvim) - Our statusline
 - [nvim-bufferline.lua](https://github.com/akinsho/nvim-bufferline.lua) - Buffers as tabs, simulating GUIs from other
-  editors
+- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) - Modern indent guides
 
 ### Git
 
