@@ -167,9 +167,8 @@ return require("packer").startup(function(use)
   }
 
   use {"lukas-reineke/indent-blankline.nvim", config=function() 
-    vim.opt.listchars = {
-      eol = "↴",
-    }
+    vim.opt.list = true
+    vim.opt.listchars:append("eol:↴")
     require("indent_blankline").setup({
       buftype_exclude = {"terminal", "packer", "startify"},
       show_end_of_line = true,

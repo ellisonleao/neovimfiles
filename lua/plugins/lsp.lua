@@ -92,7 +92,7 @@ end
 
 local function setup_servers()
   local installed_servers = lspinstall.installed_servers()
-  local required_servers = {"lua", "go", "typescript", "python", "bash", "yaml", "vim"}
+  local required_servers = {"lua", "go", "python", "typescript", "bash", "yaml", "vim"}
   for _, svr in pairs(required_servers) do
     if not vim.tbl_contains(installed_servers, svr) then
       lspinstall.install_server(svr)
