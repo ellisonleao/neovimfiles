@@ -18,11 +18,11 @@ require("formatter").setup({
     lua = {
       function()
         -- check if current folder has a lua formatter file
-        local cfg = vim.fn.findfile(".lua-format")
+        local cfg = vim.fn.findfile("stylua.toml")
         if cfg == "" then
-          cfg = vim.fn.expand("~/.config/nvim/lua/.lua-format")
+          cfg = vim.fn.expand("~/.config/nvim/lua/stylua.toml")
         end
-        return {exe = "lua-format", args = {"-c " .. cfg}, stdin = true}
+        return {exe = "stylua", args = {"--config-path=" .. cfg, "-"}, stdin = true}
       end,
     },
     python = {
@@ -67,6 +67,6 @@ require("formatter").setup({
 vim.cmd([[
 augroup FormatAu
     autocmd!
-    autocmd BufWritePost *.go,*.jsx,*.js,*.json,*.md,*.py,*.yaml,*.sh FormatWrite
+    autocmd BufWritePost *.go,*.jsx,*.js,*.json,*.md,*.py,*.yaml,*.sh,*.lua FormatWrite
 augroup END
 ]])
