@@ -1,11 +1,7 @@
 -- nvim-compe configs
 -- configure completion
 local cmp = require("cmp")
-
-local check_back_space = function()
-  local col = vim.fn.col(".") - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-end
+local compare = require("cmp.config.compare")
 
 cmp.setup({
   snippet = {
@@ -32,7 +28,7 @@ cmp.setup({
       select = true,
     }),
     ["<Tab>"] = function(fallback)
-      if cmp.visible() == 1 then
+      if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"]() == 1 then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-expand-or-jump)", true, true, true), "")
@@ -40,5 +36,16 @@ cmp.setup({
         fallback()
       end
     end,
+  },
+  sorting = {
+    comparators = {
+      compare.kind,
+      compare.offset,
+      compare.exact,
+      compare.score,
+      compare.sort_text,
+      compare.length,
+      compare.order,
+    },
   },
 })
