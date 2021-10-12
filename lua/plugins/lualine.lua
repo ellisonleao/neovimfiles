@@ -49,9 +49,9 @@ local config = {
   },
   sections = {
     lualine_a = {},
-    lualine_b = { "branch", require("github-notifications").statusline_notification_count },
+    lualine_b = {},
     lualine_y = {},
-    lualine_z = {},
+    lualine_z = { "branch", require("github-notifications").statusline_notification_count },
     -- These will be filled later
     lualine_c = {},
     lualine_x = {},
