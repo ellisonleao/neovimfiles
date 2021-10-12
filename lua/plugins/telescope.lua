@@ -14,11 +14,14 @@ require("telescope").setup({
   },
 })
 
+require("telescope").load_extension("ghn")
+
 -- create mappings
-local opts = {noremap = true}
+local opts = { noremap = true }
 local mappings = {
-  {"n", "<leader>f", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], opts},
-  {"n", "<leader>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], opts},
+  { "n", "<leader>f", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], opts },
+  { "n", "<leader>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], opts },
+  { "n", "<leader>gn", [[<Cmd>lua require("github-notifications.menu").notifications()<CR>]], opts },
 }
 
 for _, map in pairs(mappings) do

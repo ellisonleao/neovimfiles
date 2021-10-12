@@ -4,9 +4,8 @@ local function set_globals()
   vim.g.mapleader = ","
   vim.g.maplocalleader = ","
   vim.g.python3_host_prog = vim.fn.expand("~/.pyenv/versions/3.8.2/bin/python")
-  vim.g["test#strategy"] = "floaterm"
-  vim.g.floaterm_height = 0.8
-  vim.g.floaterm_width = 0.8
+  vim.g["test#strategy"] = "neovim"
+  vim.g.omni_sql_default_compl_type = "syntax"
 end
 
 local function set_ui_options()
@@ -31,7 +30,8 @@ local function set_editor_options()
     inccommand = "nosplit",
     incsearch = true,
     laststatus = 2,
-    listchars = [[eol:$,tab:>-,trail:~,extends:>,precedes:<]],
+    list = true,
+    listchars = [[eol:↴,tab:>-,trail:~,extends:>,precedes:<]],
     modeline = true,
     shada = [[!,'500,<50,s10,h]],
     showcmd = true,
@@ -63,7 +63,6 @@ local function set_editor_options()
   for k, v in pairs(options) do
     opt[k] = v
   end
-
 end
 
 local function set_options()
@@ -72,25 +71,27 @@ local function set_options()
 end
 
 local function set_mappings()
-  local opts = {noremap = true, silent = true}
+  local opts = { noremap = true, silent = true }
   local mappings = {
-    {"n", "<leader>E", [[<Cmd>edit $HOME/.config/nvim/lua/editor.lua<CR>]], opts}, -- quick edit editor.lua file
-    {"n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/bootstrap.lua<CR>]], opts}, -- quick edit plugins.lua file
-    {"n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts}, -- Update all current plugins
-    {"n", "<leader>R", [[<Cmd>lua RR()<CR>]], opts}, -- reload all custom modules
-    {"n", "<leader>,", [[<Cmd>noh<CR>]], opts}, -- clear search highlight
-    {"n", "<leader>z", [[<Cmd>bp<CR>]], opts}, -- move to the previous buffer
-    {"n", "<leader>q", [[<Cmd>bp<CR>]], opts}, -- move to the previous buffer (same option, different key)
-    {"n", "<leader>x", [[<Cmd>bn<CR>]], opts}, -- move to the next buffer
-    {"n", "<leader>w", [[<Cmd>bn<CR>]], opts}, -- move to the next buffer (same option, different key)
-    {"n", "<leader>d", [[<Cmd>bd<CR>]], opts}, -- close current buffer
-    {"n", "<leader>c", [[<Cmd>cclose<CR>]], opts}, -- close quickfix list
-    {"n", "<leader>h", [[<Cmd>split<CR>]], opts}, -- create horizontal split
-    {"n", "<leader>v", [[<Cmd>vsplit<CR>]], opts}, -- create vertical split
-    {"v", "<", [[<gv]], opts}, -- move code forward in visual mode
-    {"v", ">", [[>gv]], opts}, -- move code backwards in visual mode
-    {"n", "<leader>n", [[<Cmd>cn<CR>]], opts}, -- move to next item in quickfix list
-    {"n", "<leader>p", [[<Cmd>cp<CR>]], opts}, -- move to prev item in quickfix list
+    { "n", "<leader>E", [[<Cmd>edit $HOME/.config/nvim/lua/editor.lua<CR>]], opts }, -- quick edit editor.lua file
+    { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/bootstrap.lua<CR>]], opts }, -- quick edit plugins.lua file
+    { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
+    { "n", "<leader>R", [[<Cmd>lua RR()<CR>]], opts }, -- reload all custom modules
+    { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
+    { "n", "<leader>z", [[<Cmd>bp<CR>]], opts }, -- move to the previous buffer
+    { "n", "<leader>q", [[<Cmd>bp<CR>]], opts }, -- move to the previous buffer (same option, different key)
+    { "n", "<leader>x", [[<Cmd>bn<CR>]], opts }, -- move to the next buffer
+    { "n", "<leader>w", [[<Cmd>bn<CR>]], opts }, -- move to the next buffer (same option, different key)
+    { "n", "<leader>d", [[<Cmd>bd<CR>]], opts }, -- close current buffer
+    { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
+    { "n", "<leader>h", [[<Cmd>split<CR>]], opts }, -- create horizontal split
+    { "n", "<leader>v", [[<Cmd>vsplit<CR>]], opts }, -- create vertical split
+    { "v", "<", [[<gv]], opts }, -- move code forward in visual mode
+    { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
+    { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
+    { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
+    { "n", "<leader>tt", [[<Cmd>TestFile<CR>]], opts }, -- test current file
+    { "n", "<leader>t", [[<Cmd>TestNearest<CR>]], opts }, -- test current function
   }
 
   for _, map in pairs(mappings) do
@@ -98,8 +99,7 @@ local function set_mappings()
   end
 
   -- remember last cursor position
-  vim.cmd(
-    [[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]])
+  vim.cmd([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]])
 end
 
 set_globals()
