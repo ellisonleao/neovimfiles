@@ -59,6 +59,7 @@ return require("packer").startup(function(use)
       end
     end,
   })
+
   use({
     "lewis6991/gitsigns.nvim",
     config = function()
@@ -71,9 +72,9 @@ return require("packer").startup(function(use)
     config = function()
       require("github-notifications").setup({
         username = "ellisonleao",
-        token = os.getenv("GITHUB_TOKEN"),
         mappings = {
           mark_read = "<Tab>",
+          open_in_browser = "<CR>",
         },
       })
     end,
