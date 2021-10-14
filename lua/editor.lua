@@ -90,8 +90,6 @@ local function set_mappings()
     { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
     { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
     { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
-    { "n", "<leader>tt", [[<Cmd>TestFile<CR>]], opts }, -- test current file
-    { "n", "<leader>t", [[<Cmd>TestNearest<CR>]], opts }, -- test current function
   }
 
   for _, map in pairs(mappings) do

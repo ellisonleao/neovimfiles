@@ -48,7 +48,6 @@ Below the list of the current plugins used in this configuration and how we are 
 - [vim-startify](https://github.com/mhinz/vim-startify) - Our main starting screen
 - [lualine.nvim](https://github.com/shadmansaleh/lualine.nvim) - Our statusline
 - [nvim-bufferline.lua](https://github.com/akinsho/nvim-bufferline.lua) - Buffers as tabs, simulating GUIs from other
-- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) - Modern indent guides
 
 ### Git
 

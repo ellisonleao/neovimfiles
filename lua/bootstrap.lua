@@ -91,7 +91,7 @@ return require("packer").startup(function(use)
       local opts = { noremap = true, silent = true }
       local mappings = {
         { "n", "<leader>t", [[<Cmd>TestNearest<CR>]], opts }, -- call test for function in cursor
-        { "n", "<leader>tT", [[<Cmd>TestFile<CR>]], opts }, -- call test for current file
+        { "n", "<leader>tt", [[<Cmd>TestFile<CR>]], opts }, -- call test for current file
       }
 
       for _, m in pairs(mappings) do
@@ -180,16 +180,6 @@ return require("packer").startup(function(use)
     "mhinz/vim-startify",
     config = function()
       vim.g.startify_bookmarks = { "~/.config/nvim/lua" }
-    end,
-  })
-
-  use({
-    "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("indent_blankline").setup({
-        buftype_exclude = { "terminal", "packer", "startify" },
-        show_end_of_line = true,
-      })
     end,
   })
 

@@ -112,7 +112,7 @@ ins_left({
       t = colors.red,
     }
     vim.api.nvim_command("hi! LualineMode guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg)
-    return ""
+    return "🕮"
   end,
   color = "LualineMode",
   padding = { right = 1 },
@@ -215,5 +215,4 @@ ins_right({
   padding = { left = 1 },
 })
 
--- Now don't forget to initialize lualine
 lualine.setup(config)
