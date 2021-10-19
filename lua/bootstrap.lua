@@ -169,7 +169,7 @@ return require("packer").startup(function(use)
     config = function()
       require("plugins.lsp")
     end,
-    requires = { "kabouzeid/nvim-lspinstall" },
+    requires = { "williamboman/nvim-lsp-installer" },
   })
   use({ "Pocco81/TrueZen.nvim" })
 

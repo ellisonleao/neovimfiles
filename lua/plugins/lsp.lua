@@ -1,5 +1,5 @@
-local nvim_lsp = require("lspconfig")
-local lspinstall = require("lspinstall")
+local lsp_installer = require("nvim-lsp-installer")
+local servers = require("nvim-lsp-installer.servers")
 
 local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.lsp.omnifunc")
@@ -95,43 +95,47 @@ local function make_config()
   return { on_attach = on_attach, capabilities = capabilities }
 end
 
-local function setup_servers()
-  local installed_servers = lspinstall.installed_servers()
-  local required_servers = { "lua", "go", "python", "typescript", "bash", "yaml", "vim" }
-  for _, svr in pairs(required_servers) do
-    if not vim.tbl_contains(installed_servers, svr) then
-      lspinstall.install_server(svr)
+-- lsp servers
+local required_servers = {
+  "gopls", -- golang
+  "sumneko_lua", -- lua
+  "pyright", -- python
+  "tsserver", -- js, jsx, tsx
+  "bashls", -- bash
+  "yamlls", -- yaml
+  "vimls", -- vim
+  "jsonls", -- json
+  "sqlls", -- sql
+}
+
+-- check for missing lsp servers and install them
+for _, svr in pairs(required_servers) do
+  local ok, lsp_server = servers.get_server(svr)
+  if ok then
+    if not lsp_server:is_installed() then
+      lsp_server:install()
     end
   end
+end
 
-  lspinstall.setup()
-  installed_servers = lspinstall.installed_servers()
+local cfg = make_config()
 
-  local default_config = make_config()
-  for _, server in pairs(installed_servers) do
-    if server ~= "lua" then
-      nvim_lsp[server].setup(default_config)
-    end
-  end
-
-  -- special case for lua config
-  local luadev = require("lua-dev").setup({
-    lspconfig = {
-      cmd = {
-        vim.fn.expand("~/.local/share/nvim/lspinstall/lua/sumneko-lua-language-server"),
+lsp_installer.on_server_ready(function(server)
+  if server.name == "sumneko_lua" then
+    local luadev = require("lua-dev").setup({
+      lspconfig = {
+        cmd = {
+          vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/Linux/lua-language-server"),
+        },
+        on_attach = cfg.on_attach,
+        capabilities = cfg.capabilities,
       },
-      on_attach = default_config.on_attach,
-      capabilities = default_config.capabilities,
-    },
-  })
-  nvim_lsp.lua.setup(luadev)
-end
-
-setup_servers()
-
-lspinstall.post_install_hook = function()
-  setup_servers()
-  vim.cmd("bufdo e")
-end
+    })
+    server:setup(luadev)
+  else
+    server:setup(cfg)
+  end
+  vim.cmd([[do User LspAttachBuffers]])
+end)
 
 return { config = make_config }
