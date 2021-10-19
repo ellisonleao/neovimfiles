@@ -190,6 +190,8 @@ return require("packer").startup(function(use)
     end,
   })
 
+  use({ "rcarriga/nvim-notify" })
+
   -- buffer tabs at top
   use({
     "akinsho/nvim-bufferline.lua",

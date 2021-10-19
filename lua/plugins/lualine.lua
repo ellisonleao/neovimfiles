@@ -36,13 +36,9 @@ local conditions = {
 -- Config
 local config = {
   options = {
-    -- Disable sections and component separators
     component_separators = "",
     section_separators = "",
     theme = {
-      -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme .  So we
-      -- are just setting default looks o statusline
       normal = { c = { fg = colors.fg, bg = colors.bg } },
       inactive = { c = { fg = colors.fg, bg = colors.bg } },
     },
@@ -52,12 +48,10 @@ local config = {
     lualine_b = {},
     lualine_y = {},
     lualine_z = { "branch", require("github-notifications").statusline_notification_count },
-    -- These will be filled later
     lualine_c = {},
     lualine_x = {},
   },
   inactive_sections = {
-    -- these are to remove the defaults
     lualine_a = {},
     lualine_v = {},
     lualine_y = {},
@@ -119,15 +113,24 @@ ins_left({
 })
 
 ins_left({
-  -- filesize component
-  "filesize",
-  cond = conditions.buffer_not_empty,
-})
-
-ins_left({
-  "filename",
-  cond = conditions.buffer_not_empty,
-  color = { fg = colors.magenta, gui = "bold" },
+  -- Lsp server name .
+  function()
+    local msg = "No Active Lsp"
+    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+    local clients = vim.lsp.get_active_clients()
+    if next(clients) == nil then
+      return msg
+    end
+    for _, client in ipairs(clients) do
+      local filetypes = client.config.filetypes
+      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+        return client.name
+      end
+    end
+    return msg
+  end,
+  icon = " LSP:",
+  color = { fg = "#ffffff", gui = "bold" },
 })
 
 ins_left({ "location" })
@@ -154,24 +157,15 @@ ins_left({
 })
 
 ins_left({
-  -- Lsp server name .
-  function()
-    local msg = "No Active Lsp"
-    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-    local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
-      return msg
-    end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
-      end
-    end
-    return msg
-  end,
-  icon = " LSP:",
-  color = { fg = "#ffffff", gui = "bold" },
+  -- filesize component
+  "filesize",
+  cond = conditions.buffer_not_empty,
+})
+
+ins_left({
+  "filename",
+  cond = conditions.buffer_not_empty,
+  color = { fg = colors.magenta, gui = "bold" },
 })
 
 -- Add components to right sections
