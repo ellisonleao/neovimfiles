@@ -21,6 +21,12 @@ return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
   use({
+    "nathom/filetype.nvim",
+    config = function()
+      vim.g.did_load_filetypes = 1
+    end,
+  })
+  use({
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup()
@@ -184,7 +190,7 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "shadmansaleh/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     config = function()
       require("plugins.lualine")
     end,
