@@ -20,6 +20,7 @@ vim.cmd([[autocmd BufWritePost bootstrap.lua PackerCompile]])
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
+  use({ "github/copilot.vim" })
   use({
     "nathom/filetype.nvim",
     config = function()
