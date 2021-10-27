@@ -27,7 +27,7 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     }),
-    ["<Tab>"] = function(fallback)
+    ["<C-y>"] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"]() == 1 then
