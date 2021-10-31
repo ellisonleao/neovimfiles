@@ -1,49 +1,31 @@
-local packer_exists = pcall(vim.cmd, [[ packadd packer.nvim ]])
-if not packer_exists then
-  local dest = string.format("%s/site/pack/packer/opt/", vim.fn.stdpath("data"))
-  local repo_url = "https://github.com/wbthomason/packer.nvim"
-
-  vim.fn.mkdir(dest, "p")
-
-  print("Downloading packer..")
-  vim.fn.system(string.format("git clone %s %s", repo_url, dest .. "packer.nvim"))
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  vim.notify("Installing packer...")
+  packer_bootstrap = fn.system({
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  })
   vim.cmd([[packadd packer.nvim]])
-  vim.schedule_wrap(function()
-    vim.cmd("PackerSync")
-    print("plugins installed")
-  end)
 end
 
-vim.cmd([[autocmd BufWritePost bootstrap.lua PackerCompile]])
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost bootstrap.lua source <afile> | PackerCompile
+  augroup end
+]])
 
 -- load plugins
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
   use({ "github/copilot.vim" })
-  use({
-    "nathom/filetype.nvim",
-    config = function()
-      vim.g.did_load_filetypes = 1
-    end,
-  })
-  use({
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
-  })
-
-  -- calendar and task list
-  use({
-    "kristijanhusak/orgmode.nvim",
-    config = function()
-      require("orgmode").setup({
-        org_agenda_files = { "~/.orgmode/*" },
-        org_default_notes_file = { "~/.orgmode/notes.org" },
-      })
-    end,
-  })
+  use({ "norcalli/nvim-colorizer.lua" })
 
   -- tpopes
   use({ "tpope/vim-surround" })
@@ -214,4 +196,10 @@ return require("packer").startup(function(use)
       require("plugins.treesitter").config()
     end,
   })
+  use({ "nvim-treesitter/playground" })
+
+  if packer_bootstrap then
+    vim.notify("Installing plugins...")
+    require("packer").sync()
+  end
 end)

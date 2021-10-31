@@ -1,15 +1,7 @@
 local opt = vim.opt
 
-local function set_globals()
-  vim.g.mapleader = ","
-  vim.g.maplocalleader = ","
-  vim.g.python3_host_prog = vim.fn.expand("~/.pyenv/versions/3.8.2/bin/python")
-  vim.g["test#strategy"] = "neovim"
-  vim.g.omni_sql_default_compl_type = "syntax"
-end
-
 local function set_ui_options()
-  opt.termguicolors = true
+  -- opt.termguicolors = true
   opt.mouse = "a"
   opt.title = true
   opt.titlestring = "%{join(split(getcwd(), '/')[-2:], '/')}"
@@ -18,8 +10,8 @@ local function set_ui_options()
   opt.colorcolumn = "120"
 
   -- colorscheme configs
-  vim.g.tokyonight_style = "night"
-  vim.cmd("colorscheme tokyonight")
+  -- vim.g.tokyonight_style = "night"
+  -- vim.cmd("colorscheme tokyonight")
 end
 
 local function set_editor_options()
@@ -72,8 +64,8 @@ end
 local function set_mappings()
   local opts = { noremap = true, silent = true }
   local mappings = {
-    { "n", "<leader>E", [[<Cmd>edit $HOME/.config/nvim/lua/editor.lua<CR>]], opts }, -- quick edit editor.lua file
-    { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/bootstrap.lua<CR>]], opts }, -- quick edit plugins.lua file
+    { "n", "<leader>E", [[<Cmd>edit $HOME/.config/nvim/lua/cfg/editor.lua<CR>]], opts }, -- quick edit editor.lua file
+    { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/cfg/bootstrap.lua<CR>]], opts }, -- quick edit plugins.lua file
     { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
     { "n", "<leader>R", [[<Cmd>lua RR()<CR>]], opts }, -- reload all custom modules
     { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
@@ -99,6 +91,5 @@ local function set_mappings()
   vim.cmd([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]])
 end
 
-set_globals()
 set_options()
 set_mappings()
