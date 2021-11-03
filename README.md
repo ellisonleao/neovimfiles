@@ -58,7 +58,7 @@ Below the list of the current plugins used in this configuration and how we are 
 
 - [vim-surround](https://github.com/tpope/vim-surround) - easily add or remove strings "surroundings" chars
 - [vim-repeat](https://github.com/tpope/vim-repeat) - Puts the `.` repeat char into another level
-- [kommentary](https://github.com/b3nj5m1n/kommentary) - Shortcut for commenting in and out code snippets
+- [Comment](https://github.com/numToStr/Comment.nvim) - Shortcut for commenting in and out code snippets
 - [formatter.nvim](https://github.com/mhartington/formatter.nvim) - General Format code on save tool
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Easy default configs for the builtin LSP client
 - [lspsaga.nvim](https://github.com/glepnir/lspsaga.nvim) - Better UI for LSP outputs (docs, rename, errors)
