@@ -100,7 +100,7 @@ return require("packer").startup(function(use)
   --   end,
   --   ft = {"go"},
   -- }
-  use({ "fatih/vim-go", run = { "GoUpdateBinaries" }, ft = { "go" } })
+  use({ "fatih/vim-go", run = ":GoUpdateBinaries", ft = { "go" } })
 
   -- plugin development and utils
   use({ "nvim-lua/plenary.nvim" })

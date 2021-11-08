@@ -1,17 +1,12 @@
 local opt = vim.opt
 
 local function set_ui_options()
-  -- opt.termguicolors = true
   opt.mouse = "a"
   opt.title = true
   opt.titlestring = "%{join(split(getcwd(), '/')[-2:], '/')}"
   opt.number = true
   opt.relativenumber = true
   opt.colorcolumn = "120"
-
-  -- colorscheme configs
-  -- vim.g.tokyonight_style = "night"
-  -- vim.cmd("colorscheme tokyonight")
 end
 
 local function set_editor_options()
