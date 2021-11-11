@@ -4,64 +4,58 @@ local servers = require("nvim-lsp-installer.servers")
 local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.lsp.omnifunc")
 
+  -- Lua
+  -- vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>",
+  --   {silent = true, noremap = true}
+  -- )
+  -- vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble lsp_workspace_diagnostics<cr>",
+  --   {silent = true, noremap = true}
+  -- )
+  -- vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble lsp_document_diagnostics<cr>",
+  --   {silent = true, noremap = true}
+  -- )
+  -- vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
+  --   {silent = true, noremap = true}
+  -- )
+  -- vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
+  --   {silent = true, noremap = true}
+  -- )
+  -- vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>",
+  --   {silent = true, noremap = true}
+  -- )
+  --
   local opts = { silent = true, noremap = true }
   local mappings = {
-    { "n", "gD", [[<Cmd>lua require('lspsaga.provider').preview_definition()<CR>]], opts },
+    { "n", "gD", [[<Cmd>lua vim.lsp.buf.declaration()<CR>]], opts },
     { "n", "gd", [[<Cmd>lua vim.lsp.buf.definition()<CR>]], opts },
-    { "n", "gr", [[<Cmd>lua require('lspsaga.rename').rename()<CR>]], opts },
-    {
-      "n",
-      "gs",
-      [[<Cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>]],
-      opts,
-    },
+    { "n", "gr", [[<Cmd>lua vim.lsp.buf.rename()<CR>]], opts },
     {
       "n",
       "<leader>gR",
-      [[<Cmd>lua require("telescope.builtin").lsp_references{ path_display = "absolute" }<CR>]],
-      { noremap = true, silent = true },
+      "<cmd>TroubleToggle lsp_references<CR>",
+      opts,
     },
     {
       "i",
       "<C-x>",
-      [[<Cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>]],
+      [[<Cmd>lua vim.lsp.buf.signature_help()<CR>]],
       opts,
     },
     {
       "n",
       "[e",
-      [[<Cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_next()<CR>]],
+      [[<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>]],
       opts,
     },
     {
       "n",
       "]e",
-      [[<Cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev() <CR>]],
-      opts,
-    },
-    {
-      "n",
-      "]e",
-      [[<Cmd>lua require('lspsaga.diagnostic').lsp_jump_diagnostic_prev() <CR>]],
+      [[<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>]],
       opts,
     },
   }
 
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", [[<Cmd>lua require('lspsaga.hover').render_hover_doc()<CR>]], opts)
-  vim.api.nvim_buf_set_keymap(
-    bufnr,
-    "n",
-    "<C-f>",
-    [[<Cmd>lua require('lspsaga.hover').smart_scroll_hover(1)<CR>]],
-    opts
-  )
-  vim.api.nvim_buf_set_keymap(
-    bufnr,
-    "n",
-    "<C-b>",
-    [[<Cmd>lua require('lspsaga.hover').smart_scroll_hover(-1)<CR>]],
-    opts
-  )
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", [[<Cmd>lua vim.lsp.buf.hover()<CR>]], opts)
 
   for _, map in pairs(mappings) do
     vim.api.nvim_buf_set_keymap(bufnr, unpack(map))
@@ -70,7 +64,7 @@ local function on_attach(client, bufnr)
   if client.resolved_capabilities.document_formatting then
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   elseif client.resolved_capabilities.document_range_formatting then
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    vim.api.nvim_buf_set_keymap(bufnr, "v", "<leader>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -92,7 +86,16 @@ local function make_config()
     properties = { "documentation", "detail", "additionalTextEdits" },
   }
   capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-  return { on_attach = on_attach, capabilities = capabilities }
+  return {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    handlers = {
+      ["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        { virtual_text = false }
+      ),
+    },
+  }
 end
 
 -- lsp servers

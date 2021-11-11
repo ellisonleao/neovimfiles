@@ -61,7 +61,7 @@ Below the list of the current plugins used in this configuration and how we are 
 - [Comment](https://github.com/numToStr/Comment.nvim) - Shortcut for commenting in and out code snippets
 - [formatter.nvim](https://github.com/mhartington/formatter.nvim) - General Format code on save tool
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Easy default configs for the builtin LSP client
-- [lspsaga.nvim](https://github.com/glepnir/lspsaga.nvim) - Better UI for LSP outputs (docs, rename, errors)
+- [trouble.nvim](https://github.com/folke/trouble.nvim) - Better UI for Errors and LSP outputs (docs, references, errors)
 - [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) - Easy install LSP servers
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - The best autocomplete plugin for Neovim
 - [vim-vsnip](https://github.com/hrsh7th/vim-vsnip)
@@ -70,8 +70,8 @@ Below the list of the current plugins used in this configuration and how we are 
 - [TrueZen.nvim](https://github.com/Pocco81/TrueZen.nvim) - Distraction-free environment in Neovim
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Used on syntax highlight and custom motions
 - [nvim-treesitter-playground](https://github.com/nvim-treesitter/playground) - Treesiter Playground
-- [glow.nvim](https://github.com/npxbr/glow.nvim) - Terminal Markdown preview
-- [go.nvim](https://github.com/npxbr/go.nvim) - Go development
+- [glow.nvim](https://github.com/ellisonleao/glow.nvim) - Terminal Markdown preview
+- [go.nvim](https://github.com/ellisonleao/go.nvim) - Go development
 - [telescope.nvim](https://github.com/nvim-lua/telescope.nvim) - Find, filter, preview and pick using a nice UI
 
 ### Plugin development

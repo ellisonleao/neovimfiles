@@ -132,9 +132,10 @@ return require("packer").startup(function(use)
   -- lsp, completion, linting and snippets
   use({ "rafamadriz/friendly-snippets" })
   use({
-    "glepnir/lspsaga.nvim",
+    "folke/trouble.nvim",
     config = function()
-      require("plugins.lspsaga")
+      require("trouble").setup({})
+      vim.api.nvim_set_keymap("n", "<leader>xx", "<Cmd>Trouble<CR>", { silent = true, noremap = true })
     end,
   })
   use({
