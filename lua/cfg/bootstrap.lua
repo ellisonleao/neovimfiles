@@ -33,6 +33,13 @@ return require("packer").startup(function(use)
 
   -- git
   use({
+    "TimUntersberger/neogit",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("neogit").setup({})
+    end,
+  })
+  use({
     "tpope/vim-fugitive",
     requires = { "tpope/vim-rhubarb" },
     config = function()
