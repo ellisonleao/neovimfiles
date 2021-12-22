@@ -1,4 +1,5 @@
 local fn = vim.fn
+local packer_bootstrap
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
   vim.notify("Installing packer...")
@@ -24,7 +25,7 @@ vim.cmd([[
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
-  use({ "github/copilot.vim" })
+  -- use({ "github/copilot.vim" })
   use({ "norcalli/nvim-colorizer.lua" })
 
   -- tpopes
@@ -170,6 +171,7 @@ return require("packer").startup(function(use)
 
   -- visual
   use({ "folke/tokyonight.nvim" })
+  -- use({ "~/code/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } })
   use({ "kyazdani42/nvim-web-devicons" })
   use({
     "mhinz/vim-startify",

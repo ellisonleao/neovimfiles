@@ -110,11 +110,6 @@ _G.packer_plugins = {
     path = "/home/ellison/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
-  ["copilot.vim"] = {
-    loaded = true,
-    path = "/home/ellison/.local/share/nvim/site/pack/packer/start/copilot.vim",
-    url = "https://github.com/github/copilot.vim"
-  },
   ["formatter.nvim"] = {
     config = { "\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22plugins.formatter\frequire\0" },
     loaded = true,
