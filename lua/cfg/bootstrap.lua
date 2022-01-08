@@ -171,7 +171,7 @@ return require("packer").startup(function(use)
 
   -- visual
   use({ "folke/tokyonight.nvim" })
-  -- use({ "~/code/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } })
+  use({ "~/code/gruvbox.nvim" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({
     "mhinz/vim-startify",
