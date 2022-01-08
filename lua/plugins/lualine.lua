@@ -38,10 +38,7 @@ local config = {
   options = {
     component_separators = "",
     section_separators = "",
-    theme = {
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    },
+    theme = "tokyonight",
   },
   sections = {
     lualine_a = {},
@@ -199,14 +196,6 @@ ins_right({
     removed = { fg = colors.red },
   },
   cond = conditions.hide_in_width,
-})
-
-ins_right({
-  function()
-    return "▊"
-  end,
-  color = { fg = colors.blue },
-  padding = { left = 1 },
 })
 
 lualine.setup(config)
