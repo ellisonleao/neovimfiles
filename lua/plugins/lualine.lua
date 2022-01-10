@@ -4,20 +4,36 @@
 local lualine = require("lualine")
 
 -- Color table for highlights
--- stylua: ignore
 local colors = {
-  bg       = '#202328',
-  fg       = '#bbc2cf',
-  yellow   = '#ECBE7B',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98be65',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#51afef',
-  red      = '#ec5f67',
+  bg = "#1d2021",
+  fg = "#bbc2cf",
+  yellow = "#ECBE7B",
+  cyan = "#008080",
+  darkblue = "#081633",
+  green = "#98be65",
+  orange = "#FF8800",
+  violet = "#a9a1e1",
+  magenta = "#c678dd",
+  blue = "#076678",
+  red = "#ec5f67",
 }
+
+if vim.g.colors_name == "gruvbox" then
+  local gruv_colors = require("gruvbox.colors")
+  colors = {
+    bg = gruv_colors.dark0_hard,
+    fg = gruv_colors.light0_hard,
+    yellow = gruv_colors.bright_yellow,
+    cyan = gruv_colors.bright_blue,
+    darkblue = gruv_colors.faded_blue,
+    green = gruv_colors.bright_green,
+    orange = gruv_colors.bright_orange,
+    violet = gruv_colors.bright_purple,
+    magenta = gruv_colors.bright_purple,
+    blue = gruv_colors.bright_blue,
+    red = gruv_colors.bright_red,
+  }
+end
 
 local conditions = {
   buffer_not_empty = function()
@@ -38,7 +54,7 @@ local config = {
   options = {
     component_separators = "",
     section_separators = "",
-    theme = "tokyonight",
+    theme = vim.g.colors_name,
   },
   sections = {
     lualine_a = {},
@@ -69,14 +85,6 @@ local function ins_right(component)
 end
 
 ins_left({
-  function()
-    return "▊"
-  end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
-  padding = { left = 0, right = 1 }, -- We don't need space before this
-})
-
-ins_left({
   -- mode component
   function()
     -- auto change color according to neovims mode
@@ -103,10 +111,10 @@ ins_left({
       t = colors.red,
     }
     vim.api.nvim_command("hi! LualineMode guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg)
-    return "🕮"
+    return " 🕮"
   end,
   color = "LualineMode",
-  padding = { right = 1 },
+  padding = { right = 2 },
 })
 
 ins_left({
@@ -163,21 +171,6 @@ ins_left({
   "filename",
   cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = "bold" },
-})
-
--- Add components to right sections
-ins_right({
-  "o:encoding", -- option component same as &encoding in viml
-  fmt = string.upper, -- I'm not sure why it's upper case either ;)
-  cond = conditions.hide_in_width,
-  color = { fg = colors.green, gui = "bold" },
-})
-
-ins_right({
-  "fileformat",
-  fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-  color = { fg = colors.green, gui = "bold" },
 })
 
 ins_right({
