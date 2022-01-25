@@ -60,7 +60,7 @@ local config = {
     lualine_a = {},
     lualine_b = {},
     lualine_y = {},
-    lualine_z = { "branch", require("github-notifications").statusline_notification_count },
+    lualine_z = { "branch" },
     lualine_c = {},
     lualine_x = {},
   },

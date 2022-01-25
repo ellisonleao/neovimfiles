@@ -53,6 +53,7 @@ Below the list of the current plugins used in this configuration and how we are 
 - [vim-fugitive](https://github.com/tpope/vim-fugitive) - Still one of the best git plugins ever made for vim
 - [vim-rhubarb](https://github.com/tpope/vim-rhubarb) - A companion plugin for vim-fugitive. Open Github urls directly from vim
 - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Show git signs in buffer
+- [octo.nvim](https://github.com/pwntester/octo.nvim) -Edit and review GitHub issues and pull requests from Neovim
 
 ### Utils
 

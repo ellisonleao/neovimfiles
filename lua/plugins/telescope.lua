@@ -14,8 +14,6 @@ require("telescope").setup({
   },
 })
 
-require("telescope").load_extension("ghn")
-
 -- create mappings
 local opts = { noremap = true }
 local mappings = {

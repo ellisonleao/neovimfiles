@@ -25,6 +25,7 @@ vim.cmd([[
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
+
   -- use({ "github/copilot.vim" })
   use({ "norcalli/nvim-colorizer.lua" })
 
@@ -40,6 +41,19 @@ return require("packer").startup(function(use)
       require("neogit").setup({})
     end,
   })
+
+  use({
+    "pwntester/octo.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "kyazdani42/nvim-web-devicons",
+    },
+    config = function()
+      require("octo").setup()
+    end,
+  })
+
   use({
     "tpope/vim-fugitive",
     requires = { "tpope/vim-rhubarb" },
@@ -62,23 +76,6 @@ return require("packer").startup(function(use)
     config = function()
       require("gitsigns").setup({ numhl = true })
     end,
-  })
-
-  use({
-    "rlch/github-notifications.nvim",
-    config = function()
-      require("github-notifications").setup({
-        username = "ellisonleao",
-        mappings = {
-          mark_read = "<Tab>",
-          open_in_browser = "<CR>",
-        },
-      })
-    end,
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
   })
 
   -- testing
@@ -143,7 +140,7 @@ return require("packer").startup(function(use)
     "folke/trouble.nvim",
     config = function()
       require("trouble").setup({})
-      vim.api.nvim_set_keymap("n", "<leader>xx", "<Cmd>Trouble<CR>", { silent = true, noremap = true })
+      vim.api.nvim_set_keymap("n", "<leader>xx", "<Cmd>TroubleToggle<CR>", { silent = true, noremap = true })
     end,
   })
   use({

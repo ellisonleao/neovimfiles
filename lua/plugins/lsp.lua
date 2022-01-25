@@ -4,26 +4,6 @@ local servers = require("nvim-lsp-installer.servers")
 local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.lsp.omnifunc")
 
-  -- Lua
-  -- vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>",
-  --   {silent = true, noremap = true}
-  -- )
-  -- vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble lsp_workspace_diagnostics<cr>",
-  --   {silent = true, noremap = true}
-  -- )
-  -- vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble lsp_document_diagnostics<cr>",
-  --   {silent = true, noremap = true}
-  -- )
-  -- vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
-  --   {silent = true, noremap = true}
-  -- )
-  -- vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
-  --   {silent = true, noremap = true}
-  -- )
-  -- vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>",
-  --   {silent = true, noremap = true}
-  -- )
-  --
   local opts = { silent = true, noremap = true }
   local mappings = {
     { "n", "gD", [[<Cmd>lua vim.lsp.buf.declaration()<CR>]], opts },
@@ -44,13 +24,13 @@ local function on_attach(client, bufnr)
     {
       "n",
       "[e",
-      [[<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>]],
+      [[<Cmd>lua vim.diagnostic.goto_next()<CR>]],
       opts,
     },
     {
       "n",
       "]e",
-      [[<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>]],
+      [[<Cmd>lua vim.diagnostic.goto_prev()<CR>]],
       opts,
     },
   }
@@ -109,6 +89,7 @@ local required_servers = {
   "vimls", -- vim
   "jsonls", -- json
   "sqlls", -- sql
+  "terraformls",
 }
 
 -- check for missing lsp servers and install them
@@ -128,7 +109,7 @@ lsp_installer.on_server_ready(function(server)
     local luadev = require("lua-dev").setup({
       lspconfig = {
         cmd = {
-          vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/Linux/lua-language-server"),
+          vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server"),
         },
         on_attach = cfg.on_attach,
         capabilities = cfg.capabilities,
