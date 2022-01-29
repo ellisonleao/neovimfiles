@@ -121,18 +121,25 @@ ins_left({
   -- Lsp server name .
   function()
     local msg = "No Active Lsp"
-    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+    local ft = vim.api.nvim_buf_get_option(0, "filetype")
     local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
       return msg
     end
+
+    local clients_output = {}
     for _, client in ipairs(clients) do
       local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
+      if filetypes and vim.fn.index(filetypes, ft) ~= -1 then
+        table.insert(clients_output, client.name)
       end
     end
-    return msg
+
+    if #clients_output > 0 then 
+      return table.concat(clients_output, "/") 
+    else
+      return msg
+    end
   end,
   icon = " LSP:",
   color = { fg = "#ffffff", gui = "bold" },

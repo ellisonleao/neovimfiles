@@ -73,6 +73,7 @@ return require("packer").startup(function(use)
 
   use({
     "lewis6991/gitsigns.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require("gitsigns").setup({ numhl = true })
     end,
@@ -105,7 +106,8 @@ return require("packer").startup(function(use)
   --   end,
   --   ft = {"go"},
   -- }
-  use({ "fatih/vim-go", run = ":GoUpdateBinaries", ft = { "go" } })
+  -- use({ "fatih/vim-go", run = ":GoUpdateBinaries", ft = { "go" } })
+  use({ "WhoIsSethDaniel/goldsmith.nvim", run = ":GoInstallBinaries", requires = { "antoinemadec/FixCursorHold.nvim" } })
 
   -- plugin development and utils
   use({ "nvim-lua/plenary.nvim" })
@@ -127,14 +129,8 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use({
-    "mhartington/formatter.nvim",
-    config = function()
-      require("plugins.formatter")
-    end,
-  })
-
   -- lsp, completion, linting and snippets
+  use({ "jose-elias-alvarez/null-ls.nvim" })
   use({ "rafamadriz/friendly-snippets" })
   use({
     "folke/trouble.nvim",
@@ -201,7 +197,7 @@ return require("packer").startup(function(use)
       require("plugins.treesitter").config()
     end,
   })
-  use({ "nvim-treesitter/playground" })
+  use({ "nvim-treesitter/nvim-treesitter-textobjects" })
 
   if packer_bootstrap then
     vim.notify("Installing plugins...")

@@ -1,5 +1,5 @@
-local lsp_installer = require("nvim-lsp-installer")
 local servers = require("nvim-lsp-installer.servers")
+local null_ls = require("null-ls")
 
 local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.lsp.omnifunc")
@@ -41,10 +41,15 @@ local function on_attach(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, unpack(map))
   end
 
+  -- format on save
   if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    vim.api.nvim_buf_set_keymap(bufnr, "v", "<leader>F", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    print("client has formatting support => ", client.name)
+    vim.cmd([[
+      augroup LspFormatting
+          autocmd! * <buffer>
+          autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+      augroup END
+      ]])
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -80,7 +85,6 @@ end
 
 -- lsp servers
 local required_servers = {
-  "gopls", -- golang
   "sumneko_lua", -- lua
   "pyright", -- python
   "tsserver", -- js, jsx, tsx
@@ -92,34 +96,59 @@ local required_servers = {
   "terraformls",
 }
 
+-- default config
+local cfg = make_config()
+
+-- golang
+require("goldsmith").config({ null = { run_setup = false } })
+
+-- configuring null-ls for formatters
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.prettier.with({
+      filetypes = { "html", "json", "yaml", "markdown", "toml" },
+    }),
+    null_ls.builtins.formatting.shfmt,
+    null_ls.builtins.formatting.stylua.with({
+      condition = function(utils)
+        return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
+      end,
+    }),
+    null_ls.builtins.formatting.black,
+    null_ls.builtins.formatting.terraform_fmt,
+  },
+  on_attach = cfg.on_attach,
+})
+
+-- lua special setup
+local luadev = require("lua-dev").setup({
+  lspconfig = {
+    cmd = {
+      vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server"),
+    },
+    on_attach = cfg.on_attach,
+    capabilities = cfg.capabilities,
+  },
+})
+
 -- check for missing lsp servers and install them
 for _, svr in pairs(required_servers) do
   local ok, lsp_server = servers.get_server(svr)
   if ok then
-    if not lsp_server:is_installed() then
-      lsp_server:install()
+    if not require("goldsmith").needed(svr) then
+      lsp_server:on_ready(function()
+        if svr == "sumneko_lua" then
+          lsp_server:setup(luadev)
+        else
+          lsp_server:setup(cfg)
+        end
+      end)
+
+      if not lsp_server:is_installed() then
+        lsp_server:install()
+      end
     end
   end
 end
-
-local cfg = make_config()
-
-lsp_installer.on_server_ready(function(server)
-  if server.name == "sumneko_lua" then
-    local luadev = require("lua-dev").setup({
-      lspconfig = {
-        cmd = {
-          vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server"),
-        },
-        on_attach = cfg.on_attach,
-        capabilities = cfg.capabilities,
-      },
-    })
-    server:setup(luadev)
-  else
-    server:setup(cfg)
-  end
-  vim.cmd([[do User LspAttachBuffers]])
-end)
 
 return { config = make_config }

@@ -60,10 +60,10 @@ Below the list of the current plugins used in this configuration and how we are 
 - [vim-surround](https://github.com/tpope/vim-surround) - easily add or remove strings "surroundings" chars
 - [vim-repeat](https://github.com/tpope/vim-repeat) - Puts the `.` repeat char into another level
 - [Comment](https://github.com/numToStr/Comment.nvim) - Shortcut for commenting in and out code snippets
-- [formatter.nvim](https://github.com/mhartington/formatter.nvim) - General Format code on save tool
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Easy default configs for the builtin LSP client
 - [trouble.nvim](https://github.com/folke/trouble.nvim) - Better UI for Errors and LSP outputs (docs, references, errors)
 - [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) - Easy install LSP servers
+- [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim) - Formatting, diagnostics, code actions and more
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - The best autocomplete plugin for Neovim
 - [vim-vsnip](https://github.com/hrsh7th/vim-vsnip)
 - [vim-vsnip-integ](https://github.com/hrsh7th/vim-vsnip-integ) - Snippet engine
