@@ -43,7 +43,6 @@ local function on_attach(client, bufnr)
 
   -- format on save
   if client.resolved_capabilities.document_formatting then
-    print("client has formatting support => ", client.name)
     vim.cmd([[
       augroup LspFormatting
           autocmd! * <buffer>
@@ -55,11 +54,11 @@ local function on_attach(client, bufnr)
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.cmd([[
-    augroup lsp_document_highlight
-    autocmd! * <buffer>
-    autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
+      augroup lsp_document_highlight
+      autocmd! * <buffer>
+      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
     ]])
   end
 end
@@ -99,9 +98,6 @@ local required_servers = {
 -- default config
 local cfg = make_config()
 
--- golang
-require("goldsmith").config({ null = { run_setup = false } })
-
 -- configuring null-ls for formatters
 null_ls.setup({
   sources = {
@@ -116,9 +112,14 @@ null_ls.setup({
     }),
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.terraform_fmt,
+    null_ls.builtins.formatting.goimports,
+    null_ls.builtins.diagnostics.golangci_lint,
   },
   on_attach = cfg.on_attach,
 })
+
+-- golang
+require("goldsmith").config({ null = { run_setup = false, revive = false, gofumpt = true } })
 
 -- lua special setup
 local luadev = require("lua-dev").setup({
