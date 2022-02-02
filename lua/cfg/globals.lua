@@ -15,14 +15,16 @@ end
 -- helper function for quick reloading a lua module and optionally its subpackages
 R = function(name, all_submodules)
   local reload = require("plenary.reload").reload_module
-  return reload(name, all_submodules)
+  reload(name, all_submodules)
+  print("reloaded = ", name)
 end
 
 -- reload all my custom modules
 RR = function()
-  R("editor")
-  R("bootstrap")
-  R("plugins", true)
+  R("cfg.editor")
+  R("cfg.bootstrap")
+  R("cfg.plugins", true)
+  R("snippets", true)
   vim.cmd("PackerCompile")
   print("neovimfiles reloaded")
 end

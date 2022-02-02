@@ -59,15 +59,14 @@ Below the list of the current plugins used in this configuration and how we are 
 
 - [vim-surround](https://github.com/tpope/vim-surround) - easily add or remove strings "surroundings" chars
 - [vim-repeat](https://github.com/tpope/vim-repeat) - Puts the `.` repeat char into another level
+- [vim-dotenv](https://github.com/tpope/vim-dotenv) - Basic support for .env files in vim
 - [Comment](https://github.com/numToStr/Comment.nvim) - Shortcut for commenting in and out code snippets
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Easy default configs for the builtin LSP client
 - [trouble.nvim](https://github.com/folke/trouble.nvim) - Better UI for Errors and LSP outputs (docs, references, errors)
 - [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) - Easy install LSP servers
 - [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim) - Formatting, diagnostics, code actions and more
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - The best autocomplete plugin for Neovim
-- [vim-vsnip](https://github.com/hrsh7th/vim-vsnip)
-- [vim-vsnip-integ](https://github.com/hrsh7th/vim-vsnip-integ) - Snippet engine
-- [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) - Preconfigured snippets for multiple languages
+- [LuaSnip](https://github.com/L3MON4D3/LuaSnip/) - lua snippet engine
 - [TrueZen.nvim](https://github.com/Pocco81/TrueZen.nvim) - Distraction-free environment in Neovim
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Used on syntax highlight and custom motions
 - [nvim-treesitter-playground](https://github.com/nvim-treesitter/playground) - Treesiter Playground

@@ -32,6 +32,7 @@ return require("packer").startup(function(use)
   -- tpopes
   use({ "tpope/vim-surround" })
   use({ "tpope/vim-repeat" })
+  use({ "tpope/vim-dotenv" })
 
   -- git
   use({
@@ -107,7 +108,11 @@ return require("packer").startup(function(use)
   --   ft = {"go"},
   -- }
   -- use({ "fatih/vim-go", run = ":GoUpdateBinaries", ft = { "go" } })
-  use({ "WhoIsSethDaniel/goldsmith.nvim", run = ":GoInstallBinaries", requires = { "antoinemadec/FixCursorHold.nvim" } })
+  use({
+    "WhoIsSethDaniel/goldsmith.nvim",
+    run = ":GoInstallBinaries",
+    requires = { "antoinemadec/FixCursorHold.nvim" },
+  })
 
   -- plugin development and utils
   use({ "nvim-lua/plenary.nvim" })
@@ -131,12 +136,18 @@ return require("packer").startup(function(use)
 
   -- lsp, completion, linting and snippets
   use({ "jose-elias-alvarez/null-ls.nvim" })
-  use({ "rafamadriz/friendly-snippets" })
   use({
     "folke/trouble.nvim",
     config = function()
       require("trouble").setup({})
       vim.api.nvim_set_keymap("n", "<leader>xx", "<Cmd>TroubleToggle<CR>", { silent = true, noremap = true })
+    end,
+  })
+
+  use({
+    "L3MON4D3/LuaSnip",
+    config = function()
+      require("plugins.luasnip")
     end,
   })
   use({
@@ -145,12 +156,11 @@ return require("packer").startup(function(use)
       require("plugins.cmp")
     end,
     requires = {
-      "hrsh7th/vim-vsnip",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-vsnip",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
+      "saadparwaiz1/cmp_luasnip",
     },
   })
   use({
