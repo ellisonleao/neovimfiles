@@ -1,9 +1,7 @@
 local servers = require("nvim-lsp-installer.servers")
 local null_ls = require("null-ls")
 
-local function on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.lsp.omnifunc")
-
+local function on_attach(client)
   local opts = { silent = true, noremap = true }
   local mappings = {
     { "n", "gD", [[<Cmd>lua vim.lsp.buf.declaration()<CR>]], opts },
@@ -92,28 +90,32 @@ local required_servers = {
   "vimls", -- vim
   "jsonls", -- json
   "sqlls", -- sql
-  "terraformls",
+  "terraformls", -- terraform
 }
 
 -- default config
 local cfg = make_config()
 
 -- configuring null-ls for formatters
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+
 null_ls.setup({
   sources = {
-    null_ls.builtins.formatting.prettier.with({
-      filetypes = { "html", "json", "yaml", "markdown", "toml" },
+    formatting.prettier.with({
+      filetypes = { "html", "json", "markdown", "toml" },
     }),
-    null_ls.builtins.formatting.shfmt,
-    null_ls.builtins.formatting.stylua.with({
+    formatting.shfmt,
+    formatting.stylua.with({
       condition = function(utils)
         return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
       end,
     }),
-    null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.terraform_fmt,
-    null_ls.builtins.formatting.goimports,
-    null_ls.builtins.diagnostics.golangci_lint,
+    formatting.black,
+    formatting.terraform_fmt,
+    formatting.goimports,
+    diagnostics.golangci_lint,
+    diagnostics.yamllint,
   },
   on_attach = cfg.on_attach,
 })

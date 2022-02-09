@@ -1,8 +1,10 @@
 local luasnip = require("luasnip")
+local reload = require("plenary.reload").reload_module
 
 function _G.snippets_clear()
   for m, _ in pairs(luasnip.snippets) do
     package.loaded["snippets." .. m] = nil
+    reload("snippets." .. m)
   end
   luasnip.snippets = setmetatable({}, {
     __index = function(t, k)
@@ -39,3 +41,8 @@ function _G.edit_ft()
 end
 
 vim.cmd([[command! SnipEdit :lua _G.edit_ft()]])
+
+luasnip.config.set_config({
+  history = true,
+  updateevents = "TextChanged,TextChangedI",
+})
