@@ -30,16 +30,26 @@ return require("packer").startup(function(use)
   use({ "norcalli/nvim-colorizer.lua" })
 
   -- tpopes
-  use({ "tpope/vim-surround" })
-  use({ "tpope/vim-repeat" })
   use({ "tpope/vim-dotenv" })
 
   -- git
   use({
     "TimUntersberger/neogit",
-    requires = "nvim-lua/plenary.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
     config = function()
-      require("neogit").setup({})
+      require("neogit").setup({ kind = "split", integrations = { diffview = true } })
+      local opts = { noremap = true, silent = true }
+      local mappings = {
+        { "n", "<leader>gc", [[<Cmd>Neogit commit<CR>]], opts },
+        { "n", "<leader>gs", [[<Cmd>Neogit<CR>]], opts },
+      }
+
+      for _, m in pairs(mappings) do
+        vim.api.nvim_set_keymap(unpack(m))
+      end
     end,
   })
 
@@ -52,23 +62,6 @@ return require("packer").startup(function(use)
     },
     config = function()
       require("octo").setup()
-    end,
-  })
-
-  use({
-    "tpope/vim-fugitive",
-    requires = { "tpope/vim-rhubarb" },
-    config = function()
-      local opts = { noremap = true, silent = true }
-      local mappings = {
-        { "n", "<leader>gc", [[<Cmd>Git commit<CR>]], opts },
-        { "n", "<leader>gp", [[<Cmd>Git push<CR>]], opts },
-        { "n", "<leader>gs", [[<Cmd>G<CR>]], opts },
-      }
-
-      for _, m in pairs(mappings) do
-        vim.api.nvim_set_keymap(unpack(m))
-      end
     end,
   })
 
@@ -99,15 +92,6 @@ return require("packer").startup(function(use)
   -- local
   use({ "~/code/glow.nvim" })
 
-  -- use {
-  --   "~/code/go.nvim",
-  --   config = function()
-  --     require("go").config({lsp = require("plugins.lsp").config()})
-  --     -- require("go").config()
-  --   end,
-  --   ft = {"go"},
-  -- }
-  -- use({ "fatih/vim-go", run = ":GoUpdateBinaries", ft = { "go" } })
   use({
     "WhoIsSethDaniel/goldsmith.nvim",
     run = ":GoInstallBinaries",
@@ -208,6 +192,7 @@ return require("packer").startup(function(use)
     end,
   })
   use({ "nvim-treesitter/nvim-treesitter-textobjects" })
+  use({ "nvim-treesitter/playground" })
 
   if packer_bootstrap then
     vim.notify("Installing plugins...")

@@ -21,7 +21,7 @@ changes and experimenting new things. Also if you enjoy live coding sessions, pl
 
 **Prerequisites**
 
-- Neovim 0.5
+- Neovim 0.6
 
 Steps:
 
@@ -50,16 +50,12 @@ Below the list of the current plugins used in this configuration and how we are 
 
 ### Git
 
-- [vim-fugitive](https://github.com/tpope/vim-fugitive) - Still one of the best git plugins ever made for vim
-- [vim-rhubarb](https://github.com/tpope/vim-rhubarb) - A companion plugin for vim-fugitive. Open Github urls directly from vim
+- [neogit](https://github.com/TimUntersberger/neogit) - magit for neovim
 - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Show git signs in buffer
 - [octo.nvim](https://github.com/pwntester/octo.nvim) -Edit and review GitHub issues and pull requests from Neovim
 
 ### Utils
 
-- [vim-surround](https://github.com/tpope/vim-surround) - easily add or remove strings "surroundings" chars
-- [vim-repeat](https://github.com/tpope/vim-repeat) - Puts the `.` repeat char into another level
-- [vim-dotenv](https://github.com/tpope/vim-dotenv) - Basic support for .env files in vim
 - [Comment](https://github.com/numToStr/Comment.nvim) - Shortcut for commenting in and out code snippets
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Easy default configs for the builtin LSP client
 - [trouble.nvim](https://github.com/folke/trouble.nvim) - Better UI for Errors and LSP outputs (docs, references, errors)
