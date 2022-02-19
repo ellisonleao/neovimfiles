@@ -1,7 +1,7 @@
 local servers = require("nvim-lsp-installer.servers")
 local null_ls = require("null-ls")
 
-local function on_attach(client)
+local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true }
   local mappings = {
     { "n", "gD", [[<Cmd>lua vim.lsp.buf.declaration()<CR>]], opts },
@@ -44,7 +44,7 @@ local function on_attach(client)
     vim.cmd([[
       augroup LspFormatting
           autocmd! * <buffer>
-          autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+          autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
       augroup END
       ]])
   end
@@ -82,7 +82,7 @@ end
 
 -- lsp servers
 local required_servers = {
-  "sumneko_lua", -- lua
+  -- "sumneko_lua", -- lua
   "pyright", -- python
   "tsserver", -- js, jsx, tsx
   "bashls", -- bash

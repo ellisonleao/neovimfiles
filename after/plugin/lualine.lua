@@ -135,8 +135,8 @@ ins_left({
       end
     end
 
-    if #clients_output > 0 then 
-      return table.concat(clients_output, "/") 
+    if #clients_output > 0 then
+      return table.concat(clients_output, "/")
     else
       return msg
     end

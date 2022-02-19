@@ -21,10 +21,58 @@ vim.cmd([[
   augroup end
 ]])
 
+PackerReinstall = function(name)
+  if package.loaded["packer"] == nil then
+    R("packer")
+  end
+
+  local utils = require("packer.plugin_utils")
+  local suffix = "/" .. name
+
+  local opt, start = utils.list_installed_plugins()
+  for _, group in pairs({ opt, start }) do
+    if group ~= nil then
+      for dir, _ in pairs(group) do
+        if dir:sub(-string.len(suffix)) == suffix then
+          vim.ui.input({ prompt = "Reinstall " .. dir .. "? [y/n] " }, function(confirmation)
+            if string.lower(confirmation) ~= "y" then
+              return
+            end
+            os.execute("cd " .. dir .. " && git fetch --progress origin && git reset --hard origin")
+            vim.cmd("PackerSync")
+          end)
+        end
+      end
+    end
+  end
+end
+
+vim.cmd("command! -nargs=1 PackerReinstall lua PackerReinstall <f-args>")
+
 -- load plugins
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
+
+  -- plugin development and utils
+  use({
+    "nvim-lua/plenary.nvim",
+    config = function()
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>tp",
+        ":lua require('plenary.test_harness').test_directory(vim.fn.expand('%:p'))<CR>",
+        { noremap = true, silent = true }
+      )
+    end,
+  })
+
+  use({
+    "nvim-lua/telescope.nvim",
+    requires = { "nvim-lua/popup.nvim" },
+  })
+  use({ "mjlbach/babelfish.nvim" })
+  use({ "folke/lua-dev.nvim" })
 
   -- use({ "github/copilot.vim" })
   use({ "norcalli/nvim-colorizer.lua" })
@@ -36,7 +84,6 @@ return require("packer").startup(function(use)
   use({
     "TimUntersberger/neogit",
     requires = {
-      "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
     },
     config = function()
@@ -61,7 +108,6 @@ return require("packer").startup(function(use)
   use({
     "pwntester/octo.nvim",
     requires = {
-      "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
       "kyazdani42/nvim-web-devicons",
     },
@@ -72,7 +118,6 @@ return require("packer").startup(function(use)
 
   use({
     "lewis6991/gitsigns.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
     config = function()
       require("gitsigns").setup({ numhl = true })
     end,
@@ -96,24 +141,13 @@ return require("packer").startup(function(use)
 
   -- local
   use({ "~/code/glow.nvim" })
+  use({ "~/code/carbon-now.nvim" })
 
   use({
     "WhoIsSethDaniel/goldsmith.nvim",
     run = ":GoInstallBinaries",
     requires = { "antoinemadec/FixCursorHold.nvim" },
   })
-
-  -- plugin development and utils
-  use({ "nvim-lua/plenary.nvim" })
-  use({
-    "nvim-lua/telescope.nvim",
-    config = function()
-      require("plugins.telescope")
-    end,
-    requires = { "nvim-lua/popup.nvim" },
-  })
-  use({ "mjlbach/babelfish.nvim" })
-  use({ "folke/lua-dev.nvim" })
 
   -- editor
   use({
@@ -135,16 +169,11 @@ return require("packer").startup(function(use)
 
   use({
     "L3MON4D3/LuaSnip",
-    config = function()
-      require("plugins.luasnip")
-    end,
   })
   use({
     "hrsh7th/nvim-cmp",
-    config = function()
-      require("plugins.cmp")
-    end,
     requires = {
+      "onsails/lspkind-nvim",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
@@ -154,9 +183,6 @@ return require("packer").startup(function(use)
   })
   use({
     "neovim/nvim-lspconfig",
-    config = function()
-      require("plugins.lsp")
-    end,
     requires = { "williamboman/nvim-lsp-installer" },
   })
   use({ "Pocco81/TrueZen.nvim" })
@@ -174,9 +200,6 @@ return require("packer").startup(function(use)
 
   use({
     "nvim-lualine/lualine.nvim",
-    config = function()
-      require("plugins.lualine")
-    end,
   })
 
   use({ "rcarriga/nvim-notify" })
@@ -190,12 +213,7 @@ return require("packer").startup(function(use)
   })
 
   -- treesitter
-  use({
-    "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("plugins.treesitter").config()
-    end,
-  })
+  use({ "nvim-treesitter/nvim-treesitter" })
   use({ "nvim-treesitter/nvim-treesitter-textobjects" })
   use({ "nvim-treesitter/playground" })
 
