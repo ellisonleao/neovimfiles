@@ -217,6 +217,11 @@ return require("packer").startup(function(use)
   use({ "nvim-treesitter/nvim-treesitter-textobjects" })
   use({ "nvim-treesitter/playground" })
 
+  -- sql
+  use("tpope/vim-dadbod")
+  use({ "kristijanhusak/vim-dadbod-completion" })
+  use({ "kristijanhusak/vim-dadbod-ui" })
+
   if packer_bootstrap then
     vim.notify("Installing plugins...")
     require("packer").sync()

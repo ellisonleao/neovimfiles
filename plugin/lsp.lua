@@ -82,7 +82,7 @@ end
 
 -- lsp servers
 local required_servers = {
-  -- "sumneko_lua", -- lua
+  "sumneko_lua", -- lua
   "pyright", -- python
   "tsserver", -- js, jsx, tsx
   "bashls", -- bash

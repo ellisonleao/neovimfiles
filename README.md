@@ -48,6 +48,13 @@ Below the list of the current plugins used in this configuration and how we are 
 - [lualine.nvim](https://github.com/shadmansaleh/lualine.nvim) - Our statusline
 - [nvim-bufferline.lua](https://github.com/akinsho/nvim-bufferline.lua) - Buffers as tabs, simulating GUIs from other
 
+### Development
+
+- [lua-dev.nvim](https://github.com/folke/lua-dev.nvim) - Lua development plugin
+- [goldsmith.nvim](https://github.com/WhoIsSethDaniel/goldsmith.nvim/) - Go development plugin
+- [vim-dadbod](https://github.com/tpope/vim-dadbod) - Modern database interface for Vim
+- [vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui) - UI for vim-dadbod
+
 ### Git
 
 - [neogit](https://github.com/TimUntersberger/neogit) - magit for neovim
@@ -66,21 +73,19 @@ Below the list of the current plugins used in this configuration and how we are 
 - [TrueZen.nvim](https://github.com/Pocco81/TrueZen.nvim) - Distraction-free environment in Neovim
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Used on syntax highlight and custom motions
 - [nvim-treesitter-playground](https://github.com/nvim-treesitter/playground) - Treesiter Playground
-- [glow.nvim](https://github.com/ellisonleao/glow.nvim) - Terminal Markdown preview
-- [go.nvim](https://github.com/ellisonleao/go.nvim) - Go development
+- [glow.nvim](https://github.com/ellisonleao/glow.nvim) - Markdown preview directly in Neovim
 - [telescope.nvim](https://github.com/nvim-lua/telescope.nvim) - Find, filter, preview and pick using a nice UI
 
 ### Plugin development
 
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) - Lua helpers for general usage
 - [babelfish.nvim](https://github.com/mjlbach/babelfish.nvim) - Generate vimdocs from Markdown
-- [lua-dev.nvim](https://github.com/folke/lua-dev.nvim) - Lua development plugin
 
 ## Screenshots of some features
 
 ### Empty buffer default view
 
-![](https://i.postimg.cc/PJkyR7XT/01-start.png)
+![](https://i.postimg.cc/J4hc8D7s/Screenshot-from-2022-02-20-12-00-26.png)
 
 ### LSP Diagnostics
 
@@ -92,10 +97,4 @@ Below the list of the current plugins used in this configuration and how we are 
 
 ### Snippets
 
-![](https://i.postimg.cc/6qhq3T6q/04-snippets.gif)
-
-![](https://i.postimg.cc/0yP3Djkx/05-snippets.gif)
-
 ## File and grep search
-
-![](https://i.postimg.cc/prgm43dY/06-find-filter.gif)
