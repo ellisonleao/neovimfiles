@@ -20,6 +20,7 @@ local mappings = {
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
   { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
   { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
+  { "v", "<leader>cn", [[<Cmd>lua require('carbon-now').create_snippet()<CR>]], opts }, -- create carbon.now.sh snippet 
 }
 
 for _, map in pairs(mappings) do

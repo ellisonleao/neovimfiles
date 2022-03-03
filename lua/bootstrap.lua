@@ -51,6 +51,13 @@ vim.cmd("command! -nargs=1 PackerReinstall lua PackerReinstall <f-args>")
 
 -- load plugins
 return require("packer").startup(function(use)
+  use({
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      vim.opt.termguicolors = true
+      require("colorizer").setup()
+    end,
+  })
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
 
@@ -75,10 +82,6 @@ return require("packer").startup(function(use)
   use({ "folke/lua-dev.nvim" })
 
   -- use({ "github/copilot.vim" })
-  use({ "norcalli/nvim-colorizer.lua" })
-
-  -- tpopes
-  use({ "tpope/vim-dotenv" })
 
   -- git
   use({
@@ -141,7 +144,13 @@ return require("packer").startup(function(use)
 
   -- local
   use({ "~/code/glow.nvim" })
-  use({ "~/code/carbon-now.nvim" })
+  -- use({ "~/code/dotenv.nvim" })
+  use({
+    "~/code/carbon-now.nvim",
+    config = function()
+      require("carbon-now").setup({ options = { theme = "nord", font_family = "JetBrains Mono" } })
+    end,
+  })
 
   use({
     "WhoIsSethDaniel/goldsmith.nvim",
@@ -190,6 +199,7 @@ return require("packer").startup(function(use)
   -- visual
   use({ "folke/tokyonight.nvim" })
   use({ "~/code/gruvbox.nvim" })
+  use({ "projekt0n/github-nvim-theme" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({
     "mhinz/vim-startify",
@@ -198,10 +208,7 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use({
-    "nvim-lualine/lualine.nvim",
-  })
-
+  use({ "nvim-lualine/lualine.nvim" })
   use({ "rcarriga/nvim-notify" })
 
   -- buffer tabs at top

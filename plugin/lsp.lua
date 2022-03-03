@@ -129,6 +129,9 @@ local luadev = require("lua-dev").setup({
     cmd = {
       vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server"),
     },
+    Lua = {
+      format = false,
+    },
     on_attach = cfg.on_attach,
     capabilities = cfg.capabilities,
   },
