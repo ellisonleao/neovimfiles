@@ -142,11 +142,11 @@ return require("packer").startup(function(use)
     end,
   })
 
-  -- local
-  use({ "~/code/glow.nvim" })
-  -- use({ "~/code/dotenv.nvim" })
+  -- personal
+  use({ "ellisonleao/glow.nvim" })
+  use({ "ellisonleao/gruvbox.nvim" })
   use({
-    "~/code/carbon-now.nvim",
+    "ellisonleao/carbon-now.nvim",
     config = function()
       require("carbon-now").setup({ options = { theme = "nord", font_family = "JetBrains Mono" } })
     end,
@@ -198,7 +198,6 @@ return require("packer").startup(function(use)
 
   -- visual
   use({ "folke/tokyonight.nvim" })
-  use({ "~/code/gruvbox.nvim" })
   use({ "projekt0n/github-nvim-theme" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({
