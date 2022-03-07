@@ -13,6 +13,7 @@ require("nvim-treesitter.configs").setup({
     "bash",
     "typescript",
     "hcl",
+    "make",
   },
 })
 
