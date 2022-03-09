@@ -21,34 +21,6 @@ vim.cmd([[
   augroup end
 ]])
 
-PackerReinstall = function(name)
-  if package.loaded["packer"] == nil then
-    R("packer")
-  end
-
-  local utils = require("packer.plugin_utils")
-  local suffix = "/" .. name
-
-  local opt, start = utils.list_installed_plugins()
-  for _, group in pairs({ opt, start }) do
-    if group ~= nil then
-      for dir, _ in pairs(group) do
-        if dir:sub(-string.len(suffix)) == suffix then
-          vim.ui.input({ prompt = "Reinstall " .. dir .. "? [y/n] " }, function(confirmation)
-            if string.lower(confirmation) ~= "y" then
-              return
-            end
-            os.execute("cd " .. dir .. " && git fetch --progress origin && git reset --hard origin")
-            vim.cmd("PackerSync")
-          end)
-        end
-      end
-    end
-  end
-end
-
-vim.cmd("command! -nargs=1 PackerReinstall lua PackerReinstall <f-args>")
-
 -- load plugins
 return require("packer").startup(function(use)
   use({
@@ -73,6 +45,9 @@ return require("packer").startup(function(use)
       )
     end,
   })
+
+  use("~/code/dotenv.nvim")
+  use("tpope/vim-dotenv")
 
   use({
     "nvim-lua/telescope.nvim",

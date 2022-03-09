@@ -6,7 +6,6 @@ require("bootstrap") -- plugins configs
 
 P = function(v)
   print(vim.inspect(v))
-
   return v
 end
 
@@ -14,7 +13,6 @@ end
 
 PP = function(...)
   local vars = vim.tbl_map(vim.inspect, { ... })
-
   print(unpack(vars))
 end
 
@@ -22,7 +20,6 @@ end
 
 R = function(name, all_submodules)
   local reload = require("plenary.reload").reload_module
-
   reload(name, all_submodules)
 end
 
