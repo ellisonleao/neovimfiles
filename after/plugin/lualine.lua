@@ -33,7 +33,7 @@ end
 -- Config
 local config = {
   options = {
-    theme = "github",
+    theme = "auto",
   },
   sections = {
     lualine_a = { "mode" },

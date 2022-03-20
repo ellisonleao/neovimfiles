@@ -121,7 +121,10 @@ null_ls.setup({
 })
 
 -- golang
-require("goldsmith").config({ null = { run_setup = false, revive = false, gofumpt = true } })
+require("goldsmith").config({
+  null = { run_setup = false, revive = false, gofumpt = true },
+  mappings = {format = {}},
+})
 
 -- lua special setup
 local luadev = require("lua-dev").setup({

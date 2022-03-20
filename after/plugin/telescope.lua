@@ -17,8 +17,8 @@ require("telescope").setup({
 -- create mappings
 local opts = { noremap = true }
 local mappings = {
-  { "n", "<leader>f", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], opts },
-  { "n", "<leader>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], opts },
+  { "n", "<leader>lg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], opts },
+  { "n", "<leader>ff", [[<Cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>]], opts },
 }
 
 for _, map in pairs(mappings) do

@@ -25,7 +25,6 @@ local options = {
   textwidth = 120,
   wildignorecase = true,
   wildmenu = true,
-  wildmode = "list:longest",
   updatetime = 500,
   autoindent = true,
   smartindent = true,

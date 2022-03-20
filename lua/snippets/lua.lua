@@ -14,8 +14,8 @@ end
   ),
   ls.parser.parse_snippet({ trig = "pr" }, [[print("${1:val}")]]),
   s("req", fmt('local {} = require("{}")', { i(1, "module"), rep(1) })),
-  s("lf", fmt("local function {}({})\n  \nend", { i(1, "func"), i(2, "param") })),
-  s("mf", fmt("M.{} = function({})\n  \nend", { i(1, "func"), i(2, "param") })),
+  s("lf", fmt("local function {}({})\n  {}\nend", { i(1, "func"), i(2, "param"), i(0) })),
+  s("mf", fmt("M.{} = function({})\n  {}\nend", { i(1, "func"), i(2, "param"), i(0) })),
 }
 
 return snippets
