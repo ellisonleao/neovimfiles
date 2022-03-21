@@ -44,7 +44,6 @@ Below the list of the current plugins used in this configuration and how we are 
 - [nvim-colorizer](https://github.com/norcalli/nvim-colorizer.lua) - A high-performance color highlighter for Neovim
 - [tokyonight](https://github.com/folke/tokyonight.nvim) - Main colorscheme
 - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) - web devicons for general usage. Used in buffer tabs, statusline and telescope
-- [vim-startify](https://github.com/mhinz/vim-startify) - Our main starting screen
 - [lualine.nvim](https://github.com/shadmansaleh/lualine.nvim) - Our statusline
 - [nvim-bufferline.lua](https://github.com/akinsho/nvim-bufferline.lua) - Buffers as tabs, simulating GUIs from other
 
@@ -59,7 +58,6 @@ Below the list of the current plugins used in this configuration and how we are 
 
 - [neogit](https://github.com/TimUntersberger/neogit) - magit for neovim
 - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Show git signs in buffer
-- [octo.nvim](https://github.com/pwntester/octo.nvim) -Edit and review GitHub issues and pull requests from Neovim
 
 ### Utils
 
@@ -81,20 +79,7 @@ Below the list of the current plugins used in this configuration and how we are 
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) - Lua helpers for general usage
 - [babelfish.nvim](https://github.com/mjlbach/babelfish.nvim) - Generate vimdocs from Markdown
 
-## Screenshots of some features
+## Screenshots
 
-### Empty buffer default view
-
-![](https://i.postimg.cc/J4hc8D7s/Screenshot-from-2022-02-20-12-00-26.png)
-
-### LSP Diagnostics
-
-![](https://i.postimg.cc/0jvg4QCk/02-lsp-diagnostics.gif)
-
-### Docs and code completion
-
-![](https://i.postimg.cc/vBF9pFx8/03-docs-completion.gif)
-
-### Snippets
-
-## File and grep search
+![](https://i.postimg.cc/B66Rsy7G/Screenshot-from-2022-03-20-22-55-59.png)
+![](https://i.postimg.cc/FHrMD7bR/Screenshot-from-2022-03-20-22-57-06.png)

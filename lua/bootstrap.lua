@@ -46,7 +46,6 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use("~/code/dotenv.nvim")
   use("tpope/vim-dotenv")
 
   use({
@@ -55,8 +54,6 @@ return require("packer").startup(function(use)
   })
   use({ "mjlbach/babelfish.nvim" })
   use({ "folke/lua-dev.nvim" })
-
-  -- use({ "github/copilot.vim" })
 
   -- git
   use({
@@ -84,20 +81,19 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "pwntester/octo.nvim",
-    requires = {
-      "nvim-telescope/telescope.nvim",
-      "kyazdani42/nvim-web-devicons",
-    },
-    config = function()
-      require("octo").setup()
-    end,
-  })
-
-  use({
     "lewis6991/gitsigns.nvim",
     config = function()
-      require("gitsigns").setup({ numhl = true })
+      local bar = "❚"
+      require("gitsigns").setup({
+        numhl = true,
+        signs = {
+          add = { text = bar },
+          change = { text = bar },
+          delete = { text = bar },
+          topdelete = { text = bar },
+          changedelete = { text = bar },
+        },
+      })
     end,
   })
 
@@ -118,7 +114,13 @@ return require("packer").startup(function(use)
   })
 
   -- personal
-  use({ "ellisonleao/glow.nvim" })
+  use("~/code/dotenv.nvim")
+  use({
+    "~/code/glow.nvim",
+    config = function()
+      require("glow").setup({ style = "dark", width = 200 })
+    end,
+  })
   use({ "ellisonleao/gruvbox.nvim" })
   use({
     "ellisonleao/carbon-now.nvim",
@@ -142,18 +144,22 @@ return require("packer").startup(function(use)
   })
 
   -- lsp, completion, linting and snippets
+  use({
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup({})
+    end,
+  })
   use({ "jose-elias-alvarez/null-ls.nvim" })
   use({
     "folke/trouble.nvim",
     config = function()
-      require("trouble").setup({})
+      require("trouble").setup()
       vim.api.nvim_set_keymap("n", "<leader>xx", "<Cmd>TroubleToggle<CR>", { silent = true, noremap = true })
     end,
   })
 
-  use({
-    "L3MON4D3/LuaSnip",
-  })
+  use({ "L3MON4D3/LuaSnip" })
   use({
     "hrsh7th/nvim-cmp",
     requires = {
@@ -165,23 +171,13 @@ return require("packer").startup(function(use)
       "saadparwaiz1/cmp_luasnip",
     },
   })
-  use({
-    "neovim/nvim-lspconfig",
-    requires = { "williamboman/nvim-lsp-installer" },
-  })
+  use({ "neovim/nvim-lspconfig", requires = { "williamboman/nvim-lsp-installer" } })
   use({ "Pocco81/TrueZen.nvim" })
 
   -- visual
   use({ "folke/tokyonight.nvim" })
   use({ "projekt0n/github-nvim-theme" })
   use({ "kyazdani42/nvim-web-devicons" })
-  use({
-    "mhinz/vim-startify",
-    config = function()
-      vim.g.startify_bookmarks = { "~/.config/nvim/lua" }
-    end,
-  })
-
   use({ "nvim-lualine/lualine.nvim" })
   use({ "rcarriga/nvim-notify" })
 

@@ -3,19 +3,19 @@ local s = ls.s
 local i = ls.i
 local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
+local c = ls.choice_node
+local t = ls.text_node
 
-local snippets = {
-  ls.parser.parse_snippet(
-    { trig = "for" },
-    [[ 
-for ${1:k}, ${2:v} in pairs(${3:table}) do 
-end
-]]
+return {
+  s(
+    "for",
+    fmt(
+      "for {}, {} in {}({})\n  {}\nend",
+      { i(1, "k"), i(2, "v"), c(3, { t("pairs"), t("ipairs") }), i(4, "item"), i(0) }
+    )
   ),
-  ls.parser.parse_snippet({ trig = "pr" }, [[print("${1:val}")]]),
+  s("pr", fmt('print("{}")', { i(1, "val") })),
   s("req", fmt('local {} = require("{}")', { i(1, "module"), rep(1) })),
   s("lf", fmt("local function {}({})\n  {}\nend", { i(1, "func"), i(2, "param"), i(0) })),
   s("mf", fmt("M.{} = function({})\n  {}\nend", { i(1, "func"), i(2, "param"), i(0) })),
 }
-
-return snippets

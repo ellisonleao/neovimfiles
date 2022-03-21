@@ -1,51 +1,22 @@
-local luasnip = require("luasnip")
-local reload = require("plenary.reload").reload_module
+local ls = require("luasnip")
+-- local loader = require("luasnip.loaders.from_lua")
+local types = require("luasnip.util.types")
 
-function _G.snippets_clear()
-  for m, _ in pairs(luasnip.snippets) do
-    package.loaded["snippets." .. m] = nil
-    reload("snippets." .. m)
-  end
-  luasnip.snippets = setmetatable({}, {
-    __index = function(t, k)
-      local ok, m = pcall(require, "snippets." .. k)
-      if not ok and not string.match(m, "^module.*not found:") then
-        error(m)
-      end
-      t[k] = ok and m or {}
-      return t[k]
-    end,
-  })
-end
-
-_G.snippets_clear()
-
-vim.cmd([[
-augroup snippets_clear
-au!
-au BufWritePost ~/.config/nvim/lua/snippets/*.lua lua _G.snippets_clear()
-augroup END
-]])
-
-function _G.edit_ft()
-  -- returns table like {"lua", "all"}
-  local fts = require("luasnip.util.util").get_snippet_filetypes()
-  vim.ui.select(fts, {
-    prompt = "Select which filetype to edit:",
-  }, function(item, idx)
-    -- selection aborted -> idx == nil
-    if idx then
-      vim.cmd("edit ~/.config/nvim/lua/snippets/" .. item .. ".lua")
-    end
-  end)
-end
-
-vim.cmd([[command! SnipEdit :lua _G.edit_ft()]])
-
-luasnip.config.set_config({
+ls.config.set_config({
   history = true,
   updateevents = "TextChanged,TextChangedI",
+  ext_opts = {
+    [types.choiceNode] = {
+      active = {
+        virt_text = { { " <- Current Choice", "NonTest" } },
+      },
+    },
+  },
 })
+
+for _, lang in pairs({ "lua", "sh", "all" }) do
+  ls.add_snippets(lang, require("snippets." .. lang), { key = lang })
+end
 
 vim.cmd([[
   imap <silent><expr> <c-k> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : ''
