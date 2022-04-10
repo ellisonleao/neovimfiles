@@ -99,6 +99,7 @@ local cfg = make_config()
 -- configuring null-ls for formatters
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+local actions = null_ls.builtins.code_actions
 
 null_ls.setup({
   sources = {
@@ -116,6 +117,8 @@ null_ls.setup({
     formatting.goimports,
     diagnostics.golangci_lint,
     diagnostics.yamllint,
+    diagnostics.shellcheck,
+    actions.shellcheck,
   },
   on_attach = cfg.on_attach,
 })
@@ -123,7 +126,7 @@ null_ls.setup({
 -- golang
 require("goldsmith").config({
   null = { run_setup = false, revive = false, gofumpt = true },
-  mappings = {format = {}},
+  mappings = { format = {} },
 })
 
 -- lua special setup
