@@ -183,7 +183,7 @@ return require("packer").startup(function(use)
 
   -- buffer tabs at top
   use({
-    "akinsho/nvim-bufferline.lua",
+    "akinsho/bufferline.nvim",
     config = function()
       require("bufferline").setup({ options = { numbers = "both" } })
     end,
