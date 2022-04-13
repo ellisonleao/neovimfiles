@@ -41,11 +41,10 @@ Below the list of the current plugins used in this configuration and how we are 
 
 ### Visual
 
-- [nvim-colorizer](https://github.com/norcalli/nvim-colorizer.lua) - A high-performance color highlighter for Neovim
-- [tokyonight](https://github.com/folke/tokyonight.nvim) - Main colorscheme
+- [github-nvim-theme](https://github.com/projekt0n/github-nvim-theme) - Main colorscheme
 - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) - web devicons for general usage. Used in buffer tabs, statusline and telescope
 - [lualine.nvim](https://github.com/shadmansaleh/lualine.nvim) - Our statusline
-- [nvim-bufferline.lua](https://github.com/akinsho/nvim-bufferline.lua) - Buffers as tabs, simulating GUIs from other
+- [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) - Buffers as tabs, simulating GUIs from other
 
 ### Development
 
@@ -68,7 +67,6 @@ Below the list of the current plugins used in this configuration and how we are 
 - [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim) - Formatting, diagnostics, code actions and more
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - The best autocomplete plugin for Neovim
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip/) - lua snippet engine
-- [TrueZen.nvim](https://github.com/Pocco81/TrueZen.nvim) - Distraction-free environment in Neovim
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Used on syntax highlight and custom motions
 - [nvim-treesitter-playground](https://github.com/nvim-treesitter/playground) - Treesiter Playground
 - [glow.nvim](https://github.com/ellisonleao/glow.nvim) - Markdown preview directly in Neovim

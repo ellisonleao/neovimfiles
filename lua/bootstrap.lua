@@ -23,13 +23,6 @@ vim.cmd([[
 
 -- load plugins
 return require("packer").startup(function(use)
-  use({
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      vim.opt.termguicolors = true
-      require("colorizer").setup()
-    end,
-  })
   use({ "wbthomason/packer.nvim" })
   use({ "junegunn/fzf", run = ":call fzf#install()" })
 
@@ -172,10 +165,8 @@ return require("packer").startup(function(use)
     },
   })
   use({ "neovim/nvim-lspconfig", requires = { "williamboman/nvim-lsp-installer" } })
-  use({ "Pocco81/TrueZen.nvim" })
 
   -- visual
-  use({ "folke/tokyonight.nvim" })
   use({ "projekt0n/github-nvim-theme" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "nvim-lualine/lualine.nvim" })
@@ -185,7 +176,10 @@ return require("packer").startup(function(use)
   use({
     "akinsho/bufferline.nvim",
     config = function()
-      require("bufferline").setup({ options = { numbers = "both" } })
+      -- TODO(ellison): weird hack to get the setup working with termguicolors
+      vim.schedule(function()
+        require("bufferline").setup()
+      end)
     end,
   })
 

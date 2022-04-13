@@ -41,10 +41,11 @@ local options = {
   foldmethod = "indent",
   foldlevelstart = 99,
 }
+
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-vim.g.python3_host_prog = vim.fn.expand("~/.pyenv/versions/3.8.2/bin/python")
+vim.g.python3_host_prog = "python"
 vim.g["test#strategy"] = "neovim"
 vim.g.omni_sql_default_compl_type = "syntax"
