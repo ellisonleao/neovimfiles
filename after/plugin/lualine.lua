@@ -34,6 +34,7 @@ end
 local config = {
   options = {
     theme = "auto",
+    globalstatus = true,
   },
   sections = {
     lualine_a = { "mode" },

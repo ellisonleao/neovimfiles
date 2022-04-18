@@ -22,5 +22,5 @@ local mappings = {
 }
 
 for _, map in pairs(mappings) do
-  vim.api.nvim_set_keymap(unpack(map))
+  vim.keymap.set(unpack(map))
 end

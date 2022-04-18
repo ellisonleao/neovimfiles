@@ -41,23 +41,33 @@ local function on_attach(client, bufnr)
 
   -- format on save
   if client.resolved_capabilities.document_formatting then
-    vim.cmd([[
-      augroup LspFormatting
-          autocmd! * <buffer>
-          autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
-      augroup END
-      ]])
+    local lsp_formatting_group = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "<buffer>",
+      group = lsp_formatting_group,
+      callback = function()
+        vim.lsp.buf.formatting_seq_sync()
+      end,
+    })
   end
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
-    vim.cmd([[
-      augroup lsp_document_highlight
-      autocmd! * <buffer>
-      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]])
+    local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
+    vim.api.nvim_create_autocmd("CursorHold", {
+      pattern = "<buffer>",
+      group = lsp_highlight,
+      callback = function()
+        vim.lsp.buf.document_highlight()
+      end,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      pattern = "<buffer>",
+      group = lsp_highlight,
+      callback = function()
+        vim.lsp.buf.clear_references()
+      end,
+    })
   end
 end
 
@@ -125,7 +135,7 @@ null_ls.setup({
 
 -- golang
 require("goldsmith").config({
-  null = { run_setup = false, revive = false, gofumpt = true },
+  null = { run_setup = false, revive = false, gofumpt = true, golines = false },
   mappings = { format = {} },
 })
 

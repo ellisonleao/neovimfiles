@@ -14,12 +14,11 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd([[packadd packer.nvim]])
 end
 
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost bootstrap.lua source <afile> | PackerCompile profile=true
-  augroup end
-]])
+local packer_group = vim.api.nvim_create_augroup("PackerUserConfig", { clear = true })
+vim.api.nvim_create_autocmd(
+  "BufWritePost",
+  { group = packer_group, pattern = "bootstrap.lua", command = "source <afile> | PackerCompile profile=true" }
+)
 
 -- load plugins
 return require("packer").startup(function(use)
@@ -30,12 +29,9 @@ return require("packer").startup(function(use)
   use({
     "nvim-lua/plenary.nvim",
     config = function()
-      vim.api.nvim_set_keymap(
-        "n",
-        "<leader>tp",
-        ":lua require('plenary.test_harness').test_directory(vim.fn.expand('%:p'))<CR>",
-        { noremap = true, silent = true }
-      )
+      vim.keymap.set("n", "<leader>tp", function()
+        require("plenary.test_harness").test_directory(vim.fn.expand("%:p"))
+      end, { noremap = true, silent = true })
     end,
   })
 
@@ -68,7 +64,7 @@ return require("packer").startup(function(use)
       }
 
       for _, m in pairs(mappings) do
-        vim.api.nvim_set_keymap(unpack(m))
+        vim.keymap.set(unpack(m))
       end
     end,
   })
@@ -101,7 +97,7 @@ return require("packer").startup(function(use)
       }
 
       for _, m in pairs(mappings) do
-        vim.api.nvim_set_keymap(unpack(m))
+        vim.keymap.set(unpack(m))
       end
     end,
   })
@@ -148,7 +144,7 @@ return require("packer").startup(function(use)
     "folke/trouble.nvim",
     config = function()
       require("trouble").setup()
-      vim.api.nvim_set_keymap("n", "<leader>xx", "<Cmd>TroubleToggle<CR>", { silent = true, noremap = true })
+      vim.keymap.set("n", "<leader>xx", "<Cmd>TroubleToggle<CR>", { silent = true, noremap = true })
     end,
   })
 

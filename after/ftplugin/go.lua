@@ -11,5 +11,5 @@ opt.tabstop = 4
 opt.colorcolumn = "80,120"
 
 for _, map in pairs(mappings) do
-  vim.api.nvim_set_keymap(unpack(map))
+  vim.keymap.set(unpack(map))
 end

@@ -74,9 +74,13 @@ cmp.setup({
   },
 })
 
-vim.cmd([[
-  augroup DadbodSql
-    au!
-    autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
-  augroup END
-]])
+local group = vim.api.nvim_create_augroup("DadbodSQL", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "sql", "mysql", "plsql" },
+  group = group,
+  callback = function()
+    vim.schedule(function()
+      require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+    end)
+  end,
+})

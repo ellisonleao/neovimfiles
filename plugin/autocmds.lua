@@ -1,4 +1,11 @@
 -- global autocmds
 
 -- remember last cursor position
-vim.cmd([[ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]])
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    if vim.fn.line("'\"") <= vim.fn.line("$") then
+      vim.cmd([[norm! g`"]])
+    end
+  end,
+})

@@ -22,7 +22,7 @@ end
 
 -- reload all config
 S = function()
-  vim.cmd("source $MYVIMRC")
+  vim.cmd("luafile ~/.config/nvim/init.lua")
   vim.cmd("PackerCompile")
   print("neovimfiles reloaded")
 end
