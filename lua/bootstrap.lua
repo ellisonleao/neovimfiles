@@ -110,7 +110,7 @@ return require("packer").startup(function(use)
       require("glow").setup({ style = "dark", width = 200 })
     end,
   })
-  use({ "ellisonleao/gruvbox.nvim" })
+  -- use({ "~/code/gruvbox.nvim" })
   use({
     "ellisonleao/carbon-now.nvim",
     config = function()
