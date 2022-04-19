@@ -1,5 +1,8 @@
 -- gh issues cmp completion. thanks TJ!
-local Job = require("plenary.job")
+local ok, Job = pcall(require, "plenary.job")
+if not ok then
+  return
+end
 
 local source = {}
 
@@ -64,7 +67,8 @@ source.get_trigger_characters = function()
 end
 
 source.is_available = function()
-  return vim.bo.filetype == "gitcommit" or vim.bo.filetype == "NeogitCommitMessage"
+  local ft = vim.bo.filetype
+  return ft:lower() == "gitcommit" or ft:lower() == "neogitcommitmessage"
 end
 
 require("cmp").register_source("gh_issues", source.new())

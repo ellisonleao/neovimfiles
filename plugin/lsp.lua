@@ -1,5 +1,13 @@
+local ok, _ = pcall(require, "nvim-lsp-installer")
+if not ok then
+  return
+end
 local servers = require("nvim-lsp-installer.servers")
-local null_ls = require("null-ls")
+
+local ok, nls = pcall(require, "null-ls")
+if not ok then
+  return
+end
 
 local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true }
@@ -107,11 +115,11 @@ local required_servers = {
 local cfg = make_config()
 
 -- configuring null-ls for formatters
-local formatting = null_ls.builtins.formatting
-local diagnostics = null_ls.builtins.diagnostics
-local actions = null_ls.builtins.code_actions
+local formatting = nls.builtins.formatting
+local diagnostics = nls.builtins.diagnostics
+local actions = nls.builtins.code_actions
 
-null_ls.setup({
+nls.setup({
   sources = {
     formatting.prettier.with({
       filetypes = { "html", "json", "markdown", "toml" },

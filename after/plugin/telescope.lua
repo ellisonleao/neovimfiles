@@ -1,5 +1,10 @@
 -- search module
-require("telescope").setup({
+local ok, telescope = pcall(require, "telescope")
+if not ok then
+  return
+end
+
+telescope.setup({
   defaults = {
     vimgrep_arguments = {
       "rg",
@@ -17,8 +22,22 @@ require("telescope").setup({
 -- create mappings
 local opts = { noremap = true }
 local mappings = {
-  { "n", "<leader>lg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], opts },
-  { "n", "<leader>ff", [[<Cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>]], opts },
+  {
+    "n",
+    "<leader>lg",
+    function()
+      require("telescope.builtin").live_grep()
+    end,
+    opts,
+  },
+  {
+    "n",
+    "<leader>ff",
+    function()
+      require("telescope.builtin").find_files({ hidden = true })
+    end,
+    opts,
+  },
 }
 
 for _, map in pairs(mappings) do

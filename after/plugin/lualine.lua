@@ -1,4 +1,7 @@
-local lualine = require("lualine")
+local ok, lualine = pcall(require, "lualine")
+if not ok then
+  return
+end
 
 -- Lsp server name .
 local function lsp()

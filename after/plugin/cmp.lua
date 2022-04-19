@@ -1,9 +1,21 @@
 -- nvim-cmp configs
-local cmp = require("cmp")
-local compare = require("cmp.config.compare")
-local luasnip = require("luasnip")
+local ok, cmp = pcall(require, "cmp")
+if not ok then
+  return
+end
 
-local lspkind = require("lspkind")
+local ok, luasnip = pcall(require, "luasnip")
+if not ok then
+  return
+end
+
+local compare = require("cmp.config.compare")
+
+local ok, lspkind = pcall(require, "lspkind")
+if not ok then
+  return
+end
+
 lspkind.init()
 
 cmp.setup({

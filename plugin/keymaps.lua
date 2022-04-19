@@ -4,7 +4,7 @@ vim.g.maplocalleader = ","
 
 local opts = { noremap = true, silent = true }
 local mappings = {
-  { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/bootstrap.lua<CR>]], opts }, -- quick edit plugins.lua file
+  { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/bootstrap.lua<CR>]], opts }, -- quick edit plugins file
   { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
   { "n", "<leader>R", [[<Cmd>lua S()<CR>]], opts }, -- reload all custom modules
   { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
@@ -20,7 +20,14 @@ local mappings = {
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
   { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
   { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
-  { "v", "<leader>cn", [[<Cmd>lua require('carbon-now').create_snippet()<CR>]], opts }, -- create carbon.now.sh snippet
+  {
+    "v",
+    "<leader>cn",
+    function()
+      require("carbon-now").create_snippet()
+    end,
+    opts,
+  }, -- create carbon.now.sh snippet
 }
 
 for _, map in pairs(mappings) do
