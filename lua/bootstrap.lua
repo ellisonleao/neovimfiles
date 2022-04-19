@@ -72,7 +72,7 @@ return require("packer").startup(function(use)
   use({
     "lewis6991/gitsigns.nvim",
     config = function()
-      local bar = "❚"
+      local bar = "┃"
       require("gitsigns").setup({
         numhl = true,
         signs = {
