@@ -50,7 +50,7 @@ cmp.setup({
       },
     }),
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ["<tab>"] = cmp.config.disable,
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -59,6 +59,12 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     }, { "i", "c" }),
+    ["<C-n>"] = {
+      i = cmp.mapping.select_next_item(),
+    },
+    ["<C-p>"] = {
+      i = cmp.mapping.select_prev_item(),
+    },
     ["<C-Space>"] = cmp.mapping({
       i = cmp.mapping.complete(),
       c = function(_)
@@ -71,7 +77,7 @@ cmp.setup({
         end
       end,
     }),
-  },
+  }),
 
   sorting = {
     comparators = {
