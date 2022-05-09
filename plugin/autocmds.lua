@@ -2,10 +2,10 @@
 
 -- remember last cursor position
 vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
   callback = function()
-    if vim.fn.line("'\"") <= vim.fn.line("$") then
-      vim.cmd([[norm! g`"]])
+    local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
+    if row > 0 and row <= vim.api.nvim_buf_line_count(0) then
+      vim.api.nvim_win_set_cursor(0, { row, col })
     end
   end,
 })
