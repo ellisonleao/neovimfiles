@@ -134,7 +134,9 @@ nls.setup({
     formatting.terraform_fmt,
     formatting.goimports,
     diagnostics.golangci_lint,
-    diagnostics.yamllint,
+    diagnostics.yamllint.with({
+      extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
+    }),
     diagnostics.shellcheck,
     actions.shellcheck,
   },
