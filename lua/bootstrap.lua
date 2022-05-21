@@ -110,7 +110,7 @@ return require("packer").startup(function(use)
       require("glow").setup({ style = "dark", width = 200 })
     end,
   })
-  -- use({ "~/code/gruvbox.nvim" })
+  use({ "~/code/gruvbox.nvim" })
   use({
     "ellisonleao/carbon-now.nvim",
     config = function()
@@ -128,7 +128,7 @@ return require("packer").startup(function(use)
   use({
     "numToStr/Comment.nvim",
     config = function()
-      require("Comment").setup()
+      require("Comment").setup({})
     end,
   })
 
@@ -160,7 +160,7 @@ return require("packer").startup(function(use)
       "saadparwaiz1/cmp_luasnip",
     },
   })
-  use({ "neovim/nvim-lspconfig", requires = { "williamboman/nvim-lsp-installer" } })
+  use({ "williamboman/nvim-lsp-installer", "neovim/nvim-lspconfig" })
 
   -- visual
   use({ "projekt0n/github-nvim-theme" })
@@ -174,7 +174,7 @@ return require("packer").startup(function(use)
     config = function()
       -- TODO(ellison): weird hack to get the setup working with termguicolors
       vim.schedule(function()
-        require("bufferline").setup()
+        require("bufferline").setup({})
       end)
     end,
   })

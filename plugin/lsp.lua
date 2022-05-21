@@ -48,29 +48,31 @@ local function on_attach(client, bufnr)
   end
 
   -- format on save
-  if client.resolved_capabilities.document_formatting then
-    local lsp_formatting_group = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+  if client.supports_method("textDocument/formatting") then
+    local lsp_formatting_group = vim.api.nvim_create_augroup("LspFormatting", {})
+    vim.api.nvim_clear_autocmds({ group = lsp_formatting_group, buffer = bufnr })
     vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "<buffer>",
       group = lsp_formatting_group,
+      buffer = bufnr,
       callback = function()
+        -- TODO: on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
         vim.lsp.buf.formatting_seq_sync()
       end,
     })
   end
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
+  if client.supports_method("textDocument/documentHighlight") then
+    local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", {})
     vim.api.nvim_create_autocmd("CursorHold", {
-      pattern = "<buffer>",
       group = lsp_highlight,
+      buffer = bufnr,
       callback = function()
         vim.lsp.buf.document_highlight()
       end,
     })
     vim.api.nvim_create_autocmd("CursorMoved", {
-      pattern = "<buffer>",
+      buffer = bufnr,
       group = lsp_highlight,
       callback = function()
         vim.lsp.buf.clear_references()
@@ -126,9 +128,7 @@ nls.setup({
     }),
     formatting.shfmt,
     formatting.stylua.with({
-      condition = function(utils)
-        return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
-      end,
+      extra_args = { "--config-path", vim.fn.expand("~/.config/nvim/.stylua.toml") },
     }),
     formatting.black,
     formatting.terraform_fmt,
