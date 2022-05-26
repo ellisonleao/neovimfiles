@@ -2,7 +2,6 @@ local ls = require("luasnip")
 local s = ls.snippet
 local t = ls.text_node
 local c = ls.choice_node
-local fmt = require("luasnip.extras.fmt").fmt
 local p = require("luasnip.extras").partial
 
 local calculate_comment_string = require("Comment.ft").calculate

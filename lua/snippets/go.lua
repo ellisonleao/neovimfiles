@@ -1,32 +1,52 @@
 local ls = require("luasnip")
+local s = ls.s
+local i = ls.i
+local fmt = require("luasnip.extras.fmt").fmt
+local c = ls.choice_node
+local t = ls.text_node
 
 local snippets = {
-  ls.parser.parse_snippet({ trig = "im" }, [[import "${1:package}"]]),
-  ls.parser.parse_snippet({ trig = "cos" }, [[const ${1:name} = ${2:value}]]),
-  ls.parser.parse_snippet(
-    { trig = "tys" },
-    [[type ${1:name} struct{
-    $0
-}]]
+  s("im", fmt([[import "{}"]], { i(1) })),
+  s("cos", fmt([[const {} = {}]], { i(1), i(2) })),
+  s(
+    "tys",
+    fmt(
+      [[
+type {} struct {{
+    {} 
+}}]]   ,
+      { i(1), i(0) }
+    )
   ),
-  ls.parser.parse_snippet({ trig = "tyf" }, [[type ${1:name} func($3) $4]]),
-  ls.parser.parse_snippet(
-    { trig = "tyi" },
-    [[type ${1:name} interface{
-  $0
-}]]
+  s(
+    "tyi",
+    fmt(
+      [[
+type {} interface {{
+    {} 
+}}]]   ,
+      { i(1), i(0) }
+    )
   ),
-  ls.parser.parse_snippet(
-    { trig = "forra" },
-    [[for ${1:_, }${2:v} := range ${3:v} {
-    $0
-}]]
+  s(
+    "for",
+    fmt(
+      [[
+for {} := range {} {{
+    {}
+}}]]   ,
+      { c(1, { t("key, val"), t("_, val") }), i(2), i(0) }
+    )
   ),
-  ls.parser.parse_snippet(
-    { trig = "iferr" },
-    [[if err != nil {
-    ${1:return ${2:nil, }${3:err}}
-}]]
+  s(
+    "iferr",
+    fmt(
+      [[
+if err != nil {{
+    return {}
+}}]]   ,
+      { c(1, { t("err"), t("nil, err") }) }
+    )
   ),
 }
 

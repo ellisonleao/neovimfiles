@@ -16,7 +16,7 @@ ls.config.set_config({
   },
 })
 
-for _, lang in pairs({ "lua", "sh", "all" }) do
+for _, lang in pairs({ "lua", "go", "sh", "all" }) do
   ls.add_snippets(lang, require("snippets." .. lang), { key = lang })
 end
 

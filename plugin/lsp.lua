@@ -124,7 +124,7 @@ local actions = nls.builtins.code_actions
 nls.setup({
   sources = {
     formatting.prettier.with({
-      filetypes = { "html", "json", "markdown", "toml" },
+      filetypes = { "json", "markdown", "toml" },
     }),
     formatting.shfmt,
     formatting.stylua.with({

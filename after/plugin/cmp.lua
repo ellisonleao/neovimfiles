@@ -29,11 +29,11 @@ cmp.setup({
     native_menu = false,
   },
   sources = {
-    { name = "gh_issues" },
-    { name = "nvim_lua" },
-    { name = "nvim_lsp" },
-    { name = "path" },
     { name = "luasnip" },
+    { name = "nvim_lsp" },
+    { name = "nvim_lua" },
+    { name = "gh_issues" },
+    { name = "path" },
     { name = "buffer", keyword_length = 5 },
   },
   formatting = {
