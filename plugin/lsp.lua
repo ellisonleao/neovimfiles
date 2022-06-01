@@ -10,41 +10,27 @@ if not ok then
 end
 
 local function on_attach(client, bufnr)
-  local opts = { silent = true, noremap = true }
+  local opts = { silent = true, noremap = true, buffer = bufnr }
   local mappings = {
-    { "n", "gD", [[<Cmd>lua vim.lsp.buf.declaration()<CR>]], opts },
-    { "n", "gd", [[<Cmd>lua vim.lsp.buf.definition()<CR>]], opts },
-    { "n", "gr", [[<Cmd>lua vim.lsp.buf.rename()<CR>]], opts },
+    { "n", "gD", vim.lsp.buf.declaration, opts },
+    { "n", "gd", vim.lsp.buf.definition, opts },
+    { "n", "gr", vim.lsp.buf.rename, opts },
     {
       "n",
       "<leader>gR",
-      "<cmd>TroubleToggle lsp_references<CR>",
+      function()
+        require("trouble").toggle("lsp_references")
+      end,
       opts,
     },
-    {
-      "i",
-      "<C-x>",
-      [[<Cmd>lua vim.lsp.buf.signature_help()<CR>]],
-      opts,
-    },
-    {
-      "n",
-      "[e",
-      [[<Cmd>lua vim.diagnostic.goto_next()<CR>]],
-      opts,
-    },
-    {
-      "n",
-      "]e",
-      [[<Cmd>lua vim.diagnostic.goto_prev()<CR>]],
-      opts,
-    },
+    { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
+    { "n", "[e", vim.diagnostic.goto_next, opts },
+    { "n", "]e", vim.diagnostic.goto_prev, opts },
+    { "n", "K", vim.lsp.buf.hover, opts },
   }
 
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", [[<Cmd>lua vim.lsp.buf.hover()<CR>]], opts)
-
   for _, map in pairs(mappings) do
-    vim.api.nvim_buf_set_keymap(bufnr, unpack(map))
+    vim.keymap.set(unpack(map))
   end
 
   -- format on save
@@ -100,19 +86,6 @@ local function make_config()
   }
 end
 
--- lsp servers
-local required_servers = {
-  "sumneko_lua", -- lua
-  "pyright", -- python
-  "tsserver", -- js, jsx, tsx
-  "bashls", -- bash
-  "yamlls", -- yaml
-  "vimls", -- vim
-  "jsonls", -- json
-  "sqlls", -- sql
-  "terraformls", -- terraform
-}
-
 -- default config
 local cfg = make_config()
 
@@ -143,12 +116,6 @@ nls.setup({
   on_attach = cfg.on_attach,
 })
 
--- golang
-require("goldsmith").config({
-  null = { run_setup = false, revive = false, gofumpt = true, golines = false },
-  mappings = { format = {} },
-})
-
 -- lua special setup
 local luadev = require("lua-dev").setup({
   lspconfig = {
@@ -163,23 +130,35 @@ local luadev = require("lua-dev").setup({
   },
 })
 
+-- lsp servers
+local required_servers = {
+  "sumneko_lua", -- lua
+  "pyright", -- python
+  "tsserver", -- js, jsx, tsx
+  "bashls", -- bash
+  "yamlls", -- yaml
+  "vimls", -- vim
+  "jsonls", -- json
+  "sqlls", -- sql
+  "terraformls", -- terraform
+  "gopls", -- golang
+}
+
 -- check for missing lsp servers and install them
 for _, svr in pairs(required_servers) do
   local ok, lsp_server = servers.get_server(svr)
   if ok then
-    if not require("goldsmith").needed(svr) then
-      lsp_server:on_ready(function()
-        if svr == "sumneko_lua" then
-          lsp_server:setup(luadev)
-        else
-          lsp_server:setup(cfg)
-        end
-      end)
-
-      if not lsp_server:is_installed() then
-        lsp_server:install()
-      end
+    if not lsp_server:is_installed() then
+      lsp_server:install()
     end
+
+    lsp_server:on_ready(function()
+      if svr == "sumneko_lua" then
+        lsp_server:setup(luadev)
+      else
+        lsp_server:setup(cfg)
+      end
+    end)
   end
 end
 

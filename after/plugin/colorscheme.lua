@@ -1,2 +1,7 @@
 -- colorscheme configs
-require("github-theme").setup({ theme_style = "light", dark_float = true })
+local ok, theme = pcall(require, "github-theme")
+if not ok then
+  return
+end
+
+theme.setup({ theme_style = "light", dark_float = true })

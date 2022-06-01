@@ -118,12 +118,6 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use({
-    "WhoIsSethDaniel/goldsmith.nvim",
-    run = ":GoInstallBinaries",
-    requires = { "antoinemadec/FixCursorHold.nvim" },
-  })
-
   -- editor
   use({
     "numToStr/Comment.nvim",

@@ -49,7 +49,6 @@ Below the list of the current plugins used in this configuration and how we are 
 ### Development
 
 - [lua-dev.nvim](https://github.com/folke/lua-dev.nvim) - Lua development plugin
-- [goldsmith.nvim](https://github.com/WhoIsSethDaniel/goldsmith.nvim/) - Go development plugin
 - [vim-dadbod](https://github.com/tpope/vim-dadbod) - Modern database interface for Vim
 - [vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui) - UI for vim-dadbod
 
