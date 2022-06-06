@@ -127,12 +127,6 @@ return require("packer").startup(function(use)
   })
 
   -- lsp, completion, linting and snippets
-  use({
-    "j-hui/fidget.nvim",
-    config = function()
-      require("fidget").setup({})
-    end,
-  })
   use({ "jose-elias-alvarez/null-ls.nvim" })
   use({
     "folke/trouble.nvim",

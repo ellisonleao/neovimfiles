@@ -1,13 +1,43 @@
-local ok, _ = pcall(require, "nvim-lsp-installer")
+local ok, lspinstaller = pcall(require, "nvim-lsp-installer")
 if not ok then
   return
 end
-local servers = require("nvim-lsp-installer.servers")
+
+local lsp_servers = {
+  "sumneko_lua", -- lua
+  "pyright", -- python
+  "tsserver", -- js, jsx, tsx
+  "bashls", -- bash
+  "yamlls", -- yaml
+  "vimls", -- vim
+  "jsonls", -- json
+  "sqlls", -- sql
+  "terraformls", -- terraform
+  "gopls", -- golang
+}
+
+-- setup lsp-installer
+lspinstaller.setup({
+  ensure_installed = lsp_servers,
+  ui = {
+    icons = {
+      server_installed = "",
+      server_pending = "",
+      server_uninstalled = "",
+    },
+  },
+})
+
+local ok, lspconfig = pcall(require, "lspconfig")
+if not ok then
+  return
+end
 
 local ok, nls = pcall(require, "null-ls")
 if not ok then
   return
 end
+local lspconfig = require("lspconfig")
 
 local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true, buffer = bufnr }
@@ -67,27 +97,17 @@ local function on_attach(client, bufnr)
   end
 end
 
-local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
+local function capabilities()
+  local cap = vim.lsp.protocol.make_client_capabilities()
+  cap.textDocument.completion.completionItem.snippetSupport = true
+  cap.textDocument.completion.completionItem.resolveSupport = {
     properties = { "documentation", "detail", "additionalTextEdits" },
   }
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-  return {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    handlers = {
-      ["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics,
-        { virtual_text = false }
-      ),
-    },
-  }
+  cap = require("cmp_nvim_lsp").update_capabilities(cap)
+  return cap
 end
 
--- default config
-local cfg = make_config()
+local capabilities = capabilities()
 
 -- configuring null-ls for formatters
 local formatting = nls.builtins.formatting
@@ -105,6 +125,7 @@ nls.setup({
     }),
     formatting.black,
     formatting.terraform_fmt,
+    formatting.gofmt,
     formatting.goimports,
     diagnostics.golangci_lint,
     diagnostics.yamllint.with({
@@ -113,53 +134,27 @@ nls.setup({
     diagnostics.shellcheck,
     actions.shellcheck,
   },
-  on_attach = cfg.on_attach,
+  on_attach = on_attach,
 })
 
 -- lua special setup
 local luadev = require("lua-dev").setup({
   lspconfig = {
     cmd = {
-      vim.fn.expand("~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server"),
+      vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
     },
     Lua = {
       format = false,
     },
-    on_attach = cfg.on_attach,
-    capabilities = cfg.capabilities,
+    on_attach = on_attach,
+    capabilities = capabilities,
   },
 })
 
--- lsp servers
-local required_servers = {
-  "sumneko_lua", -- lua
-  "pyright", -- python
-  "tsserver", -- js, jsx, tsx
-  "bashls", -- bash
-  "yamlls", -- yaml
-  "vimls", -- vim
-  "jsonls", -- json
-  "sqlls", -- sql
-  "terraformls", -- terraform
-  "gopls", -- golang
-}
-
--- check for missing lsp servers and install them
-for _, svr in pairs(required_servers) do
-  local ok, lsp_server = servers.get_server(svr)
-  if ok then
-    if not lsp_server:is_installed() then
-      lsp_server:install()
-    end
-
-    lsp_server:on_ready(function()
-      if svr == "sumneko_lua" then
-        lsp_server:setup(luadev)
-      else
-        lsp_server:setup(cfg)
-      end
-    end)
+for _, server in pairs(lsp_servers) do
+  if server == "sumneko_lua" then
+    lspconfig[server].setup(luadev)
+  else
+    lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
   end
 end
-
-return { config = make_config }

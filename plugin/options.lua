@@ -49,9 +49,3 @@ end
 vim.g.python3_host_prog = "python"
 vim.g["test#strategy"] = "neovim"
 vim.g.omni_sql_default_compl_type = "syntax"
-
--- notify override
-local ok, notify = pcall(require, "notify")
-if ok then
-  vim.notify = notify
-end

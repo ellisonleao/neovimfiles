@@ -10,7 +10,7 @@ return {
   s(
     "for",
     fmt(
-      "for {}, {} in {}({})\n  {}\nend",
+      "for {}, {} in {}({}) do\n  {}\nend",
       { i(1, "k"), i(2, "v"), c(3, { t("pairs"), t("ipairs") }), i(4, "item"), i(0) }
     )
   ),
