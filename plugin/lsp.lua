@@ -77,7 +77,7 @@ local function on_attach(client, bufnr)
     })
   end
 
-  -- Set autocommands conditional on server_capabilities
+  -- highlight code references
   if client.supports_method("textDocument/documentHighlight") then
     local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", {})
     vim.api.nvim_create_autocmd("CursorHold", {
@@ -107,8 +107,6 @@ local function capabilities()
   return cap
 end
 
-local capabilities = capabilities()
-
 -- configuring null-ls for formatters
 local formatting = nls.builtins.formatting
 local diagnostics = nls.builtins.diagnostics
@@ -125,8 +123,6 @@ nls.setup({
     }),
     formatting.black,
     formatting.terraform_fmt,
-    formatting.gofmt,
-    formatting.goimports,
     diagnostics.golangci_lint,
     diagnostics.yamllint.with({
       extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
@@ -147,7 +143,7 @@ local luadev = require("lua-dev").setup({
       format = false,
     },
     on_attach = on_attach,
-    capabilities = capabilities,
+    capabilities = capabilities(),
   },
 })
 
@@ -155,6 +151,6 @@ for _, server in pairs(lsp_servers) do
   if server == "sumneko_lua" then
     lspconfig[server].setup(luadev)
   else
-    lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities })
+    lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities() })
   end
 end
