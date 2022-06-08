@@ -37,7 +37,6 @@ local ok, nls = pcall(require, "null-ls")
 if not ok then
   return
 end
-local lspconfig = require("lspconfig")
 
 local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true, buffer = bufnr }
