@@ -69,10 +69,8 @@ local function on_attach(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = lsp_formatting_group,
       buffer = bufnr,
-      callback = function()
-        -- TODO: on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-        vim.lsp.buf.formatting_seq_sync()
-      end,
+      -- TODO: on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+      callback = vim.lsp.buf.formatting_seq_sync,
     })
   end
 
@@ -82,16 +80,12 @@ local function on_attach(client, bufnr)
     vim.api.nvim_create_autocmd("CursorHold", {
       group = lsp_highlight,
       buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.document_highlight()
-      end,
+      callback = vim.lsp.buf.document_highlight,
     })
     vim.api.nvim_create_autocmd("CursorMoved", {
       buffer = bufnr,
       group = lsp_highlight,
-      callback = function()
-        vim.lsp.buf.clear_references()
-      end,
+      callback = vim.lsp.buf.clear_references,
     })
   end
 end
