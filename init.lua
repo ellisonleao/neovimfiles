@@ -1,4 +1,9 @@
-require("bootstrap") -- plugins configs
+if require("bootstrap")() then
+  return
+end
+
+-- plugins configs
+require("plugins")
 
 -- Global functions
 
@@ -22,7 +27,10 @@ end
 
 -- reload all config
 S = function()
-  vim.cmd("luafile ~/.config/nvim/init.lua")
-  vim.cmd("PackerCompile")
+  local lua_dirs = vim.fn.glob("./lua/*", 0, 1)
+  for _, dir in ipairs(lua_dirs) do
+    dir = string.gsub(dir, "./lua/", "")
+    require("plenary.reload").reload_module(dir)
+  end
   print("neovimfiles reloaded")
 end

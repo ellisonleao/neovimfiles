@@ -74,7 +74,6 @@ Below the list of the current plugins used in this configuration and how we are 
 ### Plugin development
 
 - [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) - Lua helpers for general usage
-- [babelfish.nvim](https://github.com/mjlbach/babelfish.nvim) - Generate vimdocs from Markdown
 
 ## Screenshots
 

@@ -2,16 +2,12 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
-local opts = { noremap = true, silent = true }
+local opts = { remap = false, silent = true }
 local mappings = {
-  { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/bootstrap.lua<CR>]], opts }, -- quick edit plugins file
+  { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/plugins.lua<CR>]], opts }, -- quick edit plugins file
   { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
   { "n", "<leader>R", [[<Cmd>lua S()<CR>]], opts }, -- reload all custom modules
   { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
-  { "n", "<leader>z", [[<Cmd>bp<CR>]], opts }, -- move to the previous buffer
-  { "n", "<leader>q", [[<Cmd>bp<CR>]], opts }, -- move to the previous buffer (same option, different key)
-  { "n", "<leader>x", [[<Cmd>bn<CR>]], opts }, -- move to the next buffer
-  { "n", "<leader>w", [[<Cmd>bn<CR>]], opts }, -- move to the next buffer (same option, different key)
   { "n", "<leader>d", [[<Cmd>bd<CR>]], opts }, -- close current buffer
   { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
   { "n", "<leader>h", [[<Cmd>split<CR>]], opts }, -- create horizontal split
