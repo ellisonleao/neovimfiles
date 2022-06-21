@@ -34,22 +34,7 @@ return require("packer").startup(function(use)
     },
   })
 
-  use({
-    "lewis6991/gitsigns.nvim",
-    config = function()
-      local bar = "┃"
-      require("gitsigns").setup({
-        numhl = true,
-        signs = {
-          add = { text = bar },
-          change = { text = bar },
-          delete = { text = bar },
-          topdelete = { text = bar },
-          changedelete = { text = bar },
-        },
-      })
-    end,
-  })
+  use({ "lewis6991/gitsigns.nvim" })
 
   -- testing
   use({

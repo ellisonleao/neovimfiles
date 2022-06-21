@@ -42,4 +42,8 @@ for _, map in pairs(mappings) do
   vim.keymap.set(unpack(map))
 end
 
-bufferline.setup()
+bufferline.setup({
+  options = {
+    separator_style = "slant",
+  },
+})
