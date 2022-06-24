@@ -1,5 +1,6 @@
 -- editor options
 local options = {
+  background = "light",
   mouse = "a",
   titlestring = "%{join(split(getcwd(), '/')[-2:], '/')}",
   number = true,

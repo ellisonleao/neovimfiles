@@ -13,7 +13,7 @@ return require("packer").startup(function(use)
     "nvim-lua/plenary.nvim",
     config = function()
       vim.keymap.set("n", "<leader>tp", function()
-        require("plenary.test_harness").test_directory(vim.fn.expand("%:p"))
+        require("plenary.test_harness").test_directory("tests")
       end, { noremap = true, silent = true })
     end,
   })
