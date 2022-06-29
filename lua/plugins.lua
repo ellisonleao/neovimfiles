@@ -7,6 +7,7 @@ vim.api.nvim_create_autocmd(
 -- load plugins
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
+  use({ "norcalli/nvim-colorizer.lua" })
 
   -- plugin development and utils
   use({
@@ -107,6 +108,7 @@ return require("packer").startup(function(use)
   use({
     "nvim-treesitter/nvim-treesitter",
     "nvim-treesitter/playground",
+    "nvim-treesitter/nvim-treesitter-textobjects",
   })
 
   -- sql

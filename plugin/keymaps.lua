@@ -24,6 +24,14 @@ local mappings = {
     end,
     opts,
   }, -- create carbon.now.sh snippet
+  {
+    "n",
+    "<leader>hg",
+    function()
+      return vim.cmd("TSHighlightCapturesUnderCursor")
+    end,
+    opts, -- hightlight color groups under cursor
+  },
 }
 
 for _, map in pairs(mappings) do
