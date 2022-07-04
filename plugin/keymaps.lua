@@ -6,7 +6,7 @@ local opts = { remap = false, silent = true }
 local mappings = {
   { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/plugins.lua<CR>]], opts }, -- quick edit plugins file
   { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
-  { "n", "<leader>R", [[<Cmd>lua S()<CR>]], opts }, -- reload all custom modules
+  { "n", "<leader>R", S, opts }, -- reload all custom modules
   { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
   { "n", "<leader>d", [[<Cmd>bd<CR>]], opts }, -- close current buffer
   { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
@@ -16,14 +16,7 @@ local mappings = {
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
   { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
   { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
-  {
-    "v",
-    "<leader>cn",
-    function()
-      require("carbon-now").create_snippet()
-    end,
-    opts,
-  }, -- create carbon.now.sh snippet
+  { "v", "<leader>cn", require("carbon-now").create_snippet, opts }, -- create carbon.now.sh snippet
   {
     "n",
     "<leader>hg",

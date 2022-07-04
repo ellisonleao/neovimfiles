@@ -1,7 +1,30 @@
-local ok, lspinstaller = pcall(require, "nvim-lsp-installer")
-if not ok then
+local _, lspinstaller = pcall(require, "nvim-lsp-installer")
+if lspinstaller == nil then
   return
 end
+
+local _, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+if cmp_lsp == nil then
+  return
+end
+
+local _, lspconfig = pcall(require, "lspconfig")
+if lspconfig == nil then
+  return
+end
+
+local _, nls = pcall(require, "null-ls")
+if nls == nil then
+  return
+end
+
+
+local cap = vim.lsp.protocol.make_client_capabilities()
+cap.textDocument.completion.completionItem.snippetSupport = true
+cap.textDocument.completion.completionItem.resolveSupport = {
+  properties = { "documentation", "detail", "additionalTextEdits" },
+}
+cap = cmp_lsp.update_capabilities(cap)
 
 local lsp_servers = {
   "sumneko_lua", -- lua
@@ -9,11 +32,11 @@ local lsp_servers = {
   "tsserver", -- js, jsx, tsx
   "bashls", -- bash
   "yamlls", -- yaml
-  "vimls", -- vim
   "jsonls", -- json
   "sqlls", -- sql
   "terraformls", -- terraform
   "gopls", -- golang
+  "dockerls", -- dockerfiles
 }
 
 -- setup lsp-installer
@@ -27,16 +50,6 @@ lspinstaller.setup({
     },
   },
 })
-
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-  return
-end
-
-local ok, nls = pcall(require, "null-ls")
-if not ok then
-  return
-end
 
 local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true, buffer = bufnr }
@@ -90,16 +103,6 @@ local function on_attach(client, bufnr)
   end
 end
 
-local function capabilities()
-  local cap = vim.lsp.protocol.make_client_capabilities()
-  cap.textDocument.completion.completionItem.snippetSupport = true
-  cap.textDocument.completion.completionItem.resolveSupport = {
-    properties = { "documentation", "detail", "additionalTextEdits" },
-  }
-  cap = require("cmp_nvim_lsp").update_capabilities(cap)
-  return cap
-end
-
 -- configuring null-ls for formatters
 local formatting = nls.builtins.formatting
 local diagnostics = nls.builtins.diagnostics
@@ -112,7 +115,7 @@ nls.setup({
     }),
     formatting.shfmt,
     formatting.stylua.with({
-      extra_args = { "--config-path", vim.fn.expand("~/.config/nvim/.stylua.toml") },
+      extra_args = { "--config-path", vim.fn.stdpath("config") .. ".stylua.toml" },
     }),
     formatting.black,
     formatting.terraform_fmt,
@@ -136,7 +139,7 @@ local luadev = require("lua-dev").setup({
       format = false,
     },
     on_attach = on_attach,
-    capabilities = capabilities(),
+    capabilities = cap,
   },
 })
 
@@ -144,6 +147,6 @@ for _, server in pairs(lsp_servers) do
   if server == "sumneko_lua" then
     lspconfig[server].setup(luadev)
   else
-    lspconfig[server].setup({ on_attach = on_attach, capabilities = capabilities() })
+    lspconfig[server].setup({ on_attach = on_attach, capabilities = cap })
   end
 end
