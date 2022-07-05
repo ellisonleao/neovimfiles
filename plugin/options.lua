@@ -28,6 +28,7 @@ local options = {
   tabstop = 4,
   swapfile = false,
   expandtab = true,
+  foldlevel = 99,
 }
 
 for k, v in pairs(options) do
