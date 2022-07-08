@@ -150,3 +150,6 @@ for _, server in pairs(lsp_servers) do
     lspconfig[server].setup({ on_attach = on_attach, capabilities = cap })
   end
 end
+
+-- better UI for errors
+require("lsp_lines").register_lsp_virtual_lines()

@@ -93,7 +93,7 @@ return require("packer").startup(function(use)
       "saadparwaiz1/cmp_luasnip",
     },
   })
-  use({ "williamboman/nvim-lsp-installer", "neovim/nvim-lspconfig" })
+  use({ "williamboman/nvim-lsp-installer", "neovim/nvim-lspconfig", "Maan2003/lsp_lines.nvim" })
 
   -- visual
   use({ "projekt0n/github-nvim-theme" })
