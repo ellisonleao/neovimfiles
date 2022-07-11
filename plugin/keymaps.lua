@@ -5,6 +5,7 @@ vim.g.maplocalleader = ","
 local opts = { remap = false, silent = true }
 local mappings = {
   { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/plugins.lua<CR>]], opts }, -- quick edit plugins file
+  { "n", "<leader>F", vim.lsp.buf.formatting_seq_sync, opts }, -- format shortcut
   { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
   { "n", "<leader>R", S, opts }, -- reload all custom modules
   { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight

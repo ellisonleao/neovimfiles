@@ -79,7 +79,6 @@ return require("packer").startup(function(use)
 
   -- lsp, completion, linting and snippets
   use({ "jose-elias-alvarez/null-ls.nvim" })
-  use({ "folke/trouble.nvim" })
 
   use({ "L3MON4D3/LuaSnip" })
   use({

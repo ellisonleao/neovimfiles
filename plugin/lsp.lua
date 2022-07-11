@@ -19,6 +19,11 @@ if nls == nil then
 end
 
 
+local _, tb = pcall(require, "telescope.builtin")
+if tb == nil then
+  return
+end
+
 local cap = vim.lsp.protocol.make_client_capabilities()
 cap.textDocument.completion.completionItem.snippetSupport = true
 cap.textDocument.completion.completionItem.resolveSupport = {
@@ -55,16 +60,9 @@ local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true, buffer = bufnr }
   local mappings = {
     { "n", "gD", vim.lsp.buf.declaration, opts },
-    { "n", "gd", vim.lsp.buf.definition, opts },
+    { "n", "gd", tb.lsp_definitions, opts },
     { "n", "gr", vim.lsp.buf.rename, opts },
-    {
-      "n",
-      "<leader>gR",
-      function()
-        require("trouble").toggle("lsp_references")
-      end,
-      opts,
-    },
+    { "n", "<leader>gR", tb.lsp_references, opts },
     { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
     { "n", "[e", vim.diagnostic.goto_next, opts },
     { "n", "]e", vim.diagnostic.goto_prev, opts },
@@ -101,6 +99,7 @@ local function on_attach(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
   end
+
 end
 
 -- configuring null-ls for formatters
