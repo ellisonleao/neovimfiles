@@ -18,7 +18,6 @@ if nls == nil then
   return
 end
 
-
 local _, tb = pcall(require, "telescope.builtin")
 if tb == nil then
   return
@@ -62,6 +61,7 @@ local function on_attach(client, bufnr)
     { "n", "gD", vim.lsp.buf.declaration, opts },
     { "n", "gd", tb.lsp_definitions, opts },
     { "n", "gr", vim.lsp.buf.rename, opts },
+    { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
     { "n", "<leader>gR", tb.lsp_references, opts },
     { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
     { "n", "[e", vim.diagnostic.goto_next, opts },
@@ -99,7 +99,6 @@ local function on_attach(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
   end
-
 end
 
 -- configuring null-ls for formatters
@@ -114,7 +113,15 @@ nls.setup({
     }),
     formatting.shfmt,
     formatting.stylua.with({
-      extra_args = { "--config-path", vim.fn.stdpath("config") .. ".stylua.toml" },
+      extra_args = function(params)
+        local cfg = vim.fn.stdpath("config") .. "/.stylua.toml"
+        if vim.fn.filereadable(params.root .. "/.stylua.toml") == 1 then
+          cfg = params.root .. "/.stylua.toml"
+        elseif vim.fn.filereadable(params.root .. "/stylua.toml") == 1 then
+          cfg = params.root .. "/stylua.toml"
+        end
+        return { "--config-path", cfg }
+      end,
     }),
     formatting.black,
     formatting.terraform_fmt,
