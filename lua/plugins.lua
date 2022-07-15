@@ -58,7 +58,7 @@ return require("packer").startup(function(use)
   use({
     "~/code/glow.nvim",
     config = function()
-      require("glow").setup({ style = "dark", width = 200 })
+      require("glow").setup({ style = "dark", width = 400 })
     end,
   })
   use({ "~/code/gruvbox.nvim" })
