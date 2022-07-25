@@ -1,9 +1,10 @@
 local fn = vim.fn
 local download = function()
   local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+  local packer_bootstrap
   if fn.isdirectory(install_path) == 0 then
     vim.notify("Installing packer...")
-    local packer_bootstrap = fn.system({
+    packer_bootstrap = fn.system({
       "git",
       "clone",
       "--depth",
