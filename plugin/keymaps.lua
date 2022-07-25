@@ -21,14 +21,14 @@ local mappings = {
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
   { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
   { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
-  { "v", "<leader>cn", require("carbon-now").create_snippet, opts }, -- create carbon.now.sh snippet
+  { "v", "<leader>cn", [[<Cmd>CarbonNow<CR>]], opts }, -- create carbon.now.sh snippet
   {
     "n",
     "<leader>hg",
     function()
       return vim.cmd("TSHighlightCapturesUnderCursor")
     end,
-    opts, -- hightlight color groups under cursor
+    opts, -- highlight color groups under cursor
   },
 }
 

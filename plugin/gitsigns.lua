@@ -1,10 +1,5 @@
-local ok, gitsigns = pcall(require, "gitsigns")
-if not ok then
-  return
-end
-
 local bar = "┃"
-gitsigns.setup({
+require("gitsigns").setup({
   numhl = true,
   signs = {
     add = { text = bar },

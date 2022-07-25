@@ -1,28 +1,9 @@
-local _, lspinstaller = pcall(require, "nvim-lsp-installer")
-if lspinstaller == nil then
-  return
-end
-
-local _, cmp_lsp = pcall(require, "cmp_nvim_lsp")
-if cmp_lsp == nil then
-  return
-end
-
-local _, lspconfig = pcall(require, "lspconfig")
-if lspconfig == nil then
-  return
-end
-
-local _, nls = pcall(require, "null-ls")
-if nls == nil then
-  return
-end
-
-local _, tb = pcall(require, "telescope.builtin")
-if tb == nil then
-  return
-end
-
+local lspinstaller = require("nvim-lsp-installer")
+local cmp_lsp = require("cmp_nvim_lsp")
+local lspconfig = require("lspconfig")
+local nls = require("null-ls")
+local tb = require("telescope.builtin")
+local lsp_lines = require("lsp_lines")
 local cap = vim.lsp.protocol.make_client_capabilities()
 cap.textDocument.completion.completionItem.snippetSupport = true
 cap.textDocument.completion.completionItem.resolveSupport = {
@@ -67,6 +48,7 @@ local function on_attach(client, bufnr)
     { "n", "[e", vim.diagnostic.goto_next, opts },
     { "n", "]e", vim.diagnostic.goto_prev, opts },
     { "n", "K", vim.lsp.buf.hover, opts },
+    { "n", "<leader>td", lsp_lines.toggle, opts },
   }
 
   for _, map in pairs(mappings) do
@@ -75,10 +57,8 @@ local function on_attach(client, bufnr)
 
   -- format on save
   if client.supports_method("textDocument/formatting") then
-    local lsp_formatting_group = vim.api.nvim_create_augroup("LspFormatting", {})
-    vim.api.nvim_clear_autocmds({ group = lsp_formatting_group, buffer = bufnr })
     vim.api.nvim_create_autocmd("BufWritePre", {
-      group = lsp_formatting_group,
+      group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
       buffer = bufnr,
       -- TODO: on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
       callback = vim.lsp.buf.formatting_seq_sync,
@@ -87,7 +67,7 @@ local function on_attach(client, bufnr)
 
   -- highlight code references
   if client.supports_method("textDocument/documentHighlight") then
-    local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", {})
+    local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
     vim.api.nvim_create_autocmd("CursorHold", {
       group = lsp_highlight,
       buffer = bufnr,
@@ -157,5 +137,57 @@ for _, server in pairs(lsp_servers) do
   end
 end
 
+vim.diagnostic.config({ virtual_text = false })
+
 -- better UI for errors
-require("lsp_lines").register_lsp_virtual_lines()
+require("lsp_lines").setup()
+
+-- better lsp notifications from notify
+vim.api.nvim_create_autocmd({ "UIEnter" }, {
+  once = true,
+  callback = function()
+    local Spinner = require("spinner")
+    local spinners = {}
+
+    local function format_msg(msg, percentage)
+      msg = msg or ""
+      if not percentage then
+        return msg
+      end
+      return string.format("%2d%%\t%s", percentage, msg)
+    end
+
+    vim.api.nvim_create_autocmd({ "User" }, {
+      pattern = { "LspProgressUpdate" },
+      group = vim.api.nvim_create_augroup("LSPNotify", { clear = true }),
+      desc = "LSP progress notifications",
+      callback = function()
+        for _, c in ipairs(vim.lsp.get_active_clients()) do
+          for token, ctx in pairs(c.messages.progress) do
+            if not spinners[c.id] then
+              spinners[c.id] = {}
+            end
+            local s = spinners[c.id][token]
+            if not ctx.done then
+              if not s then
+                spinners[c.id][token] = Spinner(format_msg(ctx.message, ctx.percentage), vim.log.levels.INFO, {
+                  title = ctx.title and string.format("%s: %s", c.name, ctx.title) or c.name,
+                })
+              else
+                s:update(format_msg(ctx.message, ctx.percentage))
+              end
+            else
+              c.messages.progress[token] = nil
+              if s then
+                s:done(ctx.message or "Complete", nil, {
+                  icon = "",
+                })
+                spinners[c.id][token] = nil
+              end
+            end
+          end
+        end
+      end,
+    })
+  end,
+})

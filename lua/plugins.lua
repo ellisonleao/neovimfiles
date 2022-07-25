@@ -1,8 +1,8 @@
-local packer_group = vim.api.nvim_create_augroup("PackerUserConfig", { clear = true })
-vim.api.nvim_create_autocmd(
-  "BufWritePost",
-  { group = packer_group, pattern = "plugins.lua", command = "source <afile> | PackerCompile profile=true" }
-)
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = vim.api.nvim_create_augroup("PackerUserConfig", { clear = true }),
+  pattern = "plugins.lua",
+  command = "source <afile> | PackerCompile profile=true",
+})
 
 -- load plugins
 return require("packer").startup(function(use)
@@ -54,7 +54,7 @@ return require("packer").startup(function(use)
   })
 
   -- personal
-  -- use("~/code/dotenv.nvim")
+  use("~/code/dotenv.nvim")
   use({
     "~/code/glow.nvim",
     config = function()
@@ -92,7 +92,7 @@ return require("packer").startup(function(use)
       "saadparwaiz1/cmp_luasnip",
     },
   })
-  use({ "williamboman/nvim-lsp-installer", "neovim/nvim-lspconfig", "Maan2003/lsp_lines.nvim" })
+  use({ "williamboman/nvim-lsp-installer", "neovim/nvim-lspconfig", "https://git.sr.ht/~whynothugo/lsp_lines.nvim" })
 
   -- visual
   use({ "projekt0n/github-nvim-theme" })
@@ -109,9 +109,4 @@ return require("packer").startup(function(use)
     "nvim-treesitter/playground",
     "nvim-treesitter/nvim-treesitter-textobjects",
   })
-
-  -- sql
-  use("tpope/vim-dadbod")
-  use({ "kristijanhusak/vim-dadbod-completion" })
-  use({ "kristijanhusak/vim-dadbod-ui" })
 end)

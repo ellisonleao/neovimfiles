@@ -1,9 +1,4 @@
-local ok, neogit = pcall(require, "neogit")
-if not ok then
-  return
-end
-
-neogit.setup({
+require("neogit").setup({
   kind = "split",
   integrations = { diffview = true },
   disable_commit_confirmation = true,
