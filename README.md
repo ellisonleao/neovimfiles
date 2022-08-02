@@ -74,5 +74,4 @@ Below the list of the current plugins used in this configuration and how we are 
 
 ## Screenshots
 
-![](https://i.postimg.cc/B66Rsy7G/Screenshot-from-2022-03-20-22-55-59.png)
 ![](https://i.postimg.cc/FHrMD7bR/Screenshot-from-2022-03-20-22-57-06.png)

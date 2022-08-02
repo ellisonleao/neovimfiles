@@ -1,9 +1,5 @@
 -- search module
-local ok, telescope = pcall(require, "telescope")
-if not ok then
-  return
-end
-
+local telescope = require("telescope")
 telescope.setup({
   defaults = {
     vimgrep_arguments = {

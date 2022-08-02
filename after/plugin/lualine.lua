@@ -1,14 +1,11 @@
-local ok, lualine = pcall(require, "lualine")
-if not ok then
-  return
-end
+local lualine = require("lualine")
 
 -- Lsp server name .
 local function lsp()
   return {
     function()
       local msg = "No Active Lsp"
-      local ft = vim.opt.filetype:get()
+      local ft = vim.bo.filetype
       local clients = vim.lsp.get_active_clients()
       if next(clients) == nil then
         return msg
@@ -28,7 +25,7 @@ local function lsp()
         return msg
       end
     end,
-    icon = " LSP:",
+    icon = "LSP:",
     color = { gui = "bold" },
   }
 end

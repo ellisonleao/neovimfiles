@@ -1,20 +1,8 @@
 -- nvim-cmp configs
-local ok, cmp = pcall(require, "cmp")
-if not ok then
-  return
-end
-
-local ok, luasnip = pcall(require, "luasnip")
-if not ok then
-  return
-end
-
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 local compare = require("cmp.config.compare")
-
-local ok, lspkind = pcall(require, "lspkind")
-if not ok then
-  return
-end
+local lspkind = require("lspkind")
 
 lspkind.init()
 
@@ -24,9 +12,9 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
-  experimental = {
-    ghost_test = false,
-    native_menu = false,
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   sources = {
     { name = "luasnip" },
@@ -90,15 +78,4 @@ cmp.setup({
       compare.order,
     },
   },
-})
-
-local group = vim.api.nvim_create_augroup("DadbodSQL", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "sql", "mysql", "plsql" },
-  group = group,
-  callback = function()
-    vim.schedule(function()
-      require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
-    end)
-  end,
 })

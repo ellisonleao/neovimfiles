@@ -19,8 +19,6 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use("tpope/vim-dotenv")
-
   use({
     "nvim-lua/telescope.nvim",
     requires = { "nvim-lua/popup.nvim" },

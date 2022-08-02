@@ -1,8 +1,4 @@
-local ok, bufferline = pcall(require, "bufferline")
-if not ok then
-  return
-end
-
+local bufferline = require("bufferline")
 local opts = { silent = true, remap = false }
 local mappings = {
   {
