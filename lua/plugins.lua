@@ -37,22 +37,23 @@ return require("packer").startup(function(use)
 
   -- testing
   use({
-    "vim-test/vim-test",
-    config = function()
-      local opts = { noremap = true, silent = true }
-      local mappings = {
-        { "n", "<leader>t", [[<Cmd>TestNearest<CR>]], opts }, -- call test for function in cursor
-        { "n", "<leader>tt", [[<Cmd>TestFile<CR>]], opts }, -- call test for current file
-      }
-
-      for _, m in pairs(mappings) do
-        vim.keymap.set(unpack(m))
-      end
-    end,
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-go",
+      "nvim-neotest/neotest-plenary",
+    },
   })
 
   -- personal
-  use("~/code/dotenv.nvim")
+  use({
+    "~/code/dotenv.nvim",
+    config = function()
+      require("dotenv").setup()
+    end,
+  })
   use({
     "~/code/glow.nvim",
     config = function()
@@ -96,7 +97,12 @@ return require("packer").startup(function(use)
   use({ "projekt0n/github-nvim-theme" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "nvim-lualine/lualine.nvim" })
-  use({ "rcarriga/nvim-notify" })
+  use({
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = require("notify")
+    end,
+  })
 
   -- buffer tabs at top
   use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })

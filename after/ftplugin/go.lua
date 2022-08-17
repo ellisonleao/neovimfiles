@@ -8,7 +8,7 @@ vim.opt.colorcolumn = "80,120"
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.go" },
   callback = function(opts)
-    local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding(opts.buf))
+    local params = vim.lsp.util.make_range_params(0, vim.lsp.util._get_offset_encoding(opts.buf))
     params.context = { only = { "source.organizeImports" } }
 
     local result = vim.lsp.buf_request_sync(opts.buf, "textDocument/codeAction", params, 3000)

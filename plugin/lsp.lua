@@ -105,7 +105,6 @@ nls.setup({
     }),
     formatting.black,
     formatting.terraform_fmt,
-    diagnostics.golangci_lint,
     diagnostics.yamllint.with({
       extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
     }),
@@ -117,6 +116,7 @@ nls.setup({
 
 -- lua special setup
 local luadev = require("lua-dev").setup({
+  library = { plugins = { "neotest" }, types = true },
   lspconfig = {
     cmd = {
       vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",

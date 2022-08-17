@@ -67,6 +67,7 @@ Below the list of the current plugins used in this configuration and how we are 
 - [nvim-treesitter-playground](https://github.com/nvim-treesitter/playground) - Treesiter Playground
 - [glow.nvim](https://github.com/ellisonleao/glow.nvim) - Markdown preview directly in Neovim
 - [telescope.nvim](https://github.com/nvim-lua/telescope.nvim) - Find, filter, preview and pick using a nice UI
+- [neotest](https://github.com/nvim-neotest/neotest) - An extensible framework for interacting with tests within NeoVim.
 
 ### Plugin development
 
