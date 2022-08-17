@@ -3,7 +3,6 @@ local cmp_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
 local nls = require("null-ls")
 local tb = require("telescope.builtin")
-local lsp_lines = require("lsp_lines")
 local cap = vim.lsp.protocol.make_client_capabilities()
 cap.textDocument.completion.completionItem.snippetSupport = true
 cap.textDocument.completion.completionItem.resolveSupport = {
@@ -48,7 +47,6 @@ local function on_attach(client, bufnr)
     { "n", "[e", vim.diagnostic.goto_next, opts },
     { "n", "]e", vim.diagnostic.goto_prev, opts },
     { "n", "K", vim.lsp.buf.hover, opts },
-    { "n", "<leader>td", lsp_lines.toggle, opts },
   }
 
   for _, map in pairs(mappings) do
@@ -136,11 +134,6 @@ for _, server in pairs(lsp_servers) do
     lspconfig[server].setup({ on_attach = on_attach, capabilities = cap })
   end
 end
-
-vim.diagnostic.config({ virtual_text = false })
-
--- better UI for errors
-require("lsp_lines").setup()
 
 -- better lsp notifications from notify
 vim.api.nvim_create_autocmd({ "UIEnter" }, {
