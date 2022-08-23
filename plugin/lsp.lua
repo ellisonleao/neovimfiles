@@ -103,6 +103,7 @@ nls.setup({
     }),
     formatting.black,
     formatting.terraform_fmt,
+    formatting.gofmt,
     diagnostics.yamllint.with({
       extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
     }),

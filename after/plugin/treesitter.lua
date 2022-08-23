@@ -38,6 +38,15 @@ require("nvim-treesitter.configs").setup({
         ["[["] = "@function.outer",
       },
     },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>ps"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader>pS"] = "@parameter.inner",
+      },
+    },
   },
 })
 

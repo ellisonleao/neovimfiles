@@ -19,6 +19,14 @@ local mappings = {
     end,
     opts,
   }, -- call test for current file
+  {
+    "n",
+    "<leader>ts",
+    function()
+      neotest.summary.toggle()
+    end,
+    opts,
+  },
 }
 
 for _, m in pairs(mappings) do
