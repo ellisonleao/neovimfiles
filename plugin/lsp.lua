@@ -43,6 +43,7 @@ local function on_attach(client, bufnr)
     { "n", "gr", vim.lsp.buf.rename, opts },
     { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
     { "n", "<leader>gR", tb.lsp_references, opts },
+    { "n", "<leader>lf", vim.lsp.buf.formatting_seq_sync, opts },
     { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
     { "n", "[e", vim.diagnostic.goto_next, opts },
     { "n", "]e", vim.diagnostic.goto_prev, opts },
@@ -104,6 +105,7 @@ nls.setup({
     formatting.black,
     formatting.terraform_fmt,
     formatting.gofmt,
+    formatting.pg_format,
     diagnostics.yamllint.with({
       extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
     }),
