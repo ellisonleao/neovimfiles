@@ -1,9 +1,13 @@
-local lspinstaller = require("nvim-lsp-installer")
-local cmp_lsp = require("cmp_nvim_lsp")
+local mlspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
+local mason = require("mason")
+local mason_registry = require("mason-registry")
+local mason_api = require("mason.api.command")
+local cmp_lsp = require("cmp_nvim_lsp")
 local nls = require("null-ls")
 local tb = require("telescope.builtin")
 local cap = vim.lsp.protocol.make_client_capabilities()
+
 cap.textDocument.completion.completionItem.snippetSupport = true
 cap.textDocument.completion.completionItem.resolveSupport = {
   properties = { "documentation", "detail", "additionalTextEdits" },
@@ -17,23 +21,39 @@ local lsp_servers = {
   "bashls", -- bash
   "yamlls", -- yaml
   "jsonls", -- json
-  "sqlls", -- sql
+  "sqls", -- sql
   "terraformls", -- terraform
   "gopls", -- golang
   "dockerls", -- dockerfiles
 }
 
--- setup lsp-installer
-lspinstaller.setup({
-  ensure_installed = lsp_servers,
+local tools = {
+  "stylua",
+  "prettier",
+  "black",
+  "shfmt",
+  "golangci-lint",
+  "shellcheck",
+  "yamllint",
+}
+
+mason.setup({
   ui = {
     icons = {
-      server_installed = "",
-      server_pending = "",
-      server_uninstalled = "",
+      package_installed = "",
+      package_pending = "",
+      package_uninstalled = "",
     },
   },
 })
+
+-- install tools
+for _, f in pairs(tools) do
+  local pkg = mason_registry.get_package(f)
+  if not pkg:is_installed(f) then
+    pkg:install(f)
+  end
+end
 
 local function on_attach(client, bufnr)
   local opts = { silent = true, noremap = true, buffer = bufnr }
@@ -80,6 +100,31 @@ local function on_attach(client, bufnr)
   end
 end
 
+-- lua special setup
+local luadev = require("lua-dev").setup({
+  library = { plugins = { "neotest" }, types = true },
+  lspconfig = {
+    cmd = {
+      vim.fn.stdpath("data") .. "/mason/bin/lua-language-server",
+    },
+    Lua = {
+      format = false,
+    },
+    on_attach = on_attach,
+    capabilities = cap,
+  },
+})
+
+mlspconfig.setup({ ensure_installed = lsp_servers })
+mlspconfig.setup_handlers({
+  function(server_name)
+    lspconfig[server_name].setup({ on_attach = on_attach, capabilities = cap })
+  end,
+  ["sumneko_lua"] = function()
+    lspconfig.sumneko_lua.setup(luadev)
+  end,
+})
+
 -- configuring null-ls for formatters
 local formatting = nls.builtins.formatting
 local diagnostics = nls.builtins.diagnostics
@@ -114,29 +159,6 @@ nls.setup({
   },
   on_attach = on_attach,
 })
-
--- lua special setup
-local luadev = require("lua-dev").setup({
-  library = { plugins = { "neotest" }, types = true },
-  lspconfig = {
-    cmd = {
-      vim.fn.stdpath("data") .. "/lsp_servers/sumneko_lua/extension/server/bin/lua-language-server",
-    },
-    Lua = {
-      format = false,
-    },
-    on_attach = on_attach,
-    capabilities = cap,
-  },
-})
-
-for _, server in pairs(lsp_servers) do
-  if server == "sumneko_lua" then
-    lspconfig[server].setup(luadev)
-  else
-    lspconfig[server].setup({ on_attach = on_attach, capabilities = cap })
-  end
-end
 
 -- better lsp notifications from notify
 vim.api.nvim_create_autocmd({ "UIEnter" }, {

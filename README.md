@@ -58,8 +58,8 @@ Below the list of the current plugins used in this configuration and how we are 
 ### Utils
 
 - [Comment](https://github.com/numToStr/Comment.nvim) - Shortcut for commenting in and out code snippets
-- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Easy default configs for the builtin LSP client
-- [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) - Easy install LSP servers
+- [mason.nvim](https://github.com/williamboman/mason.nvim) - Easy install LSP servers, Formatters, linters and more
+- [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim) - Easy management for LSP servers
 - [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim) - Formatting, diagnostics, code actions and more
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - The best autocomplete plugin for Neovim
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip/) - lua snippet engine
