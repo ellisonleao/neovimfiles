@@ -2,15 +2,15 @@ local mlspconfig = require("mason-lspconfig")
 local lspconfig = require("lspconfig")
 local mason = require("mason")
 local mason_registry = require("mason-registry")
-local mason_api = require("mason.api.command")
 local cmp_lsp = require("cmp_nvim_lsp")
 local nls = require("null-ls")
 local tb = require("telescope.builtin")
 local cap = vim.lsp.protocol.make_client_capabilities()
-
 cap.textDocument.completion.completionItem.snippetSupport = true
-cap.textDocument.completion.completionItem.resolveSupport = {
-  properties = { "documentation", "detail", "additionalTextEdits" },
+cap.textDocument.completion.completionItem.labelDetailsSupport = true
+cap.textDocument.completion.contextSupport = true
+cap.textDocument.completion.resolveSupport = {
+  properties = { "edit", "documentation", "detail" },
 }
 cap = cmp_lsp.update_capabilities(cap)
 
@@ -63,7 +63,7 @@ local function on_attach(client, bufnr)
     { "n", "gr", vim.lsp.buf.rename, opts },
     { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
     { "n", "<leader>gR", tb.lsp_references, opts },
-    { "n", "<leader>lf", vim.lsp.buf.formatting_seq_sync, opts },
+    { "n", "<leader>lf", vim.lsp.buf.format, opts },
     { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
     { "n", "[e", vim.diagnostic.goto_next, opts },
     { "n", "]e", vim.diagnostic.goto_prev, opts },
@@ -79,8 +79,9 @@ local function on_attach(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
       buffer = bufnr,
-      -- TODO: on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-      callback = vim.lsp.buf.formatting_seq_sync,
+      callback = function()
+        vim.lsp.buf.format({ bufnr = bufnr })
+      end,
     })
   end
 
@@ -138,11 +139,13 @@ nls.setup({
     formatting.shfmt,
     formatting.stylua.with({
       extra_args = function(params)
-        local cfg = vim.fn.stdpath("config") .. "/.stylua.toml"
-        if vim.fn.filereadable(params.root .. "/.stylua.toml") == 1 then
-          cfg = params.root .. "/.stylua.toml"
-        elseif vim.fn.filereadable(params.root .. "/stylua.toml") == 1 then
-          cfg = params.root .. "/stylua.toml"
+        local base_cfg = vim.fn.stdpath("config") .. "/.stylua.toml"
+        local cfg = vim.fs.find(".stylua.toml", { upward = true })
+        if #cfg == 0 then
+          ---@diagnostic disable-next-line: cast-local-type
+          cfg = base_cfg
+        else
+          cfg = cfg[1]
         end
         return { "--config-path", cfg }
       end,
@@ -158,54 +161,4 @@ nls.setup({
     actions.shellcheck,
   },
   on_attach = on_attach,
-})
-
--- better lsp notifications from notify
-vim.api.nvim_create_autocmd({ "UIEnter" }, {
-  once = true,
-  callback = function()
-    local Spinner = require("spinner")
-    local spinners = {}
-
-    local function format_msg(msg, percentage)
-      msg = msg or ""
-      if not percentage then
-        return msg
-      end
-      return string.format("%2d%%\t%s", percentage, msg)
-    end
-
-    vim.api.nvim_create_autocmd({ "User" }, {
-      pattern = { "LspProgressUpdate" },
-      group = vim.api.nvim_create_augroup("LSPNotify", { clear = true }),
-      desc = "LSP progress notifications",
-      callback = function()
-        for _, c in ipairs(vim.lsp.get_active_clients()) do
-          for token, ctx in pairs(c.messages.progress) do
-            if not spinners[c.id] then
-              spinners[c.id] = {}
-            end
-            local s = spinners[c.id][token]
-            if not ctx.done then
-              if not s then
-                spinners[c.id][token] = Spinner(format_msg(ctx.message, ctx.percentage), vim.log.levels.INFO, {
-                  title = ctx.title and string.format("%s: %s", c.name, ctx.title) or c.name,
-                })
-              else
-                s:update(format_msg(ctx.message, ctx.percentage))
-              end
-            else
-              c.messages.progress[token] = nil
-              if s then
-                s:done(ctx.message or "Complete", nil, {
-                  icon = "",
-                })
-                spinners[c.id][token] = nil
-              end
-            end
-          end
-        end
-      end,
-    })
-  end,
 })

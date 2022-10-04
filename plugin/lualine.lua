@@ -36,6 +36,9 @@ local config = {
     theme = "auto",
     globalstatus = true,
   },
+  winbar = {
+    lualine_c = { { "filename", path = 2 } },
+  },
   sections = {
     lualine_a = { "mode" },
     lualine_b = {
