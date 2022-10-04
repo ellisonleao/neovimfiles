@@ -20,6 +20,7 @@ end
 S = function()
   local cfg = vim.fn.stdpath("config")
   local path = string.format("%s/lua/*", cfg)
+  ---@diagnostic disable-next-line: param-type-mismatch
   local lua_dirs = vim.fn.glob(path, 0, 1)
   for _, dir in ipairs(lua_dirs) do
     dir = string.gsub(dir, cfg .. "/lua/", "")
