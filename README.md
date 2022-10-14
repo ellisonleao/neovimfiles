@@ -43,7 +43,7 @@ Below the list of the current plugins used in this configuration and how we are 
 
 - [github-nvim-theme](https://github.com/projekt0n/github-nvim-theme) - Main colorscheme
 - [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) - web devicons for general usage. Used in buffer tabs, statusline and telescope
-- [lualine.nvim](https://github.com/shadmansaleh/lualine.nvim) - Our statusline
+- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) - Our statusline
 - [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) - Buffers as tabs, simulating GUIs from other
 
 ### Development
