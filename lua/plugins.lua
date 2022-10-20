@@ -23,7 +23,7 @@ return require("packer").startup(function(use)
     "nvim-lua/telescope.nvim",
     requires = { "nvim-lua/popup.nvim" },
   })
-  use({ "folke/lua-dev.nvim" })
+  use({ "folke/neodev.nvim" })
 
   -- git
   use({
@@ -57,7 +57,7 @@ return require("packer").startup(function(use)
   use({
     "~/code/glow.nvim",
     config = function()
-      require("glow").setup({ style = "dark", width = 400 })
+      require("glow").setup()
     end,
   })
   use({ "~/code/gruvbox.nvim" })
@@ -94,15 +94,10 @@ return require("packer").startup(function(use)
   use({ "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" })
 
   -- visual
+  use({ "vigoux/notifier.nvim" })
   use({ "projekt0n/github-nvim-theme" })
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "nvim-lualine/lualine.nvim" })
-  use({
-    "rcarriga/nvim-notify",
-    config = function()
-      vim.notify = require("notify")
-    end,
-  })
 
   -- buffer tabs at top
   use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })

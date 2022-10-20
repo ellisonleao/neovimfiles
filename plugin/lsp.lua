@@ -5,14 +5,13 @@ local mason_registry = require("mason-registry")
 local cmp_lsp = require("cmp_nvim_lsp")
 local nls = require("null-ls")
 local tb = require("telescope.builtin")
-local cap = vim.lsp.protocol.make_client_capabilities()
+local cap = cmp_lsp.default_capabilities()
 cap.textDocument.completion.completionItem.snippetSupport = true
 cap.textDocument.completion.completionItem.labelDetailsSupport = true
 cap.textDocument.completion.contextSupport = true
 cap.textDocument.completion.resolveSupport = {
   properties = { "edit", "documentation", "detail" },
 }
-cap = cmp_lsp.update_capabilities(cap)
 
 local lsp_servers = {
   "sumneko_lua", -- lua
@@ -102,19 +101,21 @@ local function on_attach(client, bufnr)
 end
 
 -- lua special setup
-local luadev = require("lua-dev").setup({
-  library = { plugins = { "neotest" }, types = true },
-  lspconfig = {
-    cmd = {
-      vim.fn.stdpath("data") .. "/mason/bin/lua-language-server",
-    },
-    Lua = {
-      format = false,
-    },
-    on_attach = on_attach,
-    capabilities = cap,
-  },
+require("neodev").setup({
+  library = { plugins = { "neotest", "plenary.nvim" }, types = true, setup_jsonls = false },
 })
+
+-- lspconfig = {
+-- 	cmd = {
+-- 		vim.fn.stdpath("data") .. "/mason/bin/lua-language-server",
+-- 	},
+-- 	Lua = {
+-- 		format = false,
+-- 	},
+-- 	on_attach = on_attach,
+-- 	capabilities = cap,
+-- },
+--
 
 mlspconfig.setup({ ensure_installed = lsp_servers })
 mlspconfig.setup_handlers({
@@ -122,7 +123,17 @@ mlspconfig.setup_handlers({
     lspconfig[server_name].setup({ on_attach = on_attach, capabilities = cap })
   end,
   ["sumneko_lua"] = function()
-    lspconfig.sumneko_lua.setup(luadev)
+    local settings = {
+      cmd = {
+        vim.fn.stdpath("data") .. "/mason/bin/lua-language-server",
+      },
+      Lua = {
+        format = false,
+      },
+      on_attach = on_attach,
+      capabilities = cap,
+    }
+    lspconfig.sumneko_lua.setup(settings)
   end,
 })
 
