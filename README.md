@@ -48,7 +48,7 @@ Below the list of the current plugins used in this configuration and how we are 
 
 ### Development
 
-- [lua-dev.nvim](https://github.com/folke/lua-dev.nvim) - Lua development plugin
+- [neodev.nvim](https://github.com/folke/neodev.nvim) - Lua development plugin
 
 ### Git
 

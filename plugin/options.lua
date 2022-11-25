@@ -1,5 +1,6 @@
 -- editor options
 local options = {
+  background = "light",
   mouse = "a",
   number = true,
   relativenumber = true,

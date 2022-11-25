@@ -94,13 +94,18 @@ return require("packer").startup(function(use)
   use({ "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" })
 
   -- visual
-  use({ "vigoux/notifier.nvim" })
   use({ "projekt0n/github-nvim-theme" })
-  use({ "kyazdani42/nvim-web-devicons" })
+  use({ "nvim-tree/nvim-web-devicons" })
   use({ "nvim-lualine/lualine.nvim" })
+  use({
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup({})
+    end,
+  })
 
   -- buffer tabs at top
-  use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
+  use({ "akinsho/bufferline.nvim", tag = "v3.*" })
 
   -- treesitter
   use({
