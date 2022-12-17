@@ -26,6 +26,6 @@ S = function()
     dir = string.gsub(dir, cfg .. "/lua/", "")
     R(dir, true)
   end
-  vim.cmd("source $MYVIMRC")
+  vim.cmd.source("$MYVIMRC")
   print("neovimfiles reloaded")
 end

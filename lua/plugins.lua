@@ -1,7 +1,7 @@
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = vim.api.nvim_create_augroup("PackerUserConfig", { clear = true }),
   pattern = "plugins.lua",
-  command = "source <afile> | PackerCompile profile=true",
+  command = "source <afile> | PackerCompile",
 })
 
 -- load plugins
@@ -20,19 +20,15 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "nvim-lua/telescope.nvim",
-    requires = { "nvim-lua/popup.nvim" },
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    requires = { "nvim-lua/plenary.nvim" },
   })
   use({ "folke/neodev.nvim" })
 
   -- git
-  use({
-    "TimUntersberger/neogit",
-    requires = {
-      "sindrets/diffview.nvim",
-    },
-  })
-
+  use({ "tpope/vim-fugitive" })
+  use({ "tpope/vim-rhubarb" })
   use({ "lewis6991/gitsigns.nvim" })
 
   -- testing
@@ -53,19 +49,22 @@ return require("packer").startup(function(use)
     config = function()
       require("dotenv").setup()
     end,
+    cond = vim.fn.isdirectory(vim.fn.expand("~/code/dotenv.nvim/")) == 1,
   })
   use({
     "~/code/glow.nvim",
     config = function()
       require("glow").setup()
     end,
+    cond = vim.fn.isdirectory(vim.fn.expand("~/code/glow.nvim/")) == 1,
   })
-  use({ "~/code/gruvbox.nvim" })
+  use({ "~/code/gruvbox.nvim", cond = vim.fn.isdirectory(vim.fn.expand("~/code/gruvbox.nvim/")) == 1 })
   use({
-    "ellisonleao/carbon-now.nvim",
+    "~/code/carbon-now.nvim",
     config = function()
       require("carbon-now").setup({ options = { theme = "nord", font_family = "JetBrains Mono" } })
     end,
+    cond = vim.fn.isdirectory(vim.fn.expand("~/code/carbon-now.nvim/")) == 1,
   })
 
   -- editor

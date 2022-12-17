@@ -34,6 +34,14 @@ local mappings = {
     end,
     opts,
   },
+  {
+    "n",
+    "<leader>H",
+    function()
+      require("telescope.builtin").help_tags()
+    end,
+    opts,
+  },
 }
 
 for _, map in pairs(mappings) do

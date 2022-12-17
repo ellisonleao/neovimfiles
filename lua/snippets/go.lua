@@ -7,14 +7,24 @@ local t = ls.text_node
 
 local snippets = {
   s("im", fmt([[import "{}"]], { i(1) })),
+  s(
+    "fnm",
+    fmt(
+      [[
+func main() {{
+    {}
+}}]],
+      { i(0) }
+    )
+  ),
   s("cos", fmt([[const {} = {}]], { i(1), i(2) })),
   s(
     "tys",
     fmt(
       [[
 type {} struct {{
-    {} 
-}}]]   ,
+    {}
+}}]],
       { i(1), i(0) }
     )
   ),
@@ -24,7 +34,7 @@ type {} struct {{
       [[
 type {} interface {{
     {} 
-}}]]   ,
+}}]],
       { i(1), i(0) }
     )
   ),
@@ -34,7 +44,7 @@ type {} interface {{
       [[
 for {} := range {} {{
     {}
-}}]]   ,
+}}]],
       { c(1, { t("key, val"), t("_, val") }), i(2), i(0) }
     )
   ),
@@ -44,7 +54,7 @@ for {} := range {} {{
       [[
 if err != nil {{
     return {}
-}}]]   ,
+}}]],
       { c(1, { t("err"), t("nil, err") }) }
     )
   ),

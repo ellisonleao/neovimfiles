@@ -6,8 +6,21 @@ local opts = { remap = false, silent = true }
 local mappings = {
   { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/plugins.lua<CR>]], opts }, -- quick edit plugins file
   { "n", "<leader>F", vim.lsp.buf.format, opts }, -- format shortcut
-  { "n", "<leader>U", [[<Cmd>PackerSync<CR>]], opts }, -- Update all current plugins
-  { "n", "<leader>R", S, opts }, -- reload all custom modules
+  {
+    "n",
+    "<leader>U",
+    function()
+      pcall(require("packer").sync) -- update packer
+      pcall(require("nvim-treesitter.install").update({ with_sync = true })) -- update treesitter parsers
+    end,
+    opts,
+  }, -- Update all current plugins
+  {
+    "n",
+    "<leader>R",
+    S,
+    opts,
+  }, -- reload all custom modules
   { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
   { "n", "<leader>d", [[<Cmd>bd<CR>]], opts }, -- close current buffer
   { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
