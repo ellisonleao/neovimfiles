@@ -105,18 +105,6 @@ require("neodev").setup({
   library = { plugins = { "neotest", "plenary.nvim" }, types = true, setup_jsonls = false },
 })
 
--- lspconfig = {
--- 	cmd = {
--- 		vim.fn.stdpath("data") .. "/mason/bin/lua-language-server",
--- 	},
--- 	Lua = {
--- 		format = false,
--- 	},
--- 	on_attach = on_attach,
--- 	capabilities = cap,
--- },
---
-
 mlspconfig.setup({ ensure_installed = lsp_servers })
 mlspconfig.setup_handlers({
   function(server_name)
@@ -129,6 +117,8 @@ mlspconfig.setup_handlers({
       },
       Lua = {
         format = false,
+        telemetry = { enable = false },
+        semantic = { enable = false },
       },
       on_attach = on_attach,
       capabilities = cap,
