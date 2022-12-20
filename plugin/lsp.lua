@@ -119,6 +119,7 @@ mlspconfig.setup_handlers({
         format = false,
         telemetry = { enable = false },
         semantic = { enable = false },
+        workspace = { checkThirdParty = false },
       },
       on_attach = on_attach,
       capabilities = cap,
