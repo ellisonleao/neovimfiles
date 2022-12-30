@@ -47,3 +47,6 @@ local mappings = {
 for _, map in pairs(mappings) do
   vim.keymap.set(unpack(map))
 end
+
+-- extensions
+require("telescope").load_extension("ui-select")
