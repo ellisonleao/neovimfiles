@@ -1,8 +1,7 @@
-if require("bootstrap")() then
-  return
-end
+-- bootstrap plugin system
+require("bootstrap")
 
--- plugins configs
+-- plugins and local configs
 require("plugins")
 
 -- Global functions

@@ -1,7 +1,4 @@
 -- global keymaps
-vim.g.mapleader = ","
-vim.g.maplocalleader = ","
-
 local opts = { remap = false, silent = true }
 local mappings = {
   { "n", "<leader>P", [[<Cmd>edit $HOME/.config/nvim/lua/plugins.lua<CR>]], opts }, -- quick edit plugins file
@@ -10,7 +7,7 @@ local mappings = {
     "n",
     "<leader>U",
     function()
-      pcall(require("packer").sync) -- update packer
+      pcall(require("lazy").sync) -- update packer
       pcall(require("nvim-treesitter.install").update({ with_sync = true })) -- update treesitter parsers
     end,
     opts,
@@ -18,7 +15,9 @@ local mappings = {
   {
     "n",
     "<leader>R",
-    S,
+    function()
+      S()
+    end,
     opts,
   }, -- reload all custom modules
   { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight

@@ -1,38 +1,5 @@
 ---@diagnostic disable: missing-parameter
 local neotest = require("neotest")
-
-local opts = { noremap = true, silent = true }
-local mappings = {
-  {
-    "n",
-    "<leader>t",
-    function()
-      neotest.run.run()
-    end,
-    opts,
-  }, -- call test for function in cursor
-  {
-    "n",
-    "<leader>tt",
-    function()
-      neotest.run.run(vim.fn.expand("%"))
-    end,
-    opts,
-  }, -- call test for current file
-  {
-    "n",
-    "<leader>ts",
-    function()
-      neotest.summary.toggle()
-    end,
-    opts,
-  },
-}
-
-for _, m in pairs(mappings) do
-  vim.keymap.set(unpack(m))
-end
-
 neotest.setup({
   adapters = {
     require("neotest-go"),

@@ -1,87 +1,246 @@
-vim.api.nvim_create_autocmd("BufWritePost", {
-  group = vim.api.nvim_create_augroup("PackerUserConfig", { clear = true }),
-  pattern = "plugins.lua",
-  command = "source <afile> | PackerCompile",
-})
+-- load global opts
+require("e.options")
+
+-- global keymaps
+require("e.keymaps")
+
+-- global autocmds
+require("e.autocmds")
+
+-- global filetype checks
+require("e.filetypes")
 
 -- load plugins
-return require("packer").startup(function(use)
-  use({ "wbthomason/packer.nvim" })
-  use({ "norcalli/nvim-colorizer.lua" })
-
-  -- plugin development and utils
-  use({
-    "nvim-lua/plenary.nvim",
+return require("lazy").setup({
+  -- visual
+  { "norcalli/nvim-colorizer.lua" },
+  { "nvim-tree/nvim-web-devicons" },
+  {
+    "projekt0n/github-nvim-theme",
+    lazy = false,
+    priority = 1000,
     config = function()
-      vim.keymap.set("n", "<leader>tp", function()
-        require("plenary.test_harness").test_directory("tests")
-      end, { noremap = true, silent = true })
+      require("github-theme").setup({ theme_style = "light", dark_float = true })
     end,
-  })
-
-  use({
+  },
+  {
+    "akinsho/bufferline.nvim",
+    lazy = false,
+    priority = 999,
+    version = "v3.*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("bufferline").setup({
+        options = {
+          separator_style = "slant",
+        },
+      })
+    end,
+    keys = {
+      {
+        "<leader>z",
+        function()
+          require("bufferline").cycle(-1)
+        end,
+      }, -- move to the previous buffer
+      {
+        "<leader>q",
+        function()
+          require("bufferline").cycle(-1)
+        end,
+      }, -- move to the previous buffer (same option, different key)
+      {
+        "<leader>x",
+        function()
+          require("bufferline").cycle(1)
+        end,
+      }, -- move to the next buffer
+      {
+        "<leader>w",
+        function()
+          require("bufferline").cycle(1)
+        end,
+      }, -- move to the next buffer (same option, different key)
+    },
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    config = function()
+      require("e.lualine")
+    end,
+  },
+  {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup()
+    end,
+  },
+  { "nvim-telescope/telescope-ui-select.nvim" },
+  {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
+    config = function()
+      require("e.telescope")
+    end,
     requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
-  })
-  use({ "folke/neodev.nvim" })
+    keys = {
+      {
+        "<leader>lg",
+        function()
+          require("telescope.builtin").live_grep()
+        end,
+      },
+      {
+        "<leader>ff",
+        function()
+          require("telescope.builtin").find_files({ hidden = true })
+        end,
+      },
+      {
+        "<leader>H",
+        function()
+          require("telescope.builtin").help_tags()
+        end,
+      },
+    },
+  },
+
+  -- plugin development and utils
+  {
+    "nvim-lua/plenary.nvim",
+    keys = {
+      {
+        "<leader>tp",
+        function()
+          require("plenary.test_harness").test_directory("tests")
+        end,
+      },
+    },
+  },
+
+  { "folke/neodev.nvim", ft = "lua" },
 
   -- git
-  use({ "tpope/vim-fugitive" })
-  use({ "tpope/vim-rhubarb" })
-  use({ "lewis6991/gitsigns.nvim" })
+  { "tpope/vim-fugitive" },
+  { "tpope/vim-rhubarb" },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
 
   -- testing
-  use({
+  {
     "nvim-neotest/neotest",
-    requires = {
+    lazy = true,
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-neotest/neotest-go",
       "nvim-neotest/neotest-plenary",
     },
-  })
+    config = function()
+      require("e.neotest")
+    end,
+    keys = {
+      {
+        "<leader>t",
+        function()
+          require("neotest").run.run()
+        end,
+      }, -- call test for function in cursor
+      {
+        "<leader>tt",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+      }, -- call test for current file
+      {
+        "<leader>ts",
+        function()
+          require("neotest").summary.toggle()
+        end,
+      },
+    },
+  },
 
   -- personal
-  use({
-    "~/code/dotenv.nvim",
+  {
+    dir = "~/code/dotenv.nvim",
     config = function()
       require("dotenv").setup()
     end,
-    cond = vim.fn.isdirectory(vim.fn.expand("~/code/dotenv.nvim/")) == 1,
-  })
-  use({
-    "~/code/glow.nvim",
+  },
+  {
+    dir = "~/code/glow.nvim",
     config = function()
       require("glow").setup()
     end,
-    cond = vim.fn.isdirectory(vim.fn.expand("~/code/glow.nvim/")) == 1,
-  })
-  use({ "~/code/gruvbox.nvim", cond = vim.fn.isdirectory(vim.fn.expand("~/code/gruvbox.nvim/")) == 1 })
-  use({
-    "~/code/carbon-now.nvim",
+  },
+  { dir = "~/code/gruvbox.nvim" },
+  {
+    dir = "~/code/carbon-now.nvim",
     config = function()
       require("carbon-now").setup({ options = { theme = "nord", font_family = "JetBrains Mono" } })
     end,
-    cond = vim.fn.isdirectory(vim.fn.expand("~/code/carbon-now.nvim/")) == 1,
-  })
+  },
 
   -- editor
-  use({
+  {
     "numToStr/Comment.nvim",
     config = function()
       require("Comment").setup()
     end,
-  })
+  },
 
   -- lsp, completion, linting and snippets
-  use({ "jose-elias-alvarez/null-ls.nvim" })
-
-  use({ "L3MON4D3/LuaSnip" })
-  use({
+  {
+    "L3MON4D3/LuaSnip",
+    config = function()
+      require("e.luasnip")
+    end,
+    keys = {
+      {
+        "<C-k>",
+        function()
+          if require("luasnip").expand_or_jumpable() then
+            require("luasnip").expand_or_jump()
+          end
+        end,
+        mode = { "i", "s" },
+      },
+      {
+        "<C-j>",
+        function()
+          if require("luasnip").jumpable(-1) then
+            require("luasnip").jump(-1)
+          end
+        end,
+        mode = { "i", "s" },
+      },
+      {
+        "<C-l>",
+        function()
+          if require("luasnip").choice_active() then
+            require("luasnip").change_choice(1)
+          end
+        end,
+        mode = "i",
+      },
+      {
+        "<C-u>",
+        function()
+          require("luasnip.extras.select_choice")
+        end,
+        mode = "i",
+      },
+    },
+  },
+  {
     "hrsh7th/nvim-cmp",
-    requires = {
+    dependencies = {
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
@@ -89,27 +248,30 @@ return require("packer").startup(function(use)
       "hrsh7th/cmp-nvim-lua",
       "saadparwaiz1/cmp_luasnip",
     },
-  })
-  use({ "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" })
-
-  -- visual
-  use({ "projekt0n/github-nvim-theme" })
-  use({ "nvim-tree/nvim-web-devicons" })
-  use({ "nvim-lualine/lualine.nvim" })
-  use({
-    "j-hui/fidget.nvim",
     config = function()
-      require("fidget").setup({})
+      require("e.cmp")
+      require("e.cmp_gh_issue")
     end,
-  })
-
-  -- buffer tabs at top
-  use({ "akinsho/bufferline.nvim", tag = "v3.*" })
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    dependencies = {
+      { "williamboman/mason-lspconfig.nvim" },
+      { "neovim/nvim-lspconfig" },
+      { "williamboman/mason.nvim" },
+    },
+    config = function()
+      require("e.lsp")
+    end,
+  },
 
   -- treesitter
-  use({
+  {
     "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/playground",
-    "nvim-treesitter/nvim-treesitter-textobjects",
-  })
-end)
+    config = function()
+      require("e.treesitter")
+    end,
+  },
+  { "nvim-treesitter/playground", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+})
