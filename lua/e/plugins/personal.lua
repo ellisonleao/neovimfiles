@@ -10,7 +10,7 @@ return {
     config = function()
       require("glow").setup()
     end,
-    cmd = "Glow"
+    cmd = "Glow",
   },
   { dir = "~/code/gruvbox.nvim" },
   {

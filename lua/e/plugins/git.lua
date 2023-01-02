@@ -63,9 +63,10 @@ local setup = function()
 end
 
 return {
-  { "tpope/vim-fugitive" },
-  { "tpope/vim-rhubarb" },
+  { "tpope/vim-fugitive", cmd="Git" },
+  { "tpope/vim-rhubarb", cmd="GBrowse" },
   {
+    event = "BufReadPre",
     "lewis6991/gitsigns.nvim",
     config = setup,
   },

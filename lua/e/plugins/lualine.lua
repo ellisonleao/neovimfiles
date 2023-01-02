@@ -1,4 +1,4 @@
-local setup = function() 
+local setup = function()
   local lualine = require("lualine")
 
   -- Lsp server name .
@@ -67,6 +67,7 @@ end
 
 return {
   {
+    event = "VeryLazy",
     "nvim-lualine/lualine.nvim",
     config = setup,
   },

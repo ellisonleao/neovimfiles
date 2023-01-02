@@ -1,9 +1,10 @@
 return {
-   {
-     "numToStr/Comment.nvim",
+  {
+    event = "VeryLazy",
+    "numToStr/Comment.nvim",
     lazy = false,
-     config = function()
-       require("Comment").setup()
-     end,
-   }
+    config = function()
+      require("Comment").setup()
+    end,
+  },
 }

@@ -1,4 +1,4 @@
-local setup_cmp = function() 
+local setup_cmp = function()
   -- nvim-cmp configs
   local cmp = require("cmp")
   local luasnip = require("luasnip")
@@ -146,7 +146,7 @@ local setup_cmp = function()
   require("cmp").register_source("gh_issues", source.new())
 end
 
-local setup_luasnip = function() 
+local setup_luasnip = function()
   local ls = require("luasnip")
   local types = require("luasnip.util.types")
 
@@ -210,6 +210,7 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-buffer",

@@ -1,4 +1,4 @@
-local setup = function() 
+local setup = function()
   ---@diagnostic disable: missing-parameter
   local neotest = require("neotest")
   neotest.setup({
