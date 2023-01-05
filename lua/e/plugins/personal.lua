@@ -18,5 +18,8 @@ return {
     config = function()
       require("carbon-now").setup({ options = { theme = "nord", font_family = "JetBrains Mono" } })
     end,
+    keys = {
+      { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" }, -- create carbon.now.sh snippet
+    },
   },
 }

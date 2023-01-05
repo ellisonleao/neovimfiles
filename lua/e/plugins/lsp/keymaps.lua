@@ -9,7 +9,7 @@ function M.on_attach(_, bufnr)
     { "n", "gr", vim.lsp.buf.rename, opts },
     { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
     { "n", "<leader>gR", tb.lsp_references, opts },
-    { "n", "<leader>lf", require("e.plugins.lsp.format").format, opts },
+    { "n", "<leader>F", require("e.plugins.lsp.format").format, opts },
     { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
     { "n", "[e", vim.diagnostic.goto_next, opts },
     { "n", "]e", vim.diagnostic.goto_prev, opts },
