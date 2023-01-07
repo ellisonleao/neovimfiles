@@ -1,25 +1,12 @@
 return {
-  {
-    dir = "~/code/dotenv.nvim",
-    config = function()
-      require("dotenv").setup()
-    end,
-  },
-  {
-    dir = "~/code/glow.nvim",
-    config = function()
-      require("glow").setup()
-    end,
-    cmd = "Glow",
-  },
+  { dir = "~/code/dotenv.nvim", config = true},
+  { dir = "~/code/glow.nvim", config = true, cmd = "Glow" },
   { dir = "~/code/gruvbox.nvim" },
   {
     dir = "~/code/carbon-now.nvim",
-    config = function()
-      require("carbon-now").setup({ options = { theme = "nord", font_family = "JetBrains Mono" } })
-    end,
+    config = { options = { theme = "nord", font_family = "JetBrains Mono" } },
     keys = {
-      { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" }, -- create carbon.now.sh snippet
+      { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" },
     },
   },
 }
