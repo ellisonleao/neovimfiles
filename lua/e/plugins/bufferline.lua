@@ -5,13 +5,11 @@ return {
     priority = 999,
     version = "v3.*",
     dependencies = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require("bufferline").setup({
-        options = {
-          separator_style = "slant",
-        },
-      })
-    end,
+    opts = {
+      options = {
+        separator_style = "slant",
+      },
+    },
     keys = {
       {
         "<leader>z",

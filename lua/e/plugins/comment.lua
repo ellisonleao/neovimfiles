@@ -1,10 +1,17 @@
 return {
+  { "JoosepAlviste/nvim-ts-context-commentstring" },
   {
+    "echasnovski/mini.comment",
     event = "VeryLazy",
-    "numToStr/Comment.nvim",
-    lazy = false,
-    config = function()
-      require("Comment").setup()
+    opts = {
+      hooks = {
+        pre = function()
+          require("ts_context_commentstring.internal").update_commentstring({})
+        end,
+      },
+    },
+    config = function(_, opts)
+      require("mini.comment").setup(opts)
     end,
   },
 }

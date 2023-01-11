@@ -4,17 +4,14 @@ local t = ls.text_node
 local c = ls.choice_node
 local p = require("luasnip.extras").partial
 
-local calculate_comment_string = require("Comment.ft").calculate
-local region = require("Comment.utils").get_region
-
-local get_comment_string = function()
-  local line_comment = 1
-  local cstring = calculate_comment_string({ ctype = line_comment, range = region() }) or ""
-  local cstring_table = vim.split(cstring, "%s", { plain = true, trimempty = true })
-  if #cstring_table == 0 then
+local function get_comment_string()
+  local f = require("ts_context_commentstring.internal").calculate_commentstring()
+  local splitted = vim.split(f, "%s", {})
+  if #splitted == 0 then
     return ""
   end
-  return cstring_table[1]
+
+  return splitted[1]
 end
 
 local snippets = {

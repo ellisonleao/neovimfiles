@@ -1,32 +1,26 @@
-local setup = function()
-  -- search module
-  local telescope = require("telescope")
-  telescope.setup({
-    defaults = {
-      vimgrep_arguments = {
-        "rg",
-        "-L",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
-      },
-    },
-  })
-
-  -- extensions
-  require("telescope").load_extension("ui-select")
-end
-
 return {
-  { "nvim-telescope/telescope-ui-select.nvim" },
   {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
-    config = setup,
+    opts = {
+      defaults = {
+        layout_strategy = "horizontal",
+        layout_config = { prompt_position = "top" },
+        sorting_strategy = "ascending",
+        winblend = 0,
+      },
+    },
+    config = function(_, opts)
+      local t = require("telescope")
+      t.setup(opts)
+      t.load_extension("ui-select")
+      t.load_extension("fzf")
+    end,
     cmd = "Telescope",
+    dependencies = {
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
+    },
     requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
     keys = {
       {

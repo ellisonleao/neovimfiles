@@ -17,6 +17,7 @@ local setup = function()
       "toml",
       "markdown",
     },
+    context_commentstring = { enable = true, enable_autocmd = false },
     textobjects = {
       select = {
         enable = true,
@@ -76,5 +77,11 @@ return {
       { "<leader>hg", vim.cmd.TSHighlightCapturesUnderCursor }, -- highlight color groups under cursor
     },
   },
-  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter/nvim-treesitter" } },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    init = function()
+      require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
+    end,
+  },
 }

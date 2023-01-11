@@ -30,7 +30,7 @@ end
 return {
   {
     "nvim-neotest/neotest",
-    lazy = true,
+    cmd = "Neotest",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",

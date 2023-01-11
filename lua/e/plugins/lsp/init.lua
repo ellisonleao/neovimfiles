@@ -34,9 +34,9 @@ return {
           })
         end,
       },
-      { "mason-org/mason.nvim", config = true, cmd = "Mason" },
+      { "williamboman/mason.nvim", config = true, cmd = "Mason" },
       { "nvim-telescope/telescope.nvim" },
-      { "mason-org/mason-lspconfig.nvim", config = { automatic_installation = true } },
+      { "williamboman/mason-lspconfig.nvim", config = { automatic_installation = true } },
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()

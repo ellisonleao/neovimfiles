@@ -1,5 +1,5 @@
 return {
-  { dir = "~/code/dotenv.nvim", config = true},
+  { dir = "~/code/dotenv.nvim", config = true, cmd = { "Dotenv", "DotenvGet" } },
   { dir = "~/code/glow.nvim", config = true, cmd = "Glow" },
   { dir = "~/code/gruvbox.nvim" },
   {
@@ -8,5 +8,6 @@ return {
     keys = {
       { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" },
     },
+    cmd = "CarbonNow",
   },
 }
