@@ -5,7 +5,7 @@ return {
   {
     version = false,
     dir = "~/code/carbon-now.nvim",
-    config = { options = { theme = "nord", font_family = "JetBrains Mono" } },
+    opts = { options = { theme = "nord", font_family = "JetBrains Mono" } },
     keys = {
       { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" },
     },

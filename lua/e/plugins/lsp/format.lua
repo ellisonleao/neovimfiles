@@ -22,9 +22,7 @@ function M.on_attach(client, buf)
       group = vim.api.nvim_create_augroup("LspFormat", {}),
       buffer = buf,
       callback = function()
-        if M.autoformat then
-          M.format()
-        end
+        M.format()
       end,
     })
   end
