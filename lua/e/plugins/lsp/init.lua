@@ -2,6 +2,7 @@ return {
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
+    version = false,
     event = "BufReadPre",
     dependencies = {
       {
@@ -21,8 +22,9 @@ return {
       -- installing tools
       local tools = {
         "stylua",
-        "prettier",
         "black",
+        "flake8",
+        "prettier",
         "shfmt",
         "shellcheck",
         "yamllint",
@@ -49,26 +51,47 @@ return {
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           require("e.plugins.lsp.format").on_attach(client, buffer)
           require("e.plugins.lsp.keymaps").on_attach(client, buffer)
-
-          -- highlight code references
-          if client.supports_method("textDocument/documentHighlight") then
-            local lsp_highlight = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
-            vim.api.nvim_create_autocmd("CursorHold", {
-              group = lsp_highlight,
-              buffer = buffer,
-              callback = vim.lsp.buf.document_highlight,
-            })
-            vim.api.nvim_create_autocmd("CursorMoved", {
-              buffer = buffer,
-              group = lsp_highlight,
-              callback = vim.lsp.buf.clear_references,
-            })
-          end
         end,
       })
 
+      -- lsp config info
+      vim.api.nvim_create_user_command("LspConfig", function()
+        local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+        local config
+        for _, client in ipairs(clients) do
+          if client.name ~= "null-ls" then
+            config = client.config
+          end
+        end
+        P(config)
+      end, { nargs = 0 })
+
       -- setup servers
-      local servers = require("e.plugins.lsp.servers")
+      local servers = {
+        sumneko_lua = {
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+              },
+              completion = {
+                callSnippet = "Replace",
+              },
+              format = { enable = false },
+            },
+          },
+        },
+        pyright = {},
+        tsserver = {},
+        bashls = {},
+        yamlls = {},
+        jsonls = {},
+        sqls = {},
+        terraformls = {},
+        gopls = {},
+        dockerls = {},
+      }
+
       require("mason-lspconfig").setup({ ensure_installed = vim.tbl_keys(servers) })
       require("mason-lspconfig").setup_handlers({
         function(server)
@@ -117,6 +140,7 @@ return {
             extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
           }),
           diagnostics.shellcheck,
+          diagnostics.flake8,
           actions.shellcheck,
         },
       }

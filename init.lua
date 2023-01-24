@@ -1,1 +1,6 @@
-require("e.configs")
+require("e.configs.autocmds")
+require("e.configs.filetypes")
+require("e.configs.globals")
+require("e.configs.options")
+require("e.configs.keymaps")
+require("e.configs.lazy")

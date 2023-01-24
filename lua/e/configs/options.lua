@@ -30,6 +30,7 @@ local options = {
   swapfile = false,
   expandtab = true,
   foldlevel = 99,
+  termguicolors = true,
 }
 
 for k, v in pairs(options) do

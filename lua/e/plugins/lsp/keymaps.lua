@@ -4,6 +4,9 @@ function M.on_attach(_, bufnr)
   local tb = require("telescope.builtin")
   local opts = { silent = true, noremap = true, buffer = bufnr }
   local mappings = {
+    { "n", "<leader>li", vim.cmd.LspInfo, opts },
+    { "n", "<leader>ls", vim.cmd.LspStop, opts },
+    { "n", "<leader>lr", vim.cmd.LspRestart, opts },
     { "n", "gD", vim.lsp.buf.declaration, opts },
     { "n", "gd", tb.lsp_definitions, opts },
     { "n", "gr", vim.lsp.buf.rename, opts },

@@ -5,6 +5,10 @@ return {
   { "tpope/vim-rhubarb", cmd = "GBrowse" },
   {
     event = "BufReadPre",
+    cond = function()
+      local dirs = vim.fs.find(".git", { upward = true, type = "directory" })
+      return #dirs > 0
+    end,
     "lewis6991/gitsigns.nvim",
     opts = {
       numhl = true,
@@ -67,4 +71,5 @@ return {
       end,
     },
   },
+  { "pwntester/octo.nvim", config = true, cmd = "Octo" },
 }
