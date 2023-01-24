@@ -81,7 +81,15 @@ return {
             },
           },
         },
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "off",
+              },
+            },
+          },
+        },
         tsserver = {},
         bashls = {},
         yamlls = {},
