@@ -68,7 +68,7 @@ return {
 
       -- setup servers
       local servers = {
-        sumneko_lua = {
+        lua_ls = {
           settings = {
             Lua = {
               workspace = {
@@ -141,6 +141,7 @@ return {
             end,
           }),
           formatting.black,
+          formatting.isort,
           formatting.terraform_fmt,
           formatting.gofmt,
           formatting.pg_format,

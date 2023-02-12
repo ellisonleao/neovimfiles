@@ -21,7 +21,7 @@ changes and experimenting new things. Also if you enjoy live coding sessions, pl
 
 **Prerequisites**
 
-- Neovim 0.7+
+- Neovim 0.8+
 
 Steps:
 

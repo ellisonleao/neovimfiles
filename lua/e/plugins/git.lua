@@ -1,14 +1,16 @@
 local bar = "┃"
 
+local has_git_dir = function()
+  local dirs = vim.fs.find(".git", { upward = true, type = "directory" })
+  return #dirs > 0
+end
+
 return {
-  { "tpope/vim-fugitive", cmd = "Git" },
+  { "tpope/vim-fugitive", cond = has_git_dir },
   { "tpope/vim-rhubarb", cmd = "GBrowse" },
   {
     event = "BufReadPre",
-    cond = function()
-      local dirs = vim.fs.find(".git", { upward = true, type = "directory" })
-      return #dirs > 0
-    end,
+    cond = has_git_dir,
     "lewis6991/gitsigns.nvim",
     opts = {
       numhl = true,

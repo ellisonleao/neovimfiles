@@ -2,7 +2,9 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+      },
       indent = { enable = true },
       ensure_installed = {
         "go",
@@ -14,7 +16,7 @@ return {
         "javascript",
         "bash",
         "typescript",
-        "hcl",
+        "terraform",
         "make",
         "toml",
         "markdown",

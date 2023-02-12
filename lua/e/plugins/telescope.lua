@@ -52,7 +52,7 @@ return {
     keys = {
       { "<leader>lg", telescope("live_grep") },
       { "<leader>ff", telescope("files") },
-      { "<leader>fC", telescope("files", { cwd = vim.env.HOME .. "/code/" }) },
+      { "<leader>fC", telescope("files", { cwd = vim.env.HOME .. "/code/", hidden = true }) },
       {
         "<leader>H",
         function()

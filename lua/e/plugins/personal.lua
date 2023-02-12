@@ -1,7 +1,6 @@
 return {
   { dir = "~/code/dotenv.nvim", config = true, cmd = { "Dotenv", "DotenvGet" } },
-  { dir = "~/code/glow.nvim", config = true, cmd = "Glow" },
-  { dir = "~/code/gruvbox.nvim" },
+  { dir = "~/code/glow.nvim", opts = { border = "rounded", width = 120 } },
   {
     dir = "~/code/carbon-now.nvim",
     opts = { options = { theme = "nord", font_family = "JetBrains Mono" } },
