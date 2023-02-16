@@ -1,5 +1,5 @@
 -- global keymaps
-local opts = { remap = false, silent = true }
+local opts = { silent = true }
 local mappings = {
   {
     "n",
@@ -19,6 +19,10 @@ local mappings = {
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
   { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list
   { "n", "<leader>p", [[<Cmd>cp<CR>]], opts }, -- move to prev item in quickfix list
+  { "n", "<C-d>", "<C-d>zz", opts },
+  { "n", "<C-u>", "<C-u>zz", opts },
+  { "n", "n", "nzzzv", opts },
+  { "n", "N", "Nzzzv", opts },
 }
 
 for _, map in pairs(mappings) do
