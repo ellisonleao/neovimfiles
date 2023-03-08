@@ -38,7 +38,6 @@ for k, v in pairs(options) do
 end
 
 vim.g.python3_host_prog = "python"
-vim.g["test#strategy"] = "neovim"
 vim.g.omni_sql_default_compl_type = "syntax"
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25

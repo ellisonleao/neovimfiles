@@ -7,7 +7,7 @@ end
 
 return {
   { "tpope/vim-fugitive", cond = has_git_dir },
-  { "tpope/vim-rhubarb", cmd = "GBrowse" },
+  { "tpope/vim-rhubarb", cond = has_git_dir, dependencies = { "tpope/vim-fugitive" } },
   {
     event = "BufReadPre",
     cond = has_git_dir,
