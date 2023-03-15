@@ -7,6 +7,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 return {
   s("im", fmt([[import "{}"]], { i(1) })),
+  s("bp", fmt([[breakpoint(){}]], { i(1) })),
   s(
     "ifm",
     fmt(
