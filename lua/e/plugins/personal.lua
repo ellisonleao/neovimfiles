@@ -9,5 +9,4 @@ return {
     },
     cmd = "CarbonNow",
   },
-  { dir = "~/code/gruvbox.nvim", opts = { italic = { strings = false } } },
 }

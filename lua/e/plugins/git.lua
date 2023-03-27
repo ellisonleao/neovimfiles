@@ -73,5 +73,4 @@ return {
       end,
     },
   },
-  { "pwntester/octo.nvim", config = true, cmd = "Octo" },
 }

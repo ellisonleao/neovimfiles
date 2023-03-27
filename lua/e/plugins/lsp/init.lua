@@ -23,7 +23,7 @@ return {
       local tools = {
         "stylua",
         "black",
-        "flake8",
+        "ruff",
         "prettier",
         "shfmt",
         "shellcheck",
@@ -92,7 +92,13 @@ return {
         },
         tsserver = {},
         bashls = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
         jsonls = {},
         sqls = {},
         terraformls = {},
@@ -149,7 +155,7 @@ return {
             extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
           }),
           diagnostics.shellcheck,
-          diagnostics.flake8,
+          diagnostics.ruff,
           actions.shellcheck,
         },
       }
