@@ -23,6 +23,8 @@ local mappings = {
   { "n", "<C-u>", "<C-u>zz", opts },
   { "n", "n", "nzzzv", opts },
   { "n", "N", "Nzzzv", opts },
+  { "n", "<leader>ic", "<Cmd>Inspect<CR>", opts },
+  { "n", "<leader>it", "<Cmd>InspectTree<CR>", opts },
 }
 
 for _, map in pairs(mappings) do

@@ -1,11 +1,16 @@
 return {
   {
+    dir = "~/code/gruvbox.nvim",
+    config = function()
+      require("gruvbox").setup()
+    end,
+  },
+  {
     "projekt0n/github-nvim-theme",
-    tag = "v0.0.7",
+    branch = "0.0.x",
     lazy = false,
     priority = 1000,
     opts = {
-      theme_style = "light",
       dark_float = true,
       overrides = function()
         return {
@@ -14,7 +19,9 @@ return {
       end,
     },
     config = function(_, opts)
+      vim.opt.termguicolors = true
       require("github-theme").setup(opts)
+      vim.cmd.colorscheme("github_light")
     end,
   },
 }

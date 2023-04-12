@@ -16,7 +16,7 @@ return {
         "javascript",
         "bash",
         "typescript",
-        "terraform",
+        "hcl",
         "make",
         "toml",
         "markdown",
@@ -63,14 +63,6 @@ return {
     end,
     build = ":TSUpdate",
     event = "BufReadPost",
-  },
-  {
-    "nvim-treesitter/playground",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
-    keys = {
-      { "<leader>hg", vim.cmd.TSHighlightCapturesUnderCursor }, -- highlight color groups under cursor
-    },
   },
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 }

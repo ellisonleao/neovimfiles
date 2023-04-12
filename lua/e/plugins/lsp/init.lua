@@ -100,7 +100,6 @@ return {
           },
         },
         jsonls = {},
-        sqls = {},
         terraformls = {},
         gopls = {},
         dockerls = {},
