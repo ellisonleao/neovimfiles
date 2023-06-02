@@ -15,6 +15,7 @@ local mappings = {
   { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
   { "n", "<leader>h", [[<Cmd>split<CR>]], opts }, -- create horizontal split
   { "n", "<leader>v", [[<Cmd>vsplit<CR>]], opts }, -- create vertical split
+  { "n", "<CR>", "ciw", opts }, -- Enter on normal mode will remove the current word and enter insert mode
   { "v", "<", [[<gv]], opts }, -- move code forward in visual mode
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
   { "n", "<leader>n", [[<Cmd>cn<CR>]], opts }, -- move to next item in quickfix list

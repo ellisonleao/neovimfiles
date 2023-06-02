@@ -7,7 +7,7 @@ return {
       vim.g["test#strategy"] = "neovim"
       vim.g["test#neovim#term_position"] = "vert"
 
-      local cmd = "pytest -v"
+      local cmd = "pytest -vv"
       if vim.fs.find("bin/run.sh", {}) then
         cmd = "./bin/run.sh " .. cmd
       end

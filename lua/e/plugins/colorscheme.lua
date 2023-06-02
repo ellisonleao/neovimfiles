@@ -1,10 +1,11 @@
 return {
-  {
-    dir = "~/code/gruvbox.nvim",
-    config = function()
-      require("gruvbox").setup()
-    end,
-  },
+  -- {
+  --   dir = "~/code/gruvbox.nvim",
+  --   config = function()
+  --     require("gruvbox").setup()
+  --     vim.cmd.colorscheme("gruvbox")
+  --   end,
+  -- },
   {
     "projekt0n/github-nvim-theme",
     branch = "0.0.x",
