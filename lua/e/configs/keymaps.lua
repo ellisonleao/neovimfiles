@@ -15,6 +15,10 @@ local mappings = {
   { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
   { "n", "<leader>h", [[<Cmd>split<CR>]], opts }, -- create horizontal split
   { "n", "<leader>v", [[<Cmd>vsplit<CR>]], opts }, -- create vertical split
+  -- { "n", "<left>", "<cmd>vertical resize +5<CR>", opts }, -- resize vertical buffer
+  -- { "n", "<right>", "<cmd>vertical resize -5<CR>", opts }, -- resize vertical buffer
+  -- { "n", "<up>", "<cmd>resize -5<CR>", opts }, -- resize horizontal buffer
+  -- { "n", "<down>", "<cmd>resize +5<CR>", opts }, -- resize horizontal buffer
   { "n", "<CR>", "ciw", opts }, -- Enter on normal mode will remove the current word and enter insert mode
   { "v", "<", [[<gv]], opts }, -- move code forward in visual mode
   { "v", ">", [[>gv]], opts }, -- move code backwards in visual mode
