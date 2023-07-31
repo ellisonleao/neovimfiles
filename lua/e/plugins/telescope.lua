@@ -50,6 +50,7 @@ return {
       { "nvim-telescope/telescope-ui-select.nvim" },
     },
     keys = {
+      { "<leader><leader>", telescope("buffers") },
       { "<leader>lg", telescope("live_grep") },
       { "<leader>ff", telescope("files") },
       { "<leader>fC", telescope("files", { cwd = vim.env.HOME .. "/code/", hidden = true }) },

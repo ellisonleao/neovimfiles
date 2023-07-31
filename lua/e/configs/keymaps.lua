@@ -10,7 +10,7 @@ local mappings = {
     end,
     opts,
   }, -- Update all current plugins
-  { "n", "<leader>,", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
+  { "n", "<leader>cs", [[<Cmd>noh<CR>]], opts }, -- clear search highlight
   { "n", "<leader>d", [[<Cmd>bd!<CR>]], opts }, -- close current buffer
   { "n", "<leader>c", [[<Cmd>cclose<CR>]], opts }, -- close quickfix list
   { "n", "<leader>h", [[<Cmd>split<CR>]], opts }, -- create horizontal split
