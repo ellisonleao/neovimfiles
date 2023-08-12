@@ -7,6 +7,7 @@ function M.format()
 
   vim.lsp.buf.format({
     bufnr = buf,
+    timeout_ms = 2000,
     filter = function(client)
       if have_nls then
         return client.name == "null-ls"
