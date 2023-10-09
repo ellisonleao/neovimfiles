@@ -1,11 +1,12 @@
 return {
   {
-    dir = "~/code/gruvbox.nvim",
-    config = function()
-      require("gruvbox").setup()
-      -- vim.cmd.colorscheme("gruvbox")
-    end,
+    "ellisonleao/gruvbox.nvim",
+    dev = true,
+    priority = 1000,
+    opts = {},
+    config = true,
   },
+  { "sainnhe/gruvbox-material" },
   {
     "projekt0n/github-nvim-theme",
     branch = "0.0.x",
@@ -13,11 +14,6 @@ return {
     priority = 1000,
     opts = {
       dark_float = true,
-      overrides = function()
-        return {
-          BufferLineBackground = {},
-        }
-      end,
     },
     config = function(_, opts)
       vim.opt.termguicolors = true

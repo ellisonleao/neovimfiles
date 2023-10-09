@@ -1,12 +1,14 @@
 return {
-  { dir = "~/code/dotenv.nvim", config = true, cmd = { "Dotenv", "DotenvGet" } },
-  { dir = "~/code/glow.nvim", opts = { border = "rounded", width = 120 }, cmd = "Glow" },
+  { "ellisonleao/dotenv.nvim", dev = true, config = true, cmd = { "Dotenv", "DotenvGet" } },
+  { "ellisonleao/glow.nvim", dev = true, opts = { border = "rounded", width = 120 }, cmd = "Glow" },
   {
-    dir = "~/code/carbon-now.nvim",
+    "ellisonleao/carbon-now.nvim",
+    dev = true,
     opts = { options = { theme = "One Light", font_family = "JetBrains Mono" } },
     keys = {
       { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" },
     },
+    config = true,
     cmd = "CarbonNow",
   },
 }

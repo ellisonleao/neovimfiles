@@ -20,7 +20,7 @@ end
 function M.on_attach(client, buf)
   if client.supports_method("textDocument/formatting") then
     vim.api.nvim_create_autocmd("BufWritePre", {
-      group = vim.api.nvim_create_augroup("LspFormat", {}),
+      group = vim.api.nvim_create_augroup("LspFormat", { clear = true }),
       buffer = buf,
       callback = function()
         M.format()

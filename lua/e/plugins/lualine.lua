@@ -1,37 +1,36 @@
--- Lsp server name .
-local function lsp()
-  return {
-    function()
-      local msg = "No Active Lsp"
-      local ft = vim.bo.filetype
-      local clients = vim.lsp.get_active_clients()
-      if next(clients) == nil then
-        return msg
+local function lsp_clients()
+  return require("lsp-progress").progress({
+    format = function(messages)
+      local active_clients = vim.lsp.get_active_clients()
+      if #messages > 0 then
+        return " LSP:" .. table.concat(messages, " ")
       end
-
-      local clients_output = {}
-      for _, client in ipairs(clients) do
-        local filetypes = client.config.filetypes
-        if filetypes and vim.fn.index(filetypes, ft) ~= -1 then
-          table.insert(clients_output, client.name)
+      local client_names = {}
+      for i, client in ipairs(active_clients) do
+        if client and client.name ~= "" then
+          table.insert(client_names, "[" .. client.name .. "]")
         end
       end
-
-      if #clients_output > 0 then
-        return table.concat(clients_output, "/")
-      else
-        return msg
-      end
+      return " LSP:" .. table.concat(client_names, " ")
     end,
-    icon = "LSP:",
-    color = { gui = "bold" },
-  }
+  })
 end
 
 return {
   {
+    "linrongbin16/lsp-progress.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lsp-progress").setup()
+    end,
+  },
+  {
     event = "VeryLazy",
     "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "linrongbin16/lsp-progress.nvim",
+    },
     opts = {
       options = {
         theme = "auto",
@@ -43,7 +42,7 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = {
-          lsp(),
+          lsp_clients,
           "branch",
           { "diff", symbols = { added = " ", modified = "柳 ", removed = " " } },
           {
@@ -68,6 +67,12 @@ return {
     },
     config = function(_, opts)
       require("lualine").setup(opts)
+      -- listen lsp-progress event and refresh lualine
+      vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+      vim.api.nvim_create_autocmd("User LspProgressStatusUpdated", {
+        group = "lualine_augroup",
+        callback = require("lualine").refresh,
+      })
     end,
   },
 }

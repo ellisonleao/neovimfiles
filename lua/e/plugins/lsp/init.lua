@@ -23,6 +23,8 @@ return {
       local tools = {
         "stylua",
         "black",
+        "autoflake",
+        "isort",
         "ruff",
         "prettier",
         "shfmt",
@@ -43,7 +45,11 @@ return {
       })
 
       -- lspconfig
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities()
+      )
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -103,6 +109,7 @@ return {
         terraformls = {},
         gopls = {},
         dockerls = {},
+        rust_analyzer = {},
       }
 
       require("mason-lspconfig").setup({ ensure_installed = vim.tbl_keys(servers) })
@@ -116,9 +123,9 @@ return {
     end,
   },
 
-  -- formatters
+  -- formatters, linters
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = "BufReadPre",
     opts = function()
       local nls = require("null-ls")
@@ -148,6 +155,7 @@ return {
           formatting.black,
           formatting.isort,
           formatting.terraform_fmt,
+          formatting.autoflake,
           formatting.gofmt,
           formatting.pg_format,
           diagnostics.yamllint.with({

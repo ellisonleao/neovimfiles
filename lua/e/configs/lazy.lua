@@ -13,6 +13,10 @@ vim.opt.rtp:prepend(lazypath)
 
 return require("lazy").setup("e.plugins", {
   defaults = { version = false },
+  dev = {
+    path = vim.env.HOME .. "/code",
+  },
+  change_detection = { notify = false },
   performance = {
     rtp = {
       disabled_plugins = {
