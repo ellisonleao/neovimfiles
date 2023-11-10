@@ -55,8 +55,43 @@ return {
         callback = function(args)
           local buffer = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
-          require("e.plugins.lsp.format").on_attach(client, buffer)
-          require("e.plugins.lsp.keymaps").on_attach(client, buffer)
+
+          -- format on save
+          if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = vim.api.nvim_create_augroup("LspFormat", { clear = true }),
+              buffer = buffer,
+              callback = function(opts)
+                vim.lsp.buf.format({
+                  bufnr = opts.buf,
+                  timeout_ms = 2000,
+                })
+              end,
+            })
+          end
+
+          -- keymaps
+          local tb = require("telescope.builtin")
+          local opts = { silent = true, noremap = true, buffer = buffer }
+          local mappings = {
+            { "n", "<leader>li", vim.cmd.LspInfo, opts },
+            { "n", "<leader>ls", vim.cmd.LspStop, opts },
+            { "n", "<leader>lr", vim.cmd.LspRestart, opts },
+            { "n", "gD", vim.lsp.buf.declaration, opts },
+            { "n", "gd", tb.lsp_definitions, opts },
+            { "n", "gr", vim.lsp.buf.rename, opts },
+            { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
+            { "n", "<leader>gR", tb.lsp_references, opts },
+            { "n", "<leader>F", vim.lsp.buf.format, opts },
+            { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
+            { "n", "[e", vim.diagnostic.goto_next, opts },
+            { "n", "]e", vim.diagnostic.goto_prev, opts },
+            { "n", "K", vim.lsp.buf.hover, opts },
+          }
+
+          for _, map in pairs(mappings) do
+            vim.keymap.set(unpack(map))
+          end
         end,
       })
 

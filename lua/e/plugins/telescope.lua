@@ -32,15 +32,27 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
-    opts = {
-      defaults = {
-        sorting_strategy = "ascending",
-        winblend = 0,
-      },
-    },
-    config = function(_, opts)
+    config = function(_)
       local t = require("telescope")
-      t.setup(opts)
+      local actions = require("telescope.actions")
+      t.setup({
+        defaults = {
+          sorting_strategy = "ascending",
+          winblend = 0,
+        },
+        pickers = {
+          buffers = {
+            mappings = {
+              i = {
+                ["<c-d>"] = actions.delete_buffer,
+              },
+              n = {
+                ["<c-d>"] = actions.delete_buffer,
+              },
+            },
+          },
+        },
+      })
       t.load_extension("ui-select")
       t.load_extension("fzf")
     end,

@@ -8,7 +8,7 @@ return {
       vim.g["test#neovim#term_position"] = "vert"
 
       local cmd = "pytest -v"
-      if vim.fs.find("bin/run.sh", {}) then
+      if not vim.tbl_isempty(vim.fs.find("run.sh", {})) then
         cmd = "./bin/run.sh " .. cmd
       end
       vim.g["test#python#pytest#executable"] = cmd
