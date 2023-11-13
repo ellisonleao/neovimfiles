@@ -3,7 +3,6 @@ return {
     "ellisonleao/gruvbox.nvim",
     dev = true,
     priority = 1000,
-    opts = {},
     config = true,
   },
   { "sainnhe/gruvbox-material" },
