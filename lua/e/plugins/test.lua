@@ -7,7 +7,7 @@ return {
       vim.g["test#strategy"] = "neovim"
       vim.g["test#neovim#term_position"] = "vert"
 
-      local cmd = "pytest -v"
+      local cmd = "pytest -x --no-cov-on-fail"
       if not vim.tbl_isempty(vim.fs.find("run.sh", {})) then
         cmd = "./bin/run.sh " .. cmd
       end

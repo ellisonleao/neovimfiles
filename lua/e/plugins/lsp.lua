@@ -59,7 +59,6 @@ return {
           -- format on save
           if client.supports_method("textDocument/formatting") then
             vim.api.nvim_create_autocmd("BufWritePre", {
-              group = vim.api.nvim_create_augroup("LspFormat", { clear = true }),
               buffer = buffer,
               callback = function(opts)
                 vim.lsp.buf.format({
