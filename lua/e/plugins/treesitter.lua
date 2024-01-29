@@ -21,7 +21,7 @@ return {
         "toml",
         "markdown",
       },
-      context_commentstring = { enable = true, enable_autocmd = false },
+      enable_autocmd = false,
       textobjects = {
         select = {
           enable = true,

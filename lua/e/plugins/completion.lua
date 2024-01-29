@@ -92,8 +92,8 @@ return {
           documentation = cmp.config.window.bordered(),
         },
         sources = {
-          { name = "luasnip" },
           { name = "nvim_lsp" },
+          { name = "luasnip" },
           { name = "nvim_lua" },
           { name = "git" },
           { name = "path" },
@@ -104,8 +104,8 @@ return {
             mode = "symbol",
             maxwidth = 50,
             menu = {
-              nvim_lua = "[lua-api]",
               nvim_lsp = "[lsp]",
+              nvim_lua = "[lua-api]",
               path = "[path]",
               luasnip = "[snip]",
               buffer = "[buf]",
