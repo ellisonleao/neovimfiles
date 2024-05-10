@@ -33,7 +33,7 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-vim.g.python3_host_prog = "python"
+vim.g.python3_host_prog = "/usr/bin/python"
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 vim.g.mapleader = ","

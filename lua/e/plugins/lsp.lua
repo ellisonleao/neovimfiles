@@ -21,11 +21,6 @@ return {
     config = function()
       -- installing tools
       local tools = {
-        "stylua",
-        "black",
-        "autoflake",
-        "isort",
-        "ruff",
         "prettier",
         "shfmt",
         "shellcheck",
@@ -55,6 +50,9 @@ return {
         callback = function(args)
           local buffer = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client == nil then
+            return
+          end
 
           -- format on save
           if client.supports_method("textDocument/formatting") then
@@ -67,6 +65,14 @@ return {
                 })
               end,
             })
+          end
+
+          -- add inlay hints
+          if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+            vim.keymap.set("n", "<leader>th", function()
+              ---@diagnostic disable-next-line: missing-parameter
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            end)
           end
 
           -- keymaps
@@ -96,7 +102,7 @@ return {
 
       -- lsp config info
       vim.api.nvim_create_user_command("LspConfig", function()
-        local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+        local clients = vim.lsp.get_clients({ bufnr = 0 })
         local config
         for _, client in ipairs(clients) do
           if client.name ~= "null-ls" then
@@ -118,15 +124,21 @@ return {
                 callSnippet = "Replace",
               },
               format = { enable = false },
+              hint = { enable = true },
             },
           },
         },
+        ruff_lsp = {},
+        -- basedpyright = {},
         pyright = {
           settings = {
+            pyright = {
+              -- use ruff-lsp for organizing imports
+              disableOrganizeImports = true,
+            },
             python = {
-              analysis = {
-                typeCheckingMode = "off",
-              },
+              -- use ruff-lsp for analysis
+              analysis = { ignore = "*" },
             },
           },
         },
@@ -165,7 +177,6 @@ return {
       local nls = require("null-ls")
       local formatting = nls.builtins.formatting
       local diagnostics = nls.builtins.diagnostics
-      local actions = nls.builtins.code_actions
       return {
         sources = {
           formatting.prettier.with({
@@ -177,27 +188,22 @@ return {
               -- using default .stylua.toml file or project's one
               local base_cfg = vim.fn.stdpath("config") .. "/.stylua.toml"
               local cfg = vim.fs.find({ ".stylua.toml", "stylua.toml" }, { upward = true })
+              local path
               if #cfg == 0 then
                 ---@diagnostic disable-next-line: cast-local-type
-                cfg = base_cfg
+                path = base_cfg
               else
-                cfg = cfg[1]
+                path = cfg[1]
               end
-              return { "--config-path", cfg }
+              return { "--config-path", path }
             end,
           }),
-          formatting.black,
-          formatting.isort,
           formatting.terraform_fmt,
-          formatting.autoflake,
           formatting.gofmt,
           formatting.pg_format,
           diagnostics.yamllint.with({
             extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
           }),
-          diagnostics.shellcheck,
-          diagnostics.ruff,
-          actions.shellcheck,
         },
       }
     end,

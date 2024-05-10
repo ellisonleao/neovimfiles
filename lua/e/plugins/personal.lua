@@ -4,7 +4,7 @@ return {
   {
     "ellisonleao/carbon-now.nvim",
     dev = true,
-    opts = { options = { theme = "One Light", font_family = "JetBrains Mono" } },
+    opts = { options = { theme = "One Light", font_family = "JetBrains Mono", padding_horizontal = "100px" } },
     keys = {
       { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" },
     },

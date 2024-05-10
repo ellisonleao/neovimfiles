@@ -3,23 +3,23 @@ return {
     "~/code/gruvbox.nvim",
     dev = true,
     priority = 1000,
-    -- config = function()
-    --   vim.cmd.colorscheme("gruvbox")
-    -- end,
   },
-  { "sainnhe/gruvbox-material" },
   {
-    "projekt0n/github-nvim-theme",
-    branch = "0.0.x",
+    "navarasu/onedark.nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      dark_float = true,
-    },
-    config = function(_, opts)
-      vim.opt.termguicolors = true
-      require("github-theme").setup(opts)
-      vim.cmd.colorscheme("github_light")
+    config = function()
+      local opts
+      local is_night = tonumber(os.date("%H")) >= 18
+      if is_night then
+        vim.opt.background = "dark"
+        opts = { style = "deep" }
+      else
+        vim.opt.background = "light"
+      end
+
+      require("onedark").setup(opts)
+      vim.cmd.colorscheme("onedark")
     end,
   },
 }
