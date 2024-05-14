@@ -156,8 +156,16 @@ return {
       }
     end,
     config = function(_, opts)
-      require("cmp").setup(opts)
+      local cmp = require("cmp")
+      cmp.setup(opts)
       require("cmp_git").setup()
+      -- Setup up vim-dadbod
+      cmp.setup.filetype({ "sql" }, {
+        sources = {
+          { name = "vim-dadbod-completion" },
+          { name = "buffer" },
+        },
+      })
     end,
   },
 }

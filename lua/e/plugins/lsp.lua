@@ -21,7 +21,6 @@ return {
     config = function()
       -- installing tools
       local tools = {
-        "prettier",
         "shfmt",
         "shellcheck",
         "yamllint",
@@ -129,7 +128,6 @@ return {
           },
         },
         ruff_lsp = {},
-        -- basedpyright = {},
         pyright = {
           settings = {
             pyright = {
@@ -166,6 +164,8 @@ return {
           require("lspconfig")[server].setup(server_opts)
         end,
       })
+
+      -- special case
     end,
   },
 
@@ -179,9 +179,6 @@ return {
       local diagnostics = nls.builtins.diagnostics
       return {
         sources = {
-          formatting.prettier.with({
-            filetypes = { "json", "markdown", "toml" },
-          }),
           formatting.shfmt,
           formatting.stylua.with({
             extra_args = function(_)
