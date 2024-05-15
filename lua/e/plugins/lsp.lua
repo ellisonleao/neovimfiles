@@ -17,6 +17,8 @@ return {
       "nvim-telescope/telescope.nvim",
       { "williamboman/mason-lspconfig.nvim" },
       "hrsh7th/cmp-nvim-lsp",
+      "b0o/SchemaStore.nvim",
+      "stevearc/conform.nvim",
     },
     config = function()
       -- installing tools
@@ -47,24 +49,7 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          local buffer = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client == nil then
-            return
-          end
-
-          -- format on save
-          if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              buffer = buffer,
-              callback = function(opts)
-                vim.lsp.buf.format({
-                  bufnr = opts.buf,
-                  timeout_ms = 2000,
-                })
-              end,
-            })
-          end
+          local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
           -- add inlay hints
           if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
@@ -76,17 +61,17 @@ return {
 
           -- keymaps
           local tb = require("telescope.builtin")
-          local opts = { silent = true, noremap = true, buffer = buffer }
+          local opts = { silent = true, noremap = true, buffer = 0 }
           local mappings = {
             { "n", "<leader>li", vim.cmd.LspInfo, opts },
             { "n", "<leader>ls", vim.cmd.LspStop, opts },
             { "n", "<leader>lr", vim.cmd.LspRestart, opts },
             { "n", "gD", vim.lsp.buf.declaration, opts },
             { "n", "gd", tb.lsp_definitions, opts },
+            { "n", "gT", vim.lsp.buf.type_definition, opts },
             { "n", "gr", vim.lsp.buf.rename, opts },
             { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
             { "n", "<leader>gR", tb.lsp_references, opts },
-            { "n", "<leader>F", vim.lsp.buf.format, opts },
             { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
             { "n", "[e", vim.diagnostic.goto_next, opts },
             { "n", "]e", vim.diagnostic.goto_prev, opts },
@@ -99,16 +84,27 @@ return {
         end,
       })
 
+      require("conform").setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+        },
+      })
+
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        callback = function(args)
+          require("conform").format({
+            bufnr = args.buf,
+            lsp_fallback = true,
+            -- quiet = true,
+          })
+        end,
+      })
+
       -- lsp config info
+      -- TODO: use nui.nvim for better presentation
       vim.api.nvim_create_user_command("LspConfig", function()
         local clients = vim.lsp.get_clients({ bufnr = 0 })
-        local config
-        for _, client in ipairs(clients) do
-          if client.name ~= "null-ls" then
-            config = client.config
-          end
-        end
-        P(config)
+        P(clients)
       end, { nargs = 0 })
 
       -- setup servers
@@ -146,10 +142,23 @@ return {
           settings = {
             yaml = {
               keyOrdering = false,
+              schemaStore = {
+                -- in favor of schemastore
+                enable = false,
+                url = "",
+              },
+              schemas = require("schemastore").yaml.schemas(),
             },
           },
         },
-        jsonls = {},
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require("schemastore").json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
         terraformls = {},
         gopls = {},
         dockerls = {},
@@ -164,45 +173,6 @@ return {
           require("lspconfig")[server].setup(server_opts)
         end,
       })
-
-      -- special case
-    end,
-  },
-
-  -- formatters, linters
-  {
-    "nvimtools/none-ls.nvim",
-    event = "BufReadPre",
-    opts = function()
-      local nls = require("null-ls")
-      local formatting = nls.builtins.formatting
-      local diagnostics = nls.builtins.diagnostics
-      return {
-        sources = {
-          formatting.shfmt,
-          formatting.stylua.with({
-            extra_args = function(_)
-              -- using default .stylua.toml file or project's one
-              local base_cfg = vim.fn.stdpath("config") .. "/.stylua.toml"
-              local cfg = vim.fs.find({ ".stylua.toml", "stylua.toml" }, { upward = true })
-              local path
-              if #cfg == 0 then
-                ---@diagnostic disable-next-line: cast-local-type
-                path = base_cfg
-              else
-                path = cfg[1]
-              end
-              return { "--config-path", path }
-            end,
-          }),
-          formatting.terraform_fmt,
-          formatting.gofmt,
-          formatting.pg_format,
-          diagnostics.yamllint.with({
-            extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 200}}}" },
-          }),
-        },
-      }
     end,
   },
 }
