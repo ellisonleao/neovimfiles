@@ -1,23 +1,14 @@
 return {
   {
     "L3MON4D3/LuaSnip",
-    opts = function()
-      local types = require("luasnip.util.types")
-      return {
-        history = true,
-        updateevents = "TextChanged,TextChangedI",
-        ext_opts = {
-          [types.choiceNode] = {
-            active = {
-              virt_text = { { " <- Current Choice", "NonTest" } },
-            },
-          },
-        },
-      }
-    end,
-    config = function(_, opts)
+    version = "v2.*",
+    build = "make install_jsregexp",
+    config = function()
       local ls = require("luasnip")
-      ls.config.set_config(opts)
+      ls.config.set_config({
+        history = false,
+        updateevents = "TextChanged,TextChangedI",
+      })
 
       for _, lang in pairs({ "lua", "go", "sh", "python", "all" }) do
         ls.add_snippets(lang, require("e.snippets." .. lang), { key = lang })
@@ -62,7 +53,8 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    lazy = false,
+    priority = 100,
     dependencies = {
       "onsails/lspkind-nvim",
       "hrsh7th/cmp-buffer",
@@ -72,16 +64,15 @@ return {
       "petertriho/cmp-git",
       "saadparwaiz1/cmp_luasnip",
     },
-    opts = function()
+    config = function()
       -- nvim-cmp configs
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      local compare = require("cmp.config.compare")
       local lspkind = require("lspkind")
 
       lspkind.init()
 
-      return {
+      local opts = {
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -93,7 +84,6 @@ return {
         },
         sources = {
           { name = "nvim_lsp" },
-          { name = "luasnip" },
           { name = "nvim_lua" },
           { name = "git" },
           { name = "path" },
@@ -122,43 +112,15 @@ return {
             behavior = cmp.ConfirmBehavior.Insert,
             select = true,
           }, { "i", "c" }),
-          ["<C-n>"] = {
-            i = cmp.mapping.select_next_item(),
-          },
-          ["<C-p>"] = {
-            i = cmp.mapping.select_prev_item(),
-          },
-          ["<C-Space>"] = cmp.mapping({
-            i = cmp.mapping.complete(),
-            c = function(_)
-              if cmp.visible() then
-                if not cmp.confirm({ select = true }) then
-                  return
-                end
-              else
-                cmp.complete()
-              end
-            end,
-          }),
+          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
         }),
-
-        sorting = {
-          comparators = {
-            compare.kind,
-            compare.offset,
-            compare.exact,
-            compare.score,
-            compare.sort_text,
-            compare.length,
-            compare.order,
-          },
-        },
       }
-    end,
-    config = function(_, opts)
-      local cmp = require("cmp")
+
       cmp.setup(opts)
+
       require("cmp_git").setup()
+
       -- Setup up vim-dadbod
       cmp.setup.filetype({ "sql" }, {
         sources = {

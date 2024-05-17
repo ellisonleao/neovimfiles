@@ -1,7 +1,7 @@
 local function lsp_clients()
   return require("lsp-progress").progress({
     format = function(messages)
-      local active_clients = vim.lsp.get_active_clients()
+      local active_clients = vim.lsp.get_clients()
       if #messages > 0 then
         return " LSP:" .. table.concat(messages, " ")
       end

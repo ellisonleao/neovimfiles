@@ -52,7 +52,7 @@ return {
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
           -- add inlay hints
-          if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+          if client.server_capabilities.inlayHintProvider then
             vim.keymap.set("n", "<leader>th", function()
               ---@diagnostic disable-next-line: missing-parameter
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -73,9 +73,6 @@ return {
             { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
             { "n", "<leader>gR", tb.lsp_references, opts },
             { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
-            { "n", "[e", vim.diagnostic.goto_next, opts },
-            { "n", "]e", vim.diagnostic.goto_prev, opts },
-            { "n", "K", vim.lsp.buf.hover, opts },
           }
 
           for _, map in pairs(mappings) do
