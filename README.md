@@ -2,8 +2,6 @@
 
 <div align="center">
   <a href="https://github.com/ellisonleao/neovimfiles/#install">Install</a>
-  <span> • </span>
-  <a href="https://github.com/ellisonleao/neovimfiles/#overview">Overview</a>
   <p></p>
 </div>
 
@@ -21,7 +19,7 @@ changes and experimenting new things. Also if you enjoy live coding sessions, pl
 
 **Prerequisites**
 
-- Neovim 0.8+
+- Neovim 0.10+
 
 Steps:
 
@@ -32,7 +30,3 @@ $ git clone https://github.com/ellisonleao/neovimfiles ~/.config/nvim
 ```
 
 2. Open Neovim. You should see a _"Installing lazy.nvim.."_ and popup installing the plugins on the first run
-
-## Screenshots
-
-![](https://i.postimg.cc/FHrMD7bR/Screenshot-from-2022-03-20-22-57-06.png)
