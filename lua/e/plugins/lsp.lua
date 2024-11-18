@@ -5,14 +5,6 @@ return {
     version = false,
     event = "BufReadPre",
     dependencies = {
-      {
-        "folke/neodev.nvim",
-        config = function()
-          require("neodev").setup({
-            library = { plugins = { "neotest", "plenary.nvim" }, types = true, setup_jsonls = false },
-          })
-        end,
-      },
       { "williamboman/mason.nvim", config = true, cmd = "Mason" },
       "nvim-telescope/telescope.nvim",
       { "williamboman/mason-lspconfig.nvim" },
@@ -51,6 +43,11 @@ return {
         callback = function(args)
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
+          if client.name == "ruff" then
+            -- disable hover in favor of pyright
+            client.server_capabilities.hoverProvider = false
+          end
+
           -- add inlay hints
           if client.server_capabilities.inlayHintProvider then
             vim.keymap.set("n", "<leader>th", function()
@@ -70,6 +67,22 @@ return {
             { "n", "gd", tb.lsp_definitions, opts },
             { "n", "gT", vim.lsp.buf.type_definition, opts },
             { "n", "gr", vim.lsp.buf.rename, opts },
+            {
+              "n",
+              "[d",
+              function()
+                vim.diagnostic.goto_prev({ float = true })
+              end,
+              opts,
+            },
+            {
+              "n",
+              "]d",
+              function()
+                vim.diagnostic.goto_next({ float = true })
+              end,
+              opts,
+            },
             { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
             { "n", "<leader>gR", tb.lsp_references, opts },
             { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
@@ -120,7 +133,7 @@ return {
             },
           },
         },
-        ruff_lsp = {},
+        ruff = {},
         pyright = {
           settings = {
             pyright = {
@@ -133,7 +146,7 @@ return {
             },
           },
         },
-        tsserver = {},
+        ts_ls = {},
         bashls = {},
         yamlls = {
           settings = {

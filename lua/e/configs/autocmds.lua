@@ -146,3 +146,8 @@ vim.api.nvim_create_user_command("CheckLinks", function(opts)
     end
   end)
 end, { nargs = 1, complete = "file" })
+
+-- to make :GBrowse work
+vim.api.nvim_create_user_command("Browse", function(opts)
+  vim.ui.open(opts.fargs[1])
+end, { nargs = 1 })
