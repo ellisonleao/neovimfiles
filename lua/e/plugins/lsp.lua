@@ -21,14 +21,15 @@ return {
       }
       for _, f in pairs(tools) do
         local pkg = require("mason-registry").get_package(f)
-        if not pkg:is_installed(f) then
-          pkg:install(f)
+        if not pkg:is_installed() then
+          pkg:install()
         end
       end
 
       -- diagnostics
       vim.diagnostic.config({
-        virtual_text = { spacing = 4 },
+        -- virtual_text = { spacing = 4 },
+        virtual_text = false,
         severity_sort = true,
       })
 
