@@ -11,6 +11,7 @@ return {
         "go",
         "gomod",
         "hcl",
+        "html",
         "javascript",
         "json",
         "lua",

@@ -124,13 +124,16 @@ return {
 
       -- enable lsp servers
       vim.lsp.enable({
-        "lua_ls",
+        "dockerls",
         "gopls",
-        "zls",
+        "jsonls",
+        "lua_ls",
         "pyright",
         "ruff",
+        "terraformls",
+        "ts_ls",
         "yamlls",
-        "dockerls",
+        "zls",
       })
     end,
   },

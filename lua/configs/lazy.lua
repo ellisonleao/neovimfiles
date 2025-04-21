@@ -16,6 +16,7 @@ return require("lazy").setup("plugins", {
   dev = {
     path = vim.env.HOME .. "/code",
   },
+  rocks = { enabled = false },
   change_detection = { notify = false },
   performance = {
     rtp = {
