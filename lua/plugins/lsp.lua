@@ -11,7 +11,7 @@ return {
       "stevearc/conform.nvim",
     },
     config = function()
-      -- installing tools/lsp/formatters
+      -- installing linters/lsp/formatters
       local packages = {
         "bash-language-server",
         "dockerfile-language-server",
@@ -31,8 +31,8 @@ return {
         "zls",
       }
 
+      local registry = require("mason-registry")
       for _, pkg in pairs(packages) do
-        local registry = require("mason-registry")
         if not registry.is_installed(pkg) then
           registry.get_package(pkg):install()
         end
