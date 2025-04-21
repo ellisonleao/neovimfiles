@@ -19,7 +19,7 @@ changes and experimenting new things. Also if you enjoy live coding sessions, pl
 
 **Prerequisites**
 
-- Neovim 0.10+
+- Neovim 0.11+
 
 Steps:
 
