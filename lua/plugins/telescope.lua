@@ -1,9 +1,9 @@
 local function get_root()
   local path = vim.api.nvim_buf_get_name(0)
-  path = path ~= "" and vim.loop.fs_realpath(path) or nil
-  path = path and vim.fs.dirname(path) or vim.loop.cwd()
-  local root = vim.fs.find({ ".git", "/lua" }, { path = path, upward = true })[1]
-  root = root and vim.fs.dirname(root) or vim.loop.cwd()
+  path = path ~= "" and vim.uv.fs_realpath(path) or nil
+  path = path and vim.fs.dirname(path) or vim.uv.cwd()
+  local root = vim.fs.find({ ".git" }, { path = path, upward = true })[1]
+  root = root and vim.fs.dirname(root) or vim.uv.cwd()
   return root
 end
 
@@ -17,7 +17,7 @@ local function telescope(builtin, opts)
     opts = params.opts
     opts = vim.tbl_deep_extend("force", { cwd = get_root() }, opts or {})
     if builtin == "files" then
-      if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
+      if vim.uv.fs_stat((opts.cwd or vim.uv.cwd()) .. "/.git") then
         opts.show_untracked = true
         builtin = "git_files"
       else
@@ -52,6 +52,9 @@ return {
             },
           },
         },
+        extensions = {
+          fzf = {},
+        },
       })
       t.load_extension("ui-select")
       t.load_extension("fzf")
@@ -62,10 +65,11 @@ return {
       { "nvim-telescope/telescope-ui-select.nvim" },
     },
     keys = {
-      { "<leader><leader>", telescope("buffers") },
+      { "<leader><leader>", ":Telescope buffers<CR>" },
       { "<leader>lg", telescope("live_grep") },
       { "<leader>ff", telescope("files") },
       { "<leader>fC", telescope("files", { cwd = vim.env.HOME .. "/code/", hidden = true }) },
+      { "<leader>fP", telescope("files", { cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"), hidden = true }) },
       {
         "<leader>H",
         function()

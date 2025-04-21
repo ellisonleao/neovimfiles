@@ -1,6 +1,5 @@
 return {
   { "ellisonleao/dotenv.nvim", dev = true, config = true, cmd = { "Dotenv", "DotenvGet" } },
-  { "ellisonleao/glow.nvim", dev = true, opts = { border = "rounded", width = 120 }, cmd = "Glow" },
   {
     "ellisonleao/carbon-now.nvim",
     dev = true,

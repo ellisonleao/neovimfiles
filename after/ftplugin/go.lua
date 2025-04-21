@@ -1,9 +1,10 @@
 -- go configs
-vim.opt_local.shiftwidth = 4
-vim.opt_local.softtabstop = 4
-vim.opt_local.tabstop = 4
-vim.opt_local.colorcolumn = "80,120"
-vim.opt_local.expandtab = false
+local set = vim.opt_local
+set.shiftwidth = 4
+set.softtabstop = 4
+set.tabstop = 4
+set.colorcolumn = "80,120"
+set.expandtab = false
 
 local Job = require("plenary.job")
 local ns = vim.api.nvim_create_namespace("go")

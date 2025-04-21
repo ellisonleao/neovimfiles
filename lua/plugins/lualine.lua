@@ -56,14 +56,6 @@ return {
         lualine_y = { "progress" },
         lualine_z = { "location" },
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_v = {},
-        lualine_y = {},
-        lualine_z = {},
-        lualine_c = {},
-        lualine_x = {},
-      },
     },
     config = function(_, opts)
       require("lualine").setup(opts)

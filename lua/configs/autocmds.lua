@@ -23,51 +23,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
--- live preview
-vim.api.nvim_create_user_command("Preview", function()
-  local buf = vim.api.nvim_get_current_buf()
-  vim.api.nvim_create_autocmd("TextChangedI", {
-    group = vim.api.nvim_create_augroup("GlowChanged", { clear = true }),
-    buffer = buf,
-    callback = function()
-      -- get file contents
-      -- XXX: must find another to get the old buffer
-      local buffers = vim.api.nvim_list_bufs()
-      local preview_buffer
-      for _, b in ipairs(buffers) do
-        if vim.api.nvim_buf_is_loaded(b) and b ~= buf then
-          preview_buffer = b
-          break
-        end
-      end
-
-      if preview_buffer == nil then
-        print("cur buf not found")
-        return
-      end
-
-      local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-      local chan = vim.api.nvim_open_term(preview_buffer, {})
-      local text = table.concat(lines)
-      local cmd = string.format("echo '%s' | glow -", text)
-      vim.fn.jobstart(cmd, {
-        on_stderr = function(_, data)
-          local d = table.concat(data)
-          if d ~= "" then
-            P("error", data)
-          end
-        end,
-        on_stdout = function(_, data)
-          vim.api.nvim_chan_send(chan, table.concat(data) .. "\r\n")
-        end,
-      })
-    end,
-  })
-
-  vim.cmd("vnew")
-  vim.cmd("wincmd w")
-end, { nargs = 0 })
-
 vim.api.nvim_create_user_command("CheckLinks", function(opts)
   local path = opts.args
   local uv = vim.loop
@@ -146,8 +101,3 @@ vim.api.nvim_create_user_command("CheckLinks", function(opts)
     end
   end)
 end, { nargs = 1, complete = "file" })
-
--- to make :GBrowse work
-vim.api.nvim_create_user_command("Browse", function(opts)
-  vim.ui.open(opts.fargs[1])
-end, { nargs = 1 })

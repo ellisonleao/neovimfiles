@@ -21,6 +21,7 @@ return {
         "toml",
         "typescript",
         "yaml",
+        "zig",
       },
       enable_autocmd = false,
     },

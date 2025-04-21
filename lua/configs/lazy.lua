@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-return require("lazy").setup("e.plugins", {
+return require("lazy").setup("plugins", {
   defaults = { version = false },
   dev = {
     path = vim.env.HOME .. "/code",

@@ -1,4 +1,7 @@
-vim.opt_local.shiftwidth = 2
-vim.opt_local.tabstop = 2
-vim.opt_local.expandtab = true
-vim.opt_local.commentstring = "# %s"
+local set = vim.opt_local
+set.shiftwidth = 2
+set.tabstop = 2
+set.expandtab = true
+set.commentstring = "# %s"
+
+vim.lsp.enable("terraformls")
