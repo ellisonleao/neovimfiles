@@ -5,7 +5,7 @@ local mappings = {
     "n",
     "<leader>U",
     function()
-      pcall(require("lazy").sync) -- update packer
+      pcall(require("lazy").sync) -- update lazy
       pcall(require("nvim-treesitter.install").update({ with_sync = true })) -- update treesitter parsers
     end,
     opts,

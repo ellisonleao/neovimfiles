@@ -14,5 +14,13 @@ return {
         help = true,
       },
     },
+    config = function(_, opts)
+      require("copilot").setup(opts)
+      vim.schedule(function()
+        vim.cmd.Copilot("disable")
+      end)
+    end,
+
+    keys = { { "<leader>cd", ":Copilot disable<CR>" }, { "<leader>ce", ":Copilot enable<CR>" } },
   },
 }
