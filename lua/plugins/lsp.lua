@@ -74,7 +74,7 @@ return {
             { "n", "<leader>ls", vim.cmd.LspStop, opts },
             { "n", "<leader>lr", vim.cmd.LspRestart, opts },
             { "n", "gD", vim.lsp.buf.declaration, opts },
-            { "n", "gd", tb.lsp_definitions, opts },
+            { "n", "gd", vim.lsp.buf.definition, opts },
             { "n", "gT", vim.lsp.buf.type_definition, opts },
             { "n", "gr", vim.lsp.buf.rename, opts },
             {
@@ -124,6 +124,7 @@ return {
 
       -- enable lsp servers
       vim.lsp.enable({
+        "bashls",
         "dockerls",
         "gopls",
         "jsonls",

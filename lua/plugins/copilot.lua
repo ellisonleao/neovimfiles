@@ -12,15 +12,10 @@ return {
       filetypes = {
         markdown = true,
         help = true,
+        yaml = true,
       },
+      copilot_node_command = "/usr/bin/node",
     },
-    config = function(_, opts)
-      require("copilot").setup(opts)
-      vim.schedule(function()
-        vim.cmd.Copilot("disable")
-      end)
-    end,
-
     keys = { { "<leader>cd", ":Copilot disable<CR>" }, { "<leader>ce", ":Copilot enable<CR>" } },
   },
 }
