@@ -5,7 +5,7 @@ return {
     dev = true,
     opts = { options = { theme = "One Light", font_family = "JetBrains Mono", padding_horizontal = "100px" } },
     keys = {
-      { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v" },
+      { "<leader>cn", [[<Cmd>CarbonNow<CR>]], mode = "v", silent = true },
     },
     config = true,
     cmd = "CarbonNow",

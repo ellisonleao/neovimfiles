@@ -56,20 +56,22 @@ return {
           fzf = {},
         },
       })
-      t.load_extension("ui-select")
       t.load_extension("fzf")
     end,
     cmd = "Telescope",
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-ui-select.nvim" },
     },
     keys = {
-      { "<leader><leader>", ":Telescope buffers<CR>" },
-      { "<leader>lg", telescope("live_grep") },
-      { "<leader>ff", telescope("files") },
-      { "<leader>fC", telescope("files", { cwd = vim.env.HOME .. "/code/", hidden = true }) },
-      { "<leader>fP", telescope("files", { cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"), hidden = true }) },
+      { "<leader><leader>", ":Telescope buffers<CR>", silent = true },
+      { "<leader>lg", telescope("live_grep"), silent = true },
+      { "<leader>ff", telescope("files"), silent = true },
+      { "<leader>fC", telescope("files", { cwd = vim.env.HOME .. "/code/", hidden = true }), silent = true },
+      {
+        "<leader>fP",
+        telescope("files", { cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") }),
+        silent = true,
+      },
       {
         "<leader>H",
         function()

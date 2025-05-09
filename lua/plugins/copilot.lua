@@ -16,6 +16,9 @@ return {
       },
       copilot_node_command = "/usr/bin/node",
     },
-    keys = { { "<leader>cd", ":Copilot disable<CR>" }, { "<leader>ce", ":Copilot enable<CR>" } },
+    keys = {
+      { "<leader>cd", ":Copilot disable<CR>", silent = true },
+      { "<leader>ce", ":Copilot enable<CR>", silent = true },
+    },
   },
 }

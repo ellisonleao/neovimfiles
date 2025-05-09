@@ -1,5 +1,6 @@
 return {
   "olimorris/codecompanion.nvim",
+  event = "VeryLazy",
   opts = {
     adapters = {
       copilot = function()
@@ -19,8 +20,8 @@ return {
     },
   },
   keys = {
-    { "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { "n", "v" } },
-    { "<leader>cca", ":CodeCompanionActions<CR>", { "n", "v" } },
+    { "<leader>ccc", ":CodeCompanionChat Toggle<CR>", { "n", "v" }, silent = true },
+    { "<leader>cca", ":CodeCompanionActions<CR>", { "n", "v" }, silent = true },
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
