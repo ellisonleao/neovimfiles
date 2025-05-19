@@ -16,6 +16,7 @@ return {
       },
       copilot_node_command = "/usr/bin/node",
     },
+    copilot_node_command = vim.env.HOME .. "/.nvm/versions/node/v20.19.2/bin/node", -- Node.js version must be > 20
     keys = {
       { "<leader>cd", ":Copilot disable<CR>", silent = true },
       { "<leader>ce", ":Copilot enable<CR>", silent = true },

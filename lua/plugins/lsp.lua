@@ -77,22 +77,6 @@ return {
             { "n", "gd", vim.lsp.buf.definition, opts },
             { "n", "gT", vim.lsp.buf.type_definition, opts },
             { "n", "gr", vim.lsp.buf.rename, opts },
-            {
-              "n",
-              "[d",
-              function()
-                vim.diagnostic.prev({ float = true })
-              end,
-              opts,
-            },
-            {
-              "n",
-              "]d",
-              function()
-                vim.diagnostic.next({ float = true })
-              end,
-              opts,
-            },
             { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
             { "n", "<leader>gR", tb.lsp_references, opts },
             { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
