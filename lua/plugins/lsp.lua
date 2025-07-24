@@ -42,7 +42,7 @@ return {
       vim.diagnostic.config({
         virtual_text = false,
         severity_sort = true,
-        virtual_lines = true,
+        -- virtual_lines = true,
       })
 
       -- lsp config
