@@ -55,27 +55,33 @@ return {
 
           -- typescript: go to definition instead of .d.ts files
           local function ts_goto_source_definition()
-            local position_params = vim.lsp.util.make_position_params(0, "utf-8")
+            local position_params = vim.lsp.util.make_position_params(0, client.offset_encoding)
             client:exec_cmd({
               title = "Go to source definition",
               command = "_typescript.goToSourceDefinition",
               arguments = { vim.api.nvim_buf_get_name(0), position_params.position },
             }, {}, function(err, result)
               if err ~= nil then
-                vim.log.error(err)
+                vim.notify(err.message, vim.log.levels.ERROR)
+                return
               end
-              vim.lsp.util.show_document(result[1], "utf-8")
+
+              if result and #result > 1 then
+                local items = vim.lsp.util.locations_to_items(result, client.offset_encoding)
+                vim.fn.setqflist(items, "r")
+              end
+              vim.lsp.util.show_document(result[1], client.offset_encoding)
             end)
           end
 
-          local function organize_imports()
+          local function ts_organize_imports()
             client:exec_cmd({
               title = "Organize Imports",
               command = "_typescript.organizeImports",
               arguments = { vim.api.nvim_buf_get_name(0) },
-            }, {}, function(err, result)
+            }, {}, function(err)
               if err ~= nil then
-                vim.log.error(err)
+                vim.notify(err.message, vim.log.levels.ERROR)
               end
             end)
           end
@@ -83,7 +89,7 @@ return {
           local goto_definition_func = vim.lsp.buf.definition
           if client.name == "ts_ls" then
             goto_definition_func = ts_goto_source_definition
-            vim.keymap.set("n", "<leader>oi", organize_imports, { silent = true, noremap = true, buffer = 0 })
+            vim.keymap.set("n", "<leader>oi", ts_organize_imports, { silent = true, noremap = true, buffer = 0 })
           end
 
           if client.name == "ruff" then
