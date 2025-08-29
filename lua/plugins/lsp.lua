@@ -53,6 +53,39 @@ return {
         callback = function(args)
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
+          -- typescript: go to definition instead of .d.ts files
+          local function ts_goto_source_definition()
+            local position_params = vim.lsp.util.make_position_params(0, "utf-8")
+            client:exec_cmd({
+              title = "Go to source definition",
+              command = "_typescript.goToSourceDefinition",
+              arguments = { vim.api.nvim_buf_get_name(0), position_params.position },
+            }, {}, function(err, result)
+              if err ~= nil then
+                vim.log.error(err)
+              end
+              vim.lsp.util.show_document(result[1], "utf-8")
+            end)
+          end
+
+          local function organize_imports()
+            client:exec_cmd({
+              title = "Organize Imports",
+              command = "_typescript.organizeImports",
+              arguments = { vim.api.nvim_buf_get_name(0) },
+            }, {}, function(err, result)
+              if err ~= nil then
+                vim.log.error(err)
+              end
+            end)
+          end
+
+          local goto_definition_func = vim.lsp.buf.definition
+          if client.name == "ts_ls" then
+            goto_definition_func = ts_goto_source_definition
+            vim.keymap.set("n", "<leader>oi", organize_imports, { silent = true, noremap = true, buffer = 0 })
+          end
+
           if client.name == "ruff" then
             -- disable hover in favor of pyright
             client.server_capabilities.hoverProvider = false
@@ -74,7 +107,7 @@ return {
             { "n", "<leader>ls", vim.cmd.LspStop, opts },
             { "n", "<leader>lr", vim.cmd.LspRestart, opts },
             { "n", "gD", vim.lsp.buf.declaration, opts },
-            { "n", "gd", vim.lsp.buf.definition, opts },
+            { "n", "gd", goto_definition_func, opts },
             { "n", "gT", vim.lsp.buf.type_definition, opts },
             { "n", "gr", vim.lsp.buf.rename, opts },
             { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
