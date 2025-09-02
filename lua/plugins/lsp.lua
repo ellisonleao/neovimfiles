@@ -42,7 +42,6 @@ return {
       vim.diagnostic.config({
         virtual_text = false,
         severity_sort = true,
-        -- virtual_lines = true,
       })
 
       -- lsp config
@@ -51,51 +50,7 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
-
-          -- typescript: go to definition instead of .d.ts files
-          local function ts_goto_source_definition()
-            local position_params = vim.lsp.util.make_position_params(0, client.offset_encoding)
-            client:exec_cmd({
-              title = "Go to source definition",
-              command = "_typescript.goToSourceDefinition",
-              arguments = { vim.api.nvim_buf_get_name(0), position_params.position },
-            }, {}, function(err, result)
-              if err ~= nil then
-                vim.notify(err.message, vim.log.levels.ERROR)
-                return
-              end
-
-              if result and #result > 1 then
-                local items = vim.lsp.util.locations_to_items(result, client.offset_encoding)
-                vim.fn.setqflist(items, "r")
-              end
-              vim.lsp.util.show_document(result[1], client.offset_encoding)
-            end)
-          end
-
-          local function ts_organize_imports()
-            client:exec_cmd({
-              title = "Organize Imports",
-              command = "_typescript.organizeImports",
-              arguments = { vim.api.nvim_buf_get_name(0) },
-            }, {}, function(err)
-              if err ~= nil then
-                vim.notify(err.message, vim.log.levels.ERROR)
-              end
-            end)
-          end
-
-          local goto_definition_func = vim.lsp.buf.definition
-          if client.name == "ts_ls" then
-            goto_definition_func = ts_goto_source_definition
-            vim.keymap.set("n", "<leader>oi", ts_organize_imports, { silent = true, noremap = true, buffer = 0 })
-          end
-
-          if client.name == "ruff" then
-            -- disable hover in favor of pyright
-            client.server_capabilities.hoverProvider = false
-          end
+          local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
           -- add inlay hints
           if client.server_capabilities.inlayHintProvider then
@@ -109,16 +64,10 @@ return {
           local tb = require("telescope.builtin")
           local opts = { silent = true, noremap = true, buffer = 0 }
           local mappings = {
-            { "n", "<leader>li", vim.cmd.LspInfo, opts },
-            { "n", "<leader>ls", vim.cmd.LspStop, opts },
-            { "n", "<leader>lr", vim.cmd.LspRestart, opts },
-            { "n", "gD", vim.lsp.buf.declaration, opts },
-            { "n", "gd", goto_definition_func, opts },
-            { "n", "gT", vim.lsp.buf.type_definition, opts },
-            { "n", "gr", vim.lsp.buf.rename, opts },
-            { "n", "<leader>ca", vim.lsp.buf.code_action, opts },
-            { "n", "<leader>gR", tb.lsp_references, opts },
-            { "i", "<C-x>", vim.lsp.buf.signature_help, opts },
+            { "n", "gli", vim.cmd.LspInfo, opts },
+            { "n", "gls", vim.cmd.LspStop, opts },
+            { "n", "glr", vim.cmd.LspRestart, opts },
+            { "n", "grr", tb.lsp_references, opts }, -- override default grr mapping
           }
 
           for _, map in pairs(mappings) do

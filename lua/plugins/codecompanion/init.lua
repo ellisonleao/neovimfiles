@@ -1,11 +1,15 @@
+local default_strategy = {
+  name = "copilot",
+  model = "claude-sonnet-4",
+}
 return {
   "olimorris/codecompanion.nvim",
   event = "VeryLazy",
   opts = {
     strategies = {
-      chat = { adapter = "copilot" },
-      inline = { adapter = "copilot" },
-      agent = { adapter = "copilot" },
+      chat = { adapter = default_strategy },
+      inline = { adapter = default_strategy },
+      agent = { adapter = default_strategy },
     },
     extensions = {
       mcphub = {

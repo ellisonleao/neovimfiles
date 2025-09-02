@@ -31,7 +31,7 @@ end
 return {
   {
     "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
+    branch = "master",
     config = function(_)
       local t = require("telescope")
       local actions = require("telescope.actions")
