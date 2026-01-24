@@ -25,7 +25,6 @@ return {
         "shfmt",
         "stylua",
         "terraform-ls",
-        "typescript-language-server",
         "yaml-language-server",
         "yamllint",
         "zls",
@@ -97,6 +96,7 @@ return {
       -- enable lsp servers
       vim.lsp.enable({
         "bashls",
+        -- "copilot",
         "dockerls",
         "gopls",
         "jsonls",
@@ -104,7 +104,6 @@ return {
         "pyright",
         "ruff",
         "terraformls",
-        "ts_ls",
         "yamlls",
         "zls",
       })
