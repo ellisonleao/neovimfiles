@@ -60,7 +60,10 @@ return {
     end,
     cmd = "Telescope",
     dependencies = {
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install",
+      },
     },
     keys = {
       { "<leader><leader>", ":Telescope buffers<CR>", silent = true },
