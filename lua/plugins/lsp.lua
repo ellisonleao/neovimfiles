@@ -63,9 +63,6 @@ return {
           local tb = require("telescope.builtin")
           local opts = { silent = true, noremap = true, buffer = 0 }
           local mappings = {
-            { "n", "gli", vim.cmd.LspInfo, opts },
-            { "n", "gls", vim.cmd.LspStop, opts },
-            { "n", "glr", vim.cmd.LspRestart, opts },
             { "n", "grr", tb.lsp_references, opts }, -- override default grr mapping
           }
 

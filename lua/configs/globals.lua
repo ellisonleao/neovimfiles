@@ -1,6 +1,6 @@
 -- Global functions and configs
 
-P = vim.print
+_G.P = vim.print
 
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
