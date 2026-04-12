@@ -1,5 +1,7 @@
-_G.P = vim.print
+---@type Helpers
 _G.H = require("helpers")
+---@diagnostic disable-next-line: missing-parameter
+_G.P = vim.print
 
 -- default vim.g opts
 vim.g.mapleader = ","
