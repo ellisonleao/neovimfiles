@@ -1,5 +1,2 @@
-require("configs.options")
-require("configs.autocmds")
-require("configs.globals")
-require("configs.keymaps")
-require("configs.lazy")
+vim.loader.enable(true)
+require("configs")
