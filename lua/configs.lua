@@ -112,7 +112,6 @@ vim.api.nvim_create_user_command("PackClean", function()
       return x.spec.name
     end)
     :totable()
-  P(unused)
   if #unused > 0 then
     vim.pack.del(unused)
   end
