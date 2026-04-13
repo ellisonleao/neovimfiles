@@ -6,8 +6,6 @@ set.tabstop = 2
 set.expandtab = true
 vim.keymap.set("n", "<leader>S", [[<Cmd>luafile %<CR>]], { remap = false }) -- execute current lua file
 
-H.pack_add({ "folke/lazydev.nvim" })
-
 require("lazydev").setup({
   library = {
     -- Load luvit types when the `vim.uv` word is found

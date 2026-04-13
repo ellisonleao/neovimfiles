@@ -101,6 +101,23 @@ require("vim._core.ui2").enable({
   },
 })
 
+-- default commands
+vim.api.nvim_create_user_command("PackClean", function()
+  local unused = vim
+    .iter(vim.pack.get())
+    :filter(function(x)
+      return not x.active
+    end)
+    :map(function(x)
+      return x.spec.name
+    end)
+    :totable()
+  P(unused)
+  if #unused > 0 then
+    vim.pack.del(unused)
+  end
+end, { nargs = 0 })
+
 -- default autocmds
 
 -- remember last cursor position

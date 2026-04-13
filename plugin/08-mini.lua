@@ -4,17 +4,13 @@ H.pack_add({
 })
 
 require("mini.surround").setup()
-require("mini.pick").setup({
-  mappings = {
-    toggle_info = "<C-k>",
-    toggle_preview = "<C-f>",
-  },
-})
+require("mini.pick").setup()
 
 local keymaps = {
   { "n", "<leader><leader>", ":Pick buffers<CR>" },
   { "n", "<leader>ff", ":Pick files<CR>" },
   { "n", "<leader>lg", ":Pick grep_live<CR>" },
+  { "n", "<leader>H", ":Pick help<CR>" },
 }
 
 H.set_keymaps(keymaps)
