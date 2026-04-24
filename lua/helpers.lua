@@ -2,15 +2,15 @@
 local M = {}
 
 ---Set a single keymap
----@param mode string Mode for the keymap (e.g., "n", "i", "v")
+---@param mode string|table Mode for the keymap (e.g., "n", "i", "v", or {"n", "x"})
 ---@param shortcut string The keybinding
----@param cmd string The command to execute
+---@param cmd string|function The command or function to execute
 function M.set_keymap(mode, shortcut, cmd)
   vim.keymap.set(mode, shortcut, cmd, { remap = false, silent = true })
 end
 
 ---Set multiple keymaps from a table
----@param keymaps string[][] Array of keymap definitions [mode, shortcut, cmd]
+---@param keymaps table[] Array of keymap definitions [mode, shortcut, cmd]
 function M.set_keymaps(keymaps)
   for _, keymap in ipairs(keymaps) do
     local mode, shortcut, cmd = unpack(keymap)
@@ -19,7 +19,7 @@ function M.set_keymaps(keymaps)
 end
 
 ---Add plugins from github to the pack
----@param plugins string[]|{src: string, version?: string}[]
+---@param plugins string[]|vim.pack.Spec[]
 function M.pack_add(plugins)
   for idx, val in ipairs(plugins) do
     if type(val) == "string" then
@@ -29,26 +29,10 @@ function M.pack_add(plugins)
     if type(val) == "table" then
       plugins[idx].src = "https://github.com/" .. val.src
       plugins[idx].version = val.version or "main"
+      plugins[idx].data = val.data or {}
     end
   end
   vim.pack.add(plugins)
-end
-
----Register callback for pack change events
----@param name string The package name
----@param fun(ev: any) The callback function
----@param kind string The pack event kind
-function M.on_pack_changed(name, cb, kind)
-  vim.api.nvim_create_autocmd("PackChanged", {
-    callback = function(ev)
-      if ev.data.spec.name == name and ev.data.kind == kind then
-        if not ev.data.active then
-          vim.cmd.packadd(name)
-        end
-        cb(ev)
-      end
-    end,
-  })
 end
 
 ---Get the git root directory of the current buffer

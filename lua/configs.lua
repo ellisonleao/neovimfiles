@@ -163,6 +163,24 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- handle vim.pack events
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(ev)
+    local name, kind, data = ev.data.spec.name, ev.data.kind, ev.data.spec.data
+    if data then
+      if not ev.data.active then
+        vim.cmd.packadd(name)
+      end
+
+      -- calls install or update function, if any
+      local kind_func = vim.tbl_get(data, "data", kind)
+      if kind_func then
+        kind_func(ev)
+      end
+    end
+  end,
+})
+
 -- default keymaps
 local keymaps = {
   { "n", "<leader>U", vim.pack.update }, -- Update all current plugins
@@ -182,6 +200,7 @@ local keymaps = {
   { "n", "N", "Nzzzv" },
   { "n", "<leader>ic", vim.cmd.Inspect },
   { "n", "<leader>R", vim.cmd.restart },
+  { "t", "<Esc>", [[<C-\><C-n>]] },
 }
 
 H.set_keymaps(keymaps)

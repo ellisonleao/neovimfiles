@@ -1,8 +1,15 @@
-H.pack_add({ "rafamadriz/friendly-snippets", { src = "saghen/blink.cmp", version = vim.version.range("1.*") } })
-
-H.on_pack_changed("blink.cmp", function()
-  vim.system({ "cargo", "build", "--release" })
-end, "install")
+H.pack_add({
+  "rafamadriz/friendly-snippets",
+  {
+    src = "saghen/blink.cmp",
+    version = vim.version.range("1.*"),
+    data = {
+      install = function(ev)
+        vim.system({ "cargo", "build", "--release" }, { cwd = ev.data.path })
+      end,
+    },
+  },
+})
 
 require("blink.cmp").setup({
   keymap = {
