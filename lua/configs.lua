@@ -50,10 +50,6 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-vim.filetype.add({
-  env = "env",
-})
-
 require("vim._core.ui2").enable({
   enable = true,
   msg = {
@@ -157,9 +153,8 @@ vim.api.nvim_create_autocmd("LspProgress", {
 
 -- treesitter highlight
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "<filetype>" },
-  callback = function()
-    vim.treesitter.start()
+  callback = function(ev)
+    pcall(vim.treesitter.start, ev.buf)
   end,
 })
 

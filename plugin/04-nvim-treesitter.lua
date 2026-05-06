@@ -10,6 +10,7 @@ H.pack_add({
           "gomod",
           "hcl",
           "html",
+          "http",
           "javascript",
           "json",
           "lua",
