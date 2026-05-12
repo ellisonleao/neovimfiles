@@ -168,7 +168,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
       end
 
       -- calls install or update function, if any
-      local kind_func = vim.tbl_get(data, "data", kind)
+      local kind_func = vim.tbl_get(data, kind)
       if kind_func then
         kind_func(ev)
       end
@@ -187,14 +187,11 @@ local keymaps = {
   { "n", "<CR>", "ciw" }, -- Enter on normal mode will remove the current word and enter insert mode
   { "v", "<", [[<gv]] }, -- move code forward in visual mode
   { "v", ">", [[>gv]] }, -- move code backwards in visual mode
-  { "n", "<leader>n", [[<Cmd>cn<CR>]] }, -- move to next item in quickfix list
-  { "n", "<leader>p", [[<Cmd>cp<CR>]] }, -- move to prev item in quickfix list
   { "n", "<C-d>", "<C-d>zz" },
   { "n", "<C-u>", "<C-u>zz" },
   { "n", "n", "nzzzv" },
   { "n", "N", "Nzzzv" },
   { "n", "<leader>ic", vim.cmd.Inspect },
-  { "n", "<leader>R", vim.cmd.restart },
   { "t", "<Esc>", [[<C-\><C-n>]] },
 }
 
