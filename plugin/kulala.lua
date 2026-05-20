@@ -1,4 +1,4 @@
-H.pack_add({ "nvim-treesitter/nvim-treesitter", "mistweaverco/kulala.nvim" })
+H.pack_add({ "mistweaverco/kulala.nvim" })
 
 require("kulala").setup({
   global_keymaps = true,

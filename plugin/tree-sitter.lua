@@ -1,38 +1,31 @@
 H.pack_add({
   { src = "nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
-  {
-    src = "nvim-treesitter/nvim-treesitter",
-    data = {
-      install = function()
-        local parsers = {
-          "bash",
-          "go",
-          "gomod",
-          "hcl",
-          "html",
-          "http",
-          "javascript",
-          "json",
-          "lua",
-          "make",
-          "markdown",
-          "python",
-          "regex",
-          "toml",
-          "typescript",
-          "yaml",
-          "zig",
-        }
-        require("nvim-treesitter").install(parsers)
-      end,
-      update = function()
-        vim.cmd.TSUpdate()
-      end,
-    },
-  },
+  { src = "romus204/tree-sitter-manager.nvim" },
 })
 
-vim.g.no_plugin_maps = true
+local parsers = {
+  "bash",
+  "go",
+  "gomod",
+  "hcl",
+  "html",
+  "http",
+  "javascript",
+  "json",
+  "lua",
+  "make",
+  "markdown",
+  "python",
+  "regex",
+  "toml",
+  "typescript",
+  "yaml",
+  "zig",
+}
+
+require("tree-sitter-manager").setup({
+  ensure_installed = parsers,
+})
 
 require("nvim-treesitter-textobjects").setup({
   select = {
