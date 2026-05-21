@@ -1,31 +1,9 @@
 H.pack_add({
   { src = "nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
-  { src = "romus204/tree-sitter-manager.nvim" },
+  "arborist-ts/arborist.nvim",
 })
 
-local parsers = {
-  "bash",
-  "go",
-  "gomod",
-  "hcl",
-  "html",
-  "http",
-  "javascript",
-  "json",
-  "lua",
-  "make",
-  "markdown",
-  "python",
-  "regex",
-  "toml",
-  "typescript",
-  "yaml",
-  "zig",
-}
-
-require("tree-sitter-manager").setup({
-  ensure_installed = parsers,
-})
+require("arborist").setup()
 
 require("nvim-treesitter-textobjects").setup({
   select = {

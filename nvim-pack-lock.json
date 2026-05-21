@@ -4,6 +4,10 @@
       "rev": "f5df9e70403b5d4c0642702a64534f04f3d71d03",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
+    "arborist.nvim": {
+      "rev": "fdeef56c2840c6772b9f68c5774ed87e9340ec7d",
+      "src": "https://github.com/arborist-ts/arborist.nvim"
+    },
     "blink.cmp": {
       "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
@@ -26,7 +30,7 @@
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
     },
     "kulala.nvim": {
-      "rev": "6656c9d332735ca6a27725e0fb45a1715c4372d9",
+      "rev": "31e95b278b7e4fce1bbb19983c6221f6bce47c9f",
       "src": "https://github.com/mistweaverco/kulala.nvim"
     },
     "lazydev.nvim": {
@@ -69,11 +73,6 @@
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "tree-sitter-manager.nvim": {
-      "rev": "f18e545c6ccbbae9875e63a2a7b8e8a9678a242e",
-      "src": "https://github.com/romus204/tree-sitter-manager.nvim",
-      "version": "'main'"
     },
     "typescript-tools.nvim": {
       "rev": "c2f5910074103705661e9651aa841e0d7eea9932",
