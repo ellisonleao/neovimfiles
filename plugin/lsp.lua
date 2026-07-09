@@ -57,6 +57,7 @@ local packages = {
   "shfmt",
   "stylua",
   "terraform-ls",
+  "tsgo",
   "yaml-language-server",
   "yamllint",
 }
@@ -120,5 +121,6 @@ vim.lsp.enable({
   "pyright",
   "ruff",
   "terraformls",
+  "tsgo",
   "yamlls",
 })
