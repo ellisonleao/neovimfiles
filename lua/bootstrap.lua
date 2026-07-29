@@ -176,6 +176,9 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
+-- remove [Process exited] message on terminal end process
+vim.api.nvim_clear_autocmds({ group = "nvim.terminal", event = "TermClose" })
+
 -- default keymaps
 local keymaps = {
   { "n", "<leader>U", vim.pack.update }, -- Update all current plugins
