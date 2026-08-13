@@ -1,7 +1,7 @@
 return {
   settings = {
     yaml = {
-      keyOrdering = false,
+      format = false,
       schemaStore = {
         -- in favor of schemastore
         enable = false,
