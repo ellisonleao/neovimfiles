@@ -50,6 +50,8 @@ local packages = {
   "gopls",
   "json-lsp",
   "lua-language-server",
+  "oxfmt",
+  "oxlint",
   "pyright",
   "ruff",
   "rust-analyzer",
