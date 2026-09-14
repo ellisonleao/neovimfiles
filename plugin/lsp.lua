@@ -89,6 +89,7 @@ require("conform").setup({
     typescript = { "oxlint", "oxfmt" },
     javascriptreact = { "oxlint", "oxfmt" },
     typescriptreact = { "oxlint", "oxfmt" },
+    vue = { "oxlint", "oxfmt" },
   },
 })
 
